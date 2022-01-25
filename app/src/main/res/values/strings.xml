@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MultipleAudioPlayer</string>
+    <string name="sample_data_loaded_title">Notificação em simultâneo (sem atributos)</string>
+    <string name="sample_data_loaded_message">Eu sou uma notificação exemplo.</string>
+    <string name="sample_data_loaded_big_text">Eu sou uma notificação exemplo.</string>
+    <string name="concurrent_notification_normal">Notificação em simultâneo (sem atributos)</string>
+</resources>
