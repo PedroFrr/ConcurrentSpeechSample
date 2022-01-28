@@ -1,41 +1,30 @@
 package com.example.multipleaudioplayer
 
-import android.media.MediaPlayer
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothHeadset
+import android.bluetooth.BluetoothProfile
+import android.bluetooth.BluetoothProfile.ServiceListener
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.media.AudioDeviceInfo
+import android.media.AudioManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 import com.example.multipleaudioplayer.databinding.ActivityMainBinding
-import com.google.vr.sdk.audio.GvrAudioEngine
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
-
-    private val scope = CoroutineScope(Dispatchers.IO)
-
     private lateinit var binding: ActivityMainBinding
 
-    private var mediaPlayer: MediaPlayer? = null
+    var bluetoothHeadset: BluetoothHeadset? = null
 
-    private var mediaPlayer2: MediaPlayer? = null
-
-    private val audioEngine by lazy {
-        GvrAudioEngine(this, GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
-    }
-
-    private var sourceId = GvrAudioEngine.INVALID_ID
-    private var notificationSourceId = GvrAudioEngine.INVALID_ID
-
-    private var successSourceId = GvrAudioEngine.INVALID_ID
-
-    // sound played on the left ear
-    private var modelPosition = floatArrayOf(-8f, 0.0f, 0.0f)
-
-    // sound played on the right ear
-    private var notificationPosition = floatArrayOf(8f, 0.0f, 0.0f)
+    // Get the default adapter
+    private val bluetoothAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,66 +39,66 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.app_name), "App notification channel."
         )
 
-        val normalNotificationButton = binding.normalNotificationButton
+        // Establish connection to the proxy.
+        bluetoothAdapter.getProfileProxy(this, profileListener, BluetoothProfile.HEADSET)
 
-        normalNotificationButton.setOnClickListener {
-            scope.launch {
-                mediaPlayer = MediaPlayer.create(this@MainActivity, R.raw.document_example)
-                mediaPlayer!!.start()
+        val receiver = HeadsetStateBroadcastReceiver()
 
-                delay(7000)
+        // Intent Filter is useful to determine which apps wants to receive
+        // which intents,since here we want to respond to change of
+        // airplane mode
+        val intentFilter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
+        intentFilter.addAction("android.bluetooth.headset.action.STATE_CHANGED")
+        intentFilter.addAction("android.bluetooth.headset.profile.action.CONNECTION_STATE_CHANGED")
+        registerReceiver(receiver, intentFilter)
 
-                NotificationHelper.createSampleDataNotification(
-                    this@MainActivity,
-                    getString(R.string.sample_data_loaded_title),
-                    getString(R.string.sample_data_loaded_message),
-                    getString(R.string.sample_data_loaded_big_text), false
-                )
+    }
 
-                mediaPlayer2 = MediaPlayer.create(this@MainActivity, R.raw.notification_example)
-                mediaPlayer2!!.start()
+    /*
+     * If headphone is available we enable the spatial checkbox, disable it otherwise
+     * This is only useful at the beginning of the app,
+     * afterwards its the broadcastReceiver responsibility to enable/disable the checkbox
+     */
+    private fun isWiredHeadphoneAvailable(): Boolean {
+        val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val audioDevices = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS)
+        for (deviceInfo in audioDevices) {
+            if (deviceInfo.type == AudioDeviceInfo.TYPE_WIRED_HEADPHONES
+                || deviceInfo.type == AudioDeviceInfo.TYPE_WIRED_HEADSET
+            ) {
+                return true
+            }
+        }
+        return false
+    }
+
+    // Define Service Listener of BluetoothProfile
+    private val profileListener: ServiceListener = object : ServiceListener {
+        override fun onServiceConnected(profile: Int, proxy: BluetoothProfile) {
+            if (profile == BluetoothProfile.HEADSET) {
+                bluetoothHeadset = proxy as BluetoothHeadset
+                Log.i("", isBluetoothHeadsetConnected().toString())
             }
         }
 
-        playSound()
+        override fun onServiceDisconnected(profile: Int) {
+            if (profile == BluetoothProfile.HEADSET) {
+                bluetoothHeadset = null
+                Log.i("TAG", isBluetoothHeadsetConnected().toString())
+            }
+        }
     }
 
-    private fun playSound(){
-        // Start spatial audio playback of OBJECT_SOUND_FILE at the model position. The
-        // returned sourceId handle is stored and allows for repositioning the sound object
-        // whenever the cube position changes.
+    @SuppressLint("MissingPermission")
+    private fun isBluetoothHeadsetConnected(): Boolean {
+        val devices: List<BluetoothDevice> = bluetoothHeadset?.connectedDevices ?: return false
 
-        // Start spatial audio playback of OBJECT_SOUND_FILE at the model position. The
-        // returned sourceId handle is stored and allows for repositioning the sound object
-        // whenever the cube position changes.
-        audioEngine.preloadSoundFile(DOCUMENT_SOUND_FILE)
-        audioEngine.preloadSoundFile(NOTIFICATION_SOUND_FILE)
-        sourceId = audioEngine.createSoundObject(DOCUMENT_SOUND_FILE)
-        notificationSourceId = audioEngine.createSoundObject(NOTIFICATION_SOUND_FILE)
-        audioEngine.setSoundObjectPosition(sourceId, modelPosition[0], modelPosition[1], modelPosition[2])
-        audioEngine.playSound(sourceId, true /* looped playback */)
-        // Preload an unspatialized sound to be played on a successful trigger on the cube.
-        //audioEngine.preloadSoundFile(SUCCESS_SOUND_FILE)
+        return devices.isNotEmpty()
 
-
-        audioEngine.setSoundObjectPosition(notificationSourceId, notificationPosition[0], notificationPosition[1], notificationPosition[2])
-        audioEngine.playSound(notificationSourceId, true /* looped playback */)
     }
 
-    override fun onPause() {
-        audioEngine.pause()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        audioEngine.resume()
-    }
-
-    companion object{
-        private const val OBJECT_SOUND_FILE = "cube_sound.wav"
-        private const val SUCCESS_SOUND_FILE = "success.wav"
-        private const val DOCUMENT_SOUND_FILE = "document_example.mp3"
-        private const val NOTIFICATION_SOUND_FILE = "notification_example.mp3"
+    override fun onStop() {
+        bluetoothAdapter.closeProfileProxy(BluetoothProfile.HEADSET, bluetoothHeadset)
+        super.onStop()
     }
 }

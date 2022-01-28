@@ -3,5 +3,8 @@
     <string name="sample_data_loaded_title">Notificação em simultâneo (sem atributos)</string>
     <string name="sample_data_loaded_message">Eu sou uma notificação exemplo.</string>
     <string name="sample_data_loaded_big_text">Eu sou uma notificação exemplo.</string>
-    <string name="concurrent_notification_normal">Notificação em simultâneo (sem atributos)</string>
+    <string name="concurrent_notification_normal">Cenário das notificações</string>
+    <string name="spatialization">Espacialização</string>
+    <string name="speech_rate">Velocidade da voz</string>
+    <string name="scanning_scenario">Cenário Scanning</string>
 </resources>

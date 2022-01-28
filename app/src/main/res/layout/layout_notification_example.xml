@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_spatialization"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/spatialization"
+        tools:layout_editor_absoluteX="175dp"
+        tools:layout_editor_absoluteY="121dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_spatialization"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tv_spatialization"
+        app:layout_constraintTop_toTopOf="@id/tv_spatialization"
+        app:layout_constraintBottom_toBottomOf="@id/tv_spatialization"/>
+
+    <TextView
+        android:id="@+id/tv_speech_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_spatialization"
+        android:text="@string/speech_rate"
+        android:layout_marginTop="12dp"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_speech_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_speech_rate"
+        android:valueFrom="0.0"
+        android:valueTo="100.0"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_notification_no_spatialization"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/slider_speech_rate"
+        android:text="Notificação sem espacialização"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_notification_spatialization"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_notification_no_spatialization"
+        android:text="Notificação com espacialização"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
