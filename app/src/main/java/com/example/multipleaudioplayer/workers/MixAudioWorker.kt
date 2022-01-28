@@ -13,11 +13,13 @@ import kotlinx.coroutines.withContext
 import zeroonezero.android.audio_mixer.AudioMixer
 import zeroonezero.android.audio_mixer.input.AudioInput
 import zeroonezero.android.audio_mixer.input.GeneralAudioInput
+import java.util.concurrent.CountDownLatch
 
 class MixAudioWorker(private val appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
 
     override fun doWork(): Result{
+        val latch = CountDownLatch(1)
 
         val inputs = mutableListOf<AudioInput>()
 
@@ -51,23 +53,17 @@ class MixAudioWorker(private val appContext: Context, workerParams: WorkerParame
             audioMixer.addDataSource(it)
         }
 
-/*        audioMixer.setProcessingListener(object : AudioMixer.ProcessingListener{
-            override fun onProgress(progress: Double) {
-                //TODO
-            }
+        audioMixer.setProcessingListener(object : AudioMixer.ProcessingListener{
+            override fun onProgress(progress: Double) {/*Do nothing*/}
 
-            override fun onEnd() {
-                //TODO
-            }
+            override fun onEnd() {latch.countDown()}
 
-        })*/
+        })
 
         audioMixer.start()
         audioMixer.processAsync()
 
-        while(audioMixer.progress != 1.0){
-            Log.i("TAG", "not processed")
-        }
+        latch.await()
 
         return  Result.success()
     }
