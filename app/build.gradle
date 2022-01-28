@@ -13,13 +13,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        externalNativeBuild {
-            ndkBuild {
-                abiFilters 'armeabi-v7a', 'arm64-v8a'
-                arguments "NDK_PROJECT_PATH=$projectDir/src/main"
-            }
-        }
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -54,6 +47,11 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    implementation 'com.github.ZeroOneZeroR:android_audio_mixer:v1.1'
+
+    implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
+
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
     // Google VR SDK
     // https://github.com/googlevr/gvr-android-sdk

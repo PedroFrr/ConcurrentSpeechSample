@@ -6,7 +6,7 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.multipleaudioplayer.databinding.LayoutSampleOptionsFragmentBinding
-import com.example.multipleaudioplayer.utils.viewBinding
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
 class OptionsFragment : Fragment(R.layout.layout_sample_options_fragment) {
 
@@ -25,7 +25,7 @@ class OptionsFragment : Fragment(R.layout.layout_sample_options_fragment) {
         }
 
         binding.btnScanningScenario.setOnClickListener {
-            navigateTo(R.id.options_to_notification_example)
+            navigateTo(R.id.options_to_scanning_example)
         }
     }
 

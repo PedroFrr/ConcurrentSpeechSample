@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import com.example.multipleaudioplayer.NotificationHelper
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutNotificationExampleBinding
-import com.example.multipleaudioplayer.utils.viewBinding
 import com.google.vr.sdk.audio.GvrAudioEngine
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

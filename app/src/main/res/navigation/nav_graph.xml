@@ -13,10 +13,18 @@
         <action
             android:id="@+id/options_to_notification_example"
             app:destination="@id/notificationExampleFragment" />
+        <action
+            android:id="@+id/options_to_scanning_example"
+            app:destination="@id/scanningExampleFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationExampleFragment"
         android:name="com.example.multipleaudioplayer.notification.NotificationExampleFragment"
         android:label="NotificationExampleFragment"
         tools:layout="@layout/layout_notification_example"/>
+    <fragment
+        android:id="@+id/scanningExampleFragment"
+        android:name="com.example.multipleaudioplayer.scanning.ScanningExampleFragment"
+        android:label="ScanningExampleFragment"
+        tools:layout="@layout/layout_scanning_example"/>
 </navigation>
