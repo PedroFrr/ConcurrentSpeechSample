@@ -71,6 +71,7 @@ object NotificationHelper {
             setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
             priority = NotificationCompat.PRIORITY_MAX
             setAutoCancel(autoCancel)
+            setTicker(message)
 
         }
 

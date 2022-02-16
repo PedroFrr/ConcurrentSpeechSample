@@ -7,4 +7,7 @@
     <string name="spatialization">Espacialização</string>
     <string name="speech_rate">Velocidade da voz</string>
     <string name="scanning_scenario">Cenário Scanning</string>
+    <string name="sample_text">A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão.Contudo a história da presença humana no território correspondente a Portugal começou muito antes.A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses. Povos celtas estabeleceram-se e misturaram-se com os nativos.</string>
+    <string name="spatialization_scenario">Cenário Espacialização</string>
+    <string name="audio_properties_scenario">Cenário Propriedades de Aúdio</string>
 </resources>

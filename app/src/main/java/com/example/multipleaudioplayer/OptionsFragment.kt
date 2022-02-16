@@ -27,6 +27,14 @@ class OptionsFragment : Fragment(R.layout.layout_sample_options_fragment) {
         binding.btnScanningScenario.setOnClickListener {
             navigateTo(R.id.options_to_scanning_example)
         }
+
+        binding.btnSpatializationScenario.setOnClickListener {
+            navigateTo(R.id.options_to_spatialization_example)
+        }
+
+        binding.btnPropertiesScenario.setOnClickListener {
+            navigateTo(R.id.options_to_audio_properties_example)
+        }
     }
 
     private fun navigateTo(@IdRes navigationId: Int) {

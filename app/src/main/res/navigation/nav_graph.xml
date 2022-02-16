@@ -16,6 +16,12 @@
         <action
             android:id="@+id/options_to_scanning_example"
             app:destination="@id/scanningExampleFragment" />
+        <action
+            android:id="@+id/options_to_spatialization_example"
+            app:destination="@id/spatializationExampleFragment" />
+        <action
+            android:id="@+id/options_to_audio_properties_example"
+            app:destination="@id/audioPropertiesExampleFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationExampleFragment"
@@ -27,4 +33,14 @@
         android:name="com.example.multipleaudioplayer.scanning.ScanningExampleFragment"
         android:label="ScanningExampleFragment"
         tools:layout="@layout/layout_scanning_example"/>
+    <fragment
+        android:id="@+id/spatializationExampleFragment"
+        android:name="com.example.multipleaudioplayer.spatialization.SpatializationExampleFragment"
+        android:label="SpatializationExampleFragment"
+        tools:layout="@layout/layout_spatialization_example"/>
+    <fragment
+        android:id="@+id/audioPropertiesExampleFragment"
+        android:name="com.example.multipleaudioplayer.audioproperties.AudioPropertiesExampleFragment"
+        android:label="AudioPropertiesExampleFragment"
+        tools:layout="@layout/layout_audio_properties_example"/>
 </navigation>

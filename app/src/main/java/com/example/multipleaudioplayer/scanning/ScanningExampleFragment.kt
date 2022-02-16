@@ -31,8 +31,6 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
 
     private val binding by viewBinding(LayoutScanningExampleBinding::bind)
 
-    private val scope = CoroutineScope(Dispatchers.IO)
-
     private val mediaPlayer1: MediaPlayer by lazy {
         MediaPlayer.create(requireActivity(), R.raw.part1)
     }
@@ -59,11 +57,9 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
                 TextT
             }*/
 
-/*        mediaPlayer1.start()
+        mediaPlayer1.start()
         mediaPlayer2.start()
-        mediaPlayer3.start()*/
-
-        //setOnUtteranceProgressListener()
+        mediaPlayer3.start()
 
 
         val synthesizeFileWorker = OneTimeWorkRequest.from(SynthesizeFileWorker::class.java)
@@ -80,7 +76,7 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         val outputPath = "$directory/output_file.mp3"
 
         val mediaPlayer = MediaPlayer.create(requireContext(), Uri.parse(outputPath))
-        mediaPlayer.start()
+//        mediaPlayer.start()
 
     }
 

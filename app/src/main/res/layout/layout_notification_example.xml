@@ -40,6 +40,19 @@
         android:valueFrom="0.0"
         android:valueTo="100.0"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/slider_speech_rate"
+        android:text="@string/sample_text"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/action_btns_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="btn_notification_no_spatialization, btn_notification_spatialization"
+        android:visibility="gone"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_notification_no_spatialization"
         android:layout_width="match_parent"

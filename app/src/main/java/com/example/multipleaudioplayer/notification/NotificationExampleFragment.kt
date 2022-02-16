@@ -48,6 +48,17 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
         super.onViewCreated(view, savedInstanceState)
 
         setupUi()
+
+        scope.launch {
+            delay(7000)
+
+            NotificationHelper.createSampleDataNotification(
+                requireActivity(),
+                getString(R.string.sample_data_loaded_title),
+                getString(R.string.sample_data_loaded_message),
+                getString(R.string.sample_data_loaded_big_text), false
+            )
+        }
     }
 
     private fun setupUi() {
@@ -62,11 +73,11 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
 
     private fun playNotificationExample() {
         scope.launch {
-            documentSampleMediaPlayer.start()
+/*            documentSampleMediaPlayer.start()
 
             // manually trigger notification after waiting 7 seconds
             // and play the notification audio
-            delay(7000)
+            delay(7000)*/
 
             NotificationHelper.createSampleDataNotification(
                 requireActivity(),
@@ -75,7 +86,7 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
                 getString(R.string.sample_data_loaded_big_text), false
             )
 
-            notificationSampleMediaPlayer.start()
+//            notificationSampleMediaPlayer.start()
         }
     }
 
