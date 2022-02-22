@@ -2,8 +2,18 @@ package com.example.multipleaudioplayer.notification
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.amazonaws.auth.CognitoCachingCredentialsProvider
+import com.amazonaws.mobile.client.AWSMobileClient
+import com.amazonaws.mobile.client.Callback
+import com.amazonaws.mobile.client.UserStateDetails
+import com.amazonaws.regions.Regions
+import com.amazonaws.services.polly.AmazonPollyPresigningClient
+import com.amazonaws.services.polly.model.OutputFormat
+import com.amazonaws.services.polly.model.SynthesizeSpeechPresignRequest
+import com.amazonaws.services.polly.model.VoiceId
 import com.example.multipleaudioplayer.NotificationHelper
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutNotificationExampleBinding
@@ -11,6 +21,7 @@ import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -32,6 +43,8 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
+    private var job: Job? = null
+
     private val documentSampleMediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(requireActivity(), R.raw.document_example)
     }
@@ -44,26 +57,22 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
     }
 
+    private lateinit var client: AmazonPollyPresigningClient
+
+    var clientNew: AmazonPollyPresigningClient? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initPollyClient()
+
         setupUi()
-
-        scope.launch {
-            delay(7000)
-
-            NotificationHelper.createSampleDataNotification(
-                requireActivity(),
-                getString(R.string.sample_data_loaded_title),
-                getString(R.string.sample_data_loaded_message),
-                getString(R.string.sample_data_loaded_big_text), false
-            )
-        }
     }
 
     private fun setupUi() {
         binding.btnNotificationNoSpatialization.setOnClickListener {
-            playNotificationExample()
+//            playNotificationExample()
+            playVoice()
         }
 
         binding.btnNotificationSpatialization.setOnClickListener {
@@ -72,26 +81,20 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
     }
 
     private fun playNotificationExample() {
-        scope.launch {
-/*            documentSampleMediaPlayer.start()
+        job = scope.launch {
+            documentSampleMediaPlayer.start()
 
             // manually trigger notification after waiting 7 seconds
             // and play the notification audio
-            delay(7000)*/
+            delay(7000)
 
-            NotificationHelper.createSampleDataNotification(
-                requireActivity(),
-                getString(R.string.sample_data_loaded_title),
-                getString(R.string.sample_data_loaded_message),
-                getString(R.string.sample_data_loaded_big_text), false
-            )
-
-//            notificationSampleMediaPlayer.start()
+            launchNotification()
+            notificationSampleMediaPlayer.start()
         }
     }
 
     private fun playNotificationExampleWithSpatialization() {
-        scope.launch {
+        job = scope.launch {
             // Start spatial audio playback of OBJECT_SOUND_FILE at the model position. The
             // returned sourceId handle is stored and allows for repositioning the sound object
             // whenever the cube position changes.
@@ -116,7 +119,11 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
                 notificationPosition[1],
                 notificationPosition[2]
             )
-            audioEngine.playSound(notificationSourceId, true /* looped playback */)
+
+            delay(7000)
+            launchNotification()
+            audioEngine.playSound(notificationSourceId, false /* looped playback */)
+
         }
     }
 
@@ -134,8 +141,73 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
         audioEngine.playSound(sourceId, shouldBePlayedInLoop)
     }
 
+    private fun launchNotification() {
+        scope.launch {
+            NotificationHelper.createSampleDataNotification(
+                requireActivity(),
+                getString(R.string.sample_data_loaded_title),
+                getString(R.string.sample_data_loaded_message),
+                getString(R.string.sample_data_loaded_big_text), false
+            )
+        }
+    }
+
+    private fun initPollyClient() {
+        val credentialsProvider = CognitoCachingCredentialsProvider(
+            requireContext(),
+            "ap-northeast-2:c903f1b4-7a90-42ff-a53a-df75f34036b2",
+            Regions.AP_NORTHEAST_2
+        )
+        clientNew = AmazonPollyPresigningClient(credentialsProvider)
+
+        /*AWSMobileClient.getInstance().initialize(requireContext(), object : Callback<UserStateDetails?> {
+            override fun onResult(result: UserStateDetails?) {
+                // Create a client that supports generation of presigned URLs.
+                client = AmazonPollyPresigningClient(AWSMobileClient.getInstance())
+                Log.i("INIT", "onResult: " + result?.userState);
+            }
+
+            override fun onError(e: Exception) {
+                Log.e(TAG, "onError: Initialization error", e)
+            }
+        })*/
+    }
+
+    private fun playVoice(){
+        try {
+            scope.launch {
+                // Create speech synthesis request.
+                val synthesizeSpeechPresignRequest =
+                    SynthesizeSpeechPresignRequest() // Set text to synthesize.
+                        .withText("Texto exemplo") // Set voice selected by the user.
+                        .withVoiceId("Cristiano") // Set format to MP3.
+                        .withOutputFormat(OutputFormat.Mp3)
+
+                // Get the presigned URL for synthesized speech audio stream.
+
+                // Get the presigned URL for synthesized speech audio stream.
+                val presignedSynthesizeSpeechUrl =
+                    clientNew?.getPresignedSynthesizeSpeechUrl(synthesizeSpeechPresignRequest)
+
+
+                // Set media player's data source to previously obtained URL.
+                val mediaPlayer = MediaPlayer()
+                mediaPlayer.setDataSource(presignedSynthesizeSpeechUrl.toString())
+                mediaPlayer.prepareAsync()
+                mediaPlayer.start()
+            }
+
+        }catch (exception: java.lang.Exception){
+            Log.e(TAG, exception.toString())
+        }
+
+    }
+
     override fun onPause() {
         audioEngine.pause() // to play sound in the background we just don't have to pause it
+        documentSampleMediaPlayer.stop()
+        documentSampleMediaPlayer.release()
+        job?.cancel()
         super.onPause()
     }
 
@@ -147,5 +219,6 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
     companion object {
         private const val DOCUMENT_SOUND_FILE = "document_example.mp3"
         private const val NOTIFICATION_SOUND_FILE = "notification_example.mp3"
+        private const val TAG = "Amazon Polly"
     }
 }

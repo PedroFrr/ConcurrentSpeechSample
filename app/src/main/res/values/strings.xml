@@ -10,4 +10,8 @@
     <string name="sample_text">A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão.Contudo a história da presença humana no território correspondente a Portugal começou muito antes.A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses. Povos celtas estabeleceram-se e misturaram-se com os nativos.</string>
     <string name="spatialization_scenario">Cenário Espacialização</string>
     <string name="audio_properties_scenario">Cenário Propriedades de Aúdio</string>
+    <string name="number_of_voices_label">Número de vozes</string>
+    <string name="play_scenario_label">Reproduzir cenário</string>
+    <string name="notification_scenario_no_spatialization">Notificação sem espacialização</string>
+    <string name="notification_scenario_spatialization">Notificação com espacialização</string>
 </resources>

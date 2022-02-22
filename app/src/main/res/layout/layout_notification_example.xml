@@ -7,30 +7,11 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/tv_spatialization"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/spatialization"
-        tools:layout_editor_absoluteX="175dp"
-        tools:layout_editor_absoluteY="121dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <CheckBox
-        android:id="@+id/checkbox_spatialization"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/tv_spatialization"
-        app:layout_constraintTop_toTopOf="@id/tv_spatialization"
-        app:layout_constraintBottom_toBottomOf="@id/tv_spatialization"/>
-
-    <TextView
         android:id="@+id/tv_speech_rate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_spatialization"
-        android:text="@string/speech_rate"
-        android:layout_marginTop="12dp"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/speech_rate"/>
 
     <com.google.android.material.slider.Slider
         android:id="@+id/slider_speech_rate"
@@ -41,9 +22,42 @@
         android:valueTo="100.0"/>
 
     <TextView
+        android:id="@+id/tv_speech_timbre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/slider_speech_rate"
+        android:text="@string/speech_rate"
+        android:layout_marginTop="12dp"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_speech_timbre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_speech_timbre"
+        android:valueFrom="0.0"
+        android:valueTo="100.0"/>
+
+    <TextView
+        android:id="@+id/tv_speech_pitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/slider_speech_timbre"
+        android:text="@string/speech_rate"
+        android:layout_marginTop="12dp"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_speech_pitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_speech_pitch"
+        android:valueFrom="0.0"
+        android:valueTo="100.0"/>
+
+    <TextView
+        android:id="@+id/tv_document_sample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/slider_speech_pitch"
         android:text="@string/sample_text"/>
 
     <androidx.constraintlayout.widget.Group
@@ -51,20 +65,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="btn_notification_no_spatialization, btn_notification_spatialization"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_notification_no_spatialization"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/slider_speech_rate"
-        android:text="Notificação sem espacialização"/>
+        app:layout_constraintBottom_toTopOf="@id/btn_notification_spatialization"
+        android:text="@string/notification_scenario_no_spatialization"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_notification_spatialization"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/btn_notification_no_spatialization"
-        android:text="Notificação com espacialização"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/notification_scenario_spatialization"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

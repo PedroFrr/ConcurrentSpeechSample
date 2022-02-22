@@ -61,6 +61,16 @@ class SpatializationExampleFragment : Fragment(R.layout.layout_spatialization_ex
         audioEngine.playSound(documentPartTwoSourceId, false)
     }
 
+    override fun onPause() {
+        audioEngine.pause()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        audioEngine.resume()
+    }
+
     companion object {
         private const val DOCUMENT_PART_ONE_SOUND_FILE = "part1.mp3"
         private const val DOCUMENT_PART_TWO_SOUND_FILE = "part2.mp3"

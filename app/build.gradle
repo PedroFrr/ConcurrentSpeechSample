@@ -57,6 +57,10 @@ dependencies {
     // https://github.com/googlevr/gvr-android-sdk
     implementation 'com.google.vr:sdk-base:1.190.0'
 
+    def aws_version = "2.41.0"
+    implementation "com.amazonaws:aws-android-sdk-polly:$aws_version"
+    implementation "com.amazonaws:aws-android-sdk-mobile-client:$aws_version"
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
