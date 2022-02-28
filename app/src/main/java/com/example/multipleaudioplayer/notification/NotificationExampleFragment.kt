@@ -4,6 +4,8 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.amazonaws.auth.CognitoCachingCredentialsProvider
 import com.amazonaws.regions.Regions
@@ -11,7 +13,6 @@ import com.amazonaws.services.polly.AmazonPollyPresigningClient
 import com.amazonaws.services.polly.model.OutputFormat
 import com.amazonaws.services.polly.model.SynthesizeSpeechPresignRequest
 import com.amazonaws.services.polly.model.TextType
-import com.amazonaws.services.polly.model.VoiceId
 import com.example.multipleaudioplayer.NotificationHelper
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutNotificationExampleBinding
@@ -62,6 +63,8 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
 
     var mediaPlayer: MediaPlayer? = null
 
+    var selectedVoice: String = "Cristiano"
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -73,6 +76,27 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
     }
 
     private fun setupUi() {
+        // setup spinner (with portuguese voices)
+        val voices = resources.getStringArray(R.array.Voices)
+        val adapter =
+            ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, voices)
+        binding.spinnerVoices.adapter = adapter
+
+        binding.spinnerVoices.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                selectedVoice = voices[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+
         binding.btnNotificationNoSpatialization.setOnClickListener {
 //            playNotificationExample()
             playVoice()
@@ -169,13 +193,22 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
             binding.btnNotificationNoSpatialization.isEnabled = false
             binding.btnNotificationSpatialization.isEnabled = false
             scope.launch {
-                //TODO create text with ssml
+                //TODO this might need to be changed (the formulas +50)
+                val speedRate = binding.sliderSpeechRate.value + 50
+                val pitch = binding.sliderSpeechPitch.value - 20
+                val timbre = binding.sliderSpeechTimbre.value + 50
 
                 // Create speech synthesis request.
                 val synthesizeSpeechPresignRequest =
                     SynthesizeSpeechPresignRequest() // Set text to synthesize.
-                        .withText(getString(R.string.sample_text).convertToSsml(150)) // Set voice selected by the user.
-                        .withVoiceId(VoiceId.Cristiano) // Set format to MP3.
+                        .withText(
+                            getString(R.string.sample_text).convertToSsml(
+                                speedRate = speedRate,
+                                pitch = pitch,
+                                timbre = timbre.toInt()
+                            )
+                        ) // Set voice selected by the user.
+                        .withVoiceId(selectedVoice) // Set format to MP3.
                         .withTextType(TextType.Ssml) // Set format to ssml (to configure audio properties)
                         .withOutputFormat(OutputFormat.Mp3)
 
@@ -206,12 +239,13 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
         mediaPlayer?.setOnCompletionListener { mp ->
             mp.release()
             setupNewMediaPlayer()
+
+            binding.btnNotificationSpatialization.isEnabled = true
+            binding.btnNotificationNoSpatialization.isEnabled = true
         }
         mediaPlayer?.setOnPreparedListener { mp ->
             mp.start()
             playNotificationExample()
-            binding.btnNotificationSpatialization.isEnabled = true
-            binding.btnNotificationNoSpatialization.isEnabled = true
         }
         mediaPlayer?.setOnErrorListener { _, _, _ ->
             binding.btnNotificationSpatialization.isEnabled = true

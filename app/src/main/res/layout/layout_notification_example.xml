@@ -19,14 +19,16 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_speech_rate"
         android:valueFrom="0.0"
-        android:valueTo="100.0"/>
+        android:valueTo="100.0"
+        android:stepSize="1"
+        android:value="50"/>
 
     <TextView
         android:id="@+id/tv_speech_timbre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/slider_speech_rate"
-        android:text="@string/speech_rate"
+        android:text="@string/speech_timbre"
         android:layout_marginTop="12dp"/>
 
     <com.google.android.material.slider.Slider
@@ -35,14 +37,16 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_speech_timbre"
         android:valueFrom="0.0"
-        android:valueTo="100.0"/>
+        android:valueTo="100.0"
+        android:value="50"
+        android:stepSize="1"/>
 
     <TextView
         android:id="@+id/tv_speech_pitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/slider_speech_timbre"
-        android:text="@string/speech_rate"
+        android:text="@string/speech_pitch"
         android:layout_marginTop="12dp"/>
 
     <com.google.android.material.slider.Slider
@@ -51,13 +55,31 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_speech_pitch"
         android:valueFrom="0.0"
-        android:valueTo="100.0"/>
+        android:valueTo="40.0"
+        android:value="20"
+        android:stepSize="1"/>
+
+    <TextView
+        android:id="@+id/tv_speech_voice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/slider_speech_pitch"
+        android:text="@string/speech_voice"
+        android:layout_marginTop="12dp"/>
+
+    <Spinner
+        android:id="@+id/spinner_voices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_speech_voice"
+        android:layout_marginTop="12dp"/>
 
     <TextView
         android:id="@+id/tv_document_sample"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/slider_speech_pitch"
+        app:layout_constraintTop_toBottomOf="@id/spinner_voices"
+        android:layout_marginTop="12dp"
         android:text="@string/sample_text"/>
 
     <androidx.constraintlayout.widget.Group
