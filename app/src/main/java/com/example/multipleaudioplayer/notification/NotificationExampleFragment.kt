@@ -10,10 +10,12 @@ import com.amazonaws.regions.Regions
 import com.amazonaws.services.polly.AmazonPollyPresigningClient
 import com.amazonaws.services.polly.model.OutputFormat
 import com.amazonaws.services.polly.model.SynthesizeSpeechPresignRequest
+import com.amazonaws.services.polly.model.TextType
 import com.amazonaws.services.polly.model.VoiceId
 import com.example.multipleaudioplayer.NotificationHelper
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutNotificationExampleBinding
+import com.example.multipleaudioplayer.utils.convertToSsml
 import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
@@ -165,12 +167,16 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
 
         try {
             binding.btnNotificationNoSpatialization.isEnabled = false
+            binding.btnNotificationSpatialization.isEnabled = false
             scope.launch {
+                //TODO create text with ssml
+
                 // Create speech synthesis request.
                 val synthesizeSpeechPresignRequest =
                     SynthesizeSpeechPresignRequest() // Set text to synthesize.
-                        .withText("Texto exemplo") // Set voice selected by the user.
+                        .withText(getString(R.string.sample_text).convertToSsml(150)) // Set voice selected by the user.
                         .withVoiceId(VoiceId.Cristiano) // Set format to MP3.
+                        .withTextType(TextType.Ssml) // Set format to ssml (to configure audio properties)
                         .withOutputFormat(OutputFormat.Mp3)
 
                 // Get the presigned URL for synthesized speech audio stream.
@@ -204,9 +210,11 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
         mediaPlayer?.setOnPreparedListener { mp ->
             mp.start()
             playNotificationExample()
+            binding.btnNotificationSpatialization.isEnabled = true
             binding.btnNotificationNoSpatialization.isEnabled = true
         }
         mediaPlayer?.setOnErrorListener { _, _, _ ->
+            binding.btnNotificationSpatialization.isEnabled = true
             binding.btnNotificationNoSpatialization.isEnabled = true
             false
         }
@@ -214,6 +222,8 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
 
     override fun onPause() {
         audioEngine.pause() // to play sound in the background we just don't have to pause it
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
         documentSampleMediaPlayer.stop()
         documentSampleMediaPlayer.release()
         job?.cancel()
