@@ -6,9 +6,6 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.amazonaws.auth.CognitoCachingCredentialsProvider
-import com.amazonaws.mobile.client.AWSMobileClient
-import com.amazonaws.mobile.client.Callback
-import com.amazonaws.mobile.client.UserStateDetails
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.polly.AmazonPollyPresigningClient
 import com.amazonaws.services.polly.model.OutputFormat
@@ -61,12 +58,16 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
 
     var clientNew: AmazonPollyPresigningClient? = null
 
+    var mediaPlayer: MediaPlayer? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initPollyClient()
 
         setupUi()
+
+        setupNewMediaPlayer()
     }
 
     private fun setupUi() {
@@ -82,7 +83,8 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
 
     private fun playNotificationExample() {
         job = scope.launch {
-            documentSampleMediaPlayer.start()
+            //TODO
+            //documentSampleMediaPlayer.start()
 
             // manually trigger notification after waiting 7 seconds
             // and play the notification audio
@@ -127,20 +129,6 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
         }
     }
 
-    /**
-     * @param soundFile is the name of the sound file placed in the assets folder
-     */
-    private fun playSoundInPosition(
-        position: FloatArray,
-        soundFile: String,
-        shouldBePlayedInLoop: Boolean = true
-    ) {
-        audioEngine.preloadSoundFile(soundFile)
-        val sourceId = audioEngine.createSoundObject(soundFile)
-        audioEngine.setSoundObjectPosition(sourceId, position[0], position[1], position[2])
-        audioEngine.playSound(sourceId, shouldBePlayedInLoop)
-    }
-
     private fun launchNotification() {
         scope.launch {
             NotificationHelper.createSampleDataNotification(
@@ -173,14 +161,16 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
         })*/
     }
 
-    private fun playVoice(){
+    private fun playVoice() {
+
         try {
+            binding.btnNotificationNoSpatialization.isEnabled = false
             scope.launch {
                 // Create speech synthesis request.
                 val synthesizeSpeechPresignRequest =
                     SynthesizeSpeechPresignRequest() // Set text to synthesize.
                         .withText("Texto exemplo") // Set voice selected by the user.
-                        .withVoiceId("Cristiano") // Set format to MP3.
+                        .withVoiceId(VoiceId.Cristiano) // Set format to MP3.
                         .withOutputFormat(OutputFormat.Mp3)
 
                 // Get the presigned URL for synthesized speech audio stream.
@@ -191,16 +181,35 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
 
 
                 // Set media player's data source to previously obtained URL.
-                val mediaPlayer = MediaPlayer()
-                mediaPlayer.setDataSource(presignedSynthesizeSpeechUrl.toString())
-                mediaPlayer.prepareAsync()
-                mediaPlayer.start()
+
+                // Create a media player to play the synthesized audio stream.
+                if (mediaPlayer?.isPlaying == true) {
+                    setupNewMediaPlayer()
+                }
+                mediaPlayer?.setDataSource(presignedSynthesizeSpeechUrl.toString())
+                mediaPlayer?.prepareAsync()
             }
 
-        }catch (exception: java.lang.Exception){
+        } catch (exception: java.lang.Exception) {
             Log.e(TAG, exception.toString())
         }
+    }
 
+    private fun setupNewMediaPlayer() {
+        mediaPlayer = MediaPlayer()
+        mediaPlayer?.setOnCompletionListener { mp ->
+            mp.release()
+            setupNewMediaPlayer()
+        }
+        mediaPlayer?.setOnPreparedListener { mp ->
+            mp.start()
+            playNotificationExample()
+            binding.btnNotificationNoSpatialization.isEnabled = true
+        }
+        mediaPlayer?.setOnErrorListener { _, _, _ ->
+            binding.btnNotificationNoSpatialization.isEnabled = true
+            false
+        }
     }
 
     override fun onPause() {
