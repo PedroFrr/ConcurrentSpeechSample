@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NotificationExampleFragment : Fragment(R.layout.layout_notification_example) {
 
@@ -56,8 +57,6 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
     private val audioEngine by lazy {
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
     }
-
-    private lateinit var client: AmazonPollyPresigningClient
 
     var clientNew: AmazonPollyPresigningClient? = null
 
@@ -98,7 +97,6 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
         }
 
         binding.btnNotificationNoSpatialization.setOnClickListener {
-//            playNotificationExample()
             playVoice()
         }
 
@@ -122,6 +120,8 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
     }
 
     private fun playNotificationExampleWithSpatialization() {
+        binding.btnNotificationSpatialization.isEnabled = false
+        binding.btnNotificationNoSpatialization.isEnabled = false
         job = scope.launch {
             // Start spatial audio playback of OBJECT_SOUND_FILE at the model position. The
             // returned sourceId handle is stored and allows for repositioning the sound object
@@ -152,6 +152,10 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
             launchNotification()
             audioEngine.playSound(notificationSourceId, false /* looped playback */)
 
+            withContext(Dispatchers.Main){
+                binding.btnNotificationSpatialization.isEnabled = true
+                binding.btnNotificationNoSpatialization.isEnabled = true
+            }
         }
     }
 

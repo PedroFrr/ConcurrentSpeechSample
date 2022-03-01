@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp">
 
     <TextView
@@ -24,6 +25,47 @@
         android:valueTo="4"
         android:stepSize="1"
         android:value="1"/>
+
+    <TextView
+        android:id="@+id/tv_audio_channel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Canal de aúdio a configurar"
+        app:layout_constraintTop_toBottomOf="@id/slider_voices_configuration"/>
+
+    <Spinner
+        android:id="@+id/spinner_voice_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_audio_channel"/>
+
+    <include
+        android:id="@+id/first_audio_channel_properties"
+        layout="@layout/item_audio_configuration"
+        app:layout_constraintTop_toBottomOf="@id/spinner_voice_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <include
+        android:id="@+id/second_audio_channel_properties"
+        layout="@layout/item_audio_configuration"
+        app:layout_constraintTop_toBottomOf="@id/spinner_voice_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <include
+        android:id="@+id/third_audio_channel_properties"
+        layout="@layout/item_audio_configuration"
+        app:layout_constraintTop_toBottomOf="@id/spinner_voice_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <include
+        android:id="@+id/fourth_audio_channel_properties"
+        layout="@layout/item_audio_configuration"
+        app:layout_constraintTop_toBottomOf="@id/spinner_voice_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btn_play_scenario"

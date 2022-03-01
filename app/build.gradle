@@ -60,6 +60,7 @@ dependencies {
     def aws_version = "2.41.0"
     implementation "com.amazonaws:aws-android-sdk-polly:$aws_version"
     implementation "com.amazonaws:aws-android-sdk-mobile-client:$aws_version"
+    implementation "androidx.core:core-ktx:1.7.0"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
