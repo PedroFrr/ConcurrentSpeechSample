@@ -215,39 +215,41 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
             //TODO split text into parts depending on numberOfVoices
             val sampleText = listOf(
                 "A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão",
-                "Contudo a história da presença humana no território correspondente a Portugal começou muito antes. A pré-história regista os primeiros hominídeos"
-            )
+                "Contudo a história da presença humana no território correspondente a Portugal começou muito antes.",
+                "A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses.",
+                "Povos celtas estabeleceram-se e misturaram-se com os nativos. No século III a.C. era habitado por vários povos, quando se deu a invasão romana da Península Ibérica."
+                )
 
             filteredAudioProperties.forEachIndexed { index, audioChannelProperty ->
 
-                    val synthesizeSpeechPresignRequest =
-                        SynthesizeSpeechPresignRequest() // Set text to synthesize.
-                            .withText(
-                                sampleText[index].convertToSsml(
-                                    speedRate = audioChannelProperty.speedRate,
-                                    pitch = audioChannelProperty.pitch,
-                                    timbre = audioChannelProperty.timbre
-                                )
-                            ) // Set voice selected by the user.
-                            .withVoiceId(audioChannelProperty.voice) // Set format to MP3.
-                            .withTextType(TextType.Ssml) // Set format to ssml (to configure audio properties)
-                            .withOutputFormat(OutputFormat.Mp3)
+                val synthesizeSpeechPresignRequest =
+                    SynthesizeSpeechPresignRequest() // Set text to synthesize.
+                        .withText(
+                            sampleText[index].convertToSsml(
+                                speedRate = audioChannelProperty.speedRate,
+                                pitch = audioChannelProperty.pitch,
+                                timbre = audioChannelProperty.timbre
+                            )
+                        ) // Set voice selected by the user.
+                        .withVoiceId(audioChannelProperty.voice) // Set format to MP3.
+                        .withTextType(TextType.Ssml) // Set format to ssml (to configure audio properties)
+                        .withOutputFormat(OutputFormat.Mp3)
 
-                    val presignedSynthesizeSpeechUrl =
-                        client?.getPresignedSynthesizeSpeechUrl(synthesizeSpeechPresignRequest)
+                val presignedSynthesizeSpeechUrl =
+                    client?.getPresignedSynthesizeSpeechUrl(synthesizeSpeechPresignRequest)
 
 
-                    when(index){
-                        0 -> setFirstMediaPlayer(presignedSynthesizeSpeechUrl = presignedSynthesizeSpeechUrl)
-                        1 -> setSecondMediaPlayer(presignedSynthesizeSpeechUrl = presignedSynthesizeSpeechUrl)
-                        2 -> setThirdMediaPlayer(presignedSynthesizeSpeechUrl = presignedSynthesizeSpeechUrl)
-                        3 -> setFourthMediaPlayer(presignedSynthesizeSpeechUrl = presignedSynthesizeSpeechUrl)
+                when (index) {
+                    0 -> setFirstMediaPlayer(presignedSynthesizeSpeechUrl = presignedSynthesizeSpeechUrl)
+                    1 -> setSecondMediaPlayer(presignedSynthesizeSpeechUrl = presignedSynthesizeSpeechUrl)
+                    2 -> setThirdMediaPlayer(presignedSynthesizeSpeechUrl = presignedSynthesizeSpeechUrl)
+                    3 -> setFourthMediaPlayer(presignedSynthesizeSpeechUrl = presignedSynthesizeSpeechUrl)
                 }
             }
         }
     }
 
-    private fun setFirstMediaPlayer(presignedSynthesizeSpeechUrl: URL?){
+    private fun setFirstMediaPlayer(presignedSynthesizeSpeechUrl: URL?) {
         if (mediaPlayer1?.isPlaying == true) {
             setupFirstNewMediaPlayer()
         }
@@ -255,7 +257,7 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         mediaPlayer1?.prepareAsync()
     }
 
-    private fun setSecondMediaPlayer(presignedSynthesizeSpeechUrl: URL?){
+    private fun setSecondMediaPlayer(presignedSynthesizeSpeechUrl: URL?) {
         if (mediaPlayer2?.isPlaying == true) {
             setupSecondNewMediaPlayer()
         }
@@ -263,7 +265,7 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         mediaPlayer2?.prepareAsync()
     }
 
-    private fun setThirdMediaPlayer(presignedSynthesizeSpeechUrl: URL?){
+    private fun setThirdMediaPlayer(presignedSynthesizeSpeechUrl: URL?) {
         if (mediaPlayer3?.isPlaying == true) {
             setupThirdNewMediaPlayer()
         }
@@ -271,7 +273,7 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         mediaPlayer3?.prepareAsync()
     }
 
-    private fun setFourthMediaPlayer(presignedSynthesizeSpeechUrl: URL?){
+    private fun setFourthMediaPlayer(presignedSynthesizeSpeechUrl: URL?) {
         if (mediaPlayer4?.isPlaying == true) {
             setupFourthNewMediaPlayer()
         }
