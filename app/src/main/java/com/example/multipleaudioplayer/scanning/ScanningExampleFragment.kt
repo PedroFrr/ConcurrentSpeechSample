@@ -211,14 +211,37 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         val numberOfVoices = binding.sliderVoicesConfiguration.value.toInt()
         val filteredAudioProperties = properties.take(numberOfVoices)
 
-        scope.launch {
-            //TODO split text into parts depending on numberOfVoices
-            val sampleText = listOf(
-                "A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão",
-                "Contudo a história da presença humana no território correspondente a Portugal começou muito antes.",
-                "A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses.",
-                "Povos celtas estabeleceram-se e misturaram-se com os nativos. No século III a.C. era habitado por vários povos, quando se deu a invasão romana da Península Ibérica."
+        //TODO do this programatically
+        val sampleText = when (numberOfVoices) {
+            1 -> {
+                listOf(
+                    "A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão. Contudo a história da presença humana no território correspondente a Portugal começou muito antes. A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses. Povos celtas estabeleceram-se e misturaram-se com os nativos. No século III a.C. era habitado por vários povos, quando se deu a invasão romana da Península Ibérica."
                 )
+            }
+            2 -> {
+                listOf(
+                    "A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão. Contudo a história da presença humana no território correspondente a Portugal começou muito antes.",
+                    "A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses. Povos celtas estabeleceram-se e misturaram-se com os nativos. No século III a.C. era habitado por vários povos, quando se deu a invasão romana da Península Ibérica."
+                )
+            }
+            3 -> {
+                listOf(
+                    "A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão. Contudo a história da presença humana no território correspondente a Portugal começou muito antes.",
+                    "A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses.",
+                    "Povos celtas estabeleceram-se e misturaram-se com os nativos. No século III a.C. era habitado por vários povos, quando se deu a invasão romana da Península Ibérica."
+                )
+            }
+            else -> {
+                listOf(
+                    "A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão",
+                    "Contudo a história da presença humana no território correspondente a Portugal começou muito antes.",
+                    "A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses.",
+                    "Povos celtas estabeleceram-se e misturaram-se com os nativos. No século III a.C. era habitado por vários povos, quando se deu a invasão romana da Península Ibérica."
+                )
+            }
+        }
+
+        scope.launch {
 
             filteredAudioProperties.forEachIndexed { index, audioChannelProperty ->
 
