@@ -77,8 +77,7 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
     private fun setupUi() {
         // setup spinner (with portuguese voices)
         val voices = resources.getStringArray(R.array.Voices)
-        val adapter =
-            ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, voices)
+        val adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, voices)
         binding.spinnerVoices.adapter = adapter
 
         binding.spinnerVoices.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -152,7 +151,7 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
             launchNotification()
             audioEngine.playSound(notificationSourceId, false /* looped playback */)
 
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 binding.btnNotificationSpatialization.isEnabled = true
                 binding.btnNotificationNoSpatialization.isEnabled = true
             }
