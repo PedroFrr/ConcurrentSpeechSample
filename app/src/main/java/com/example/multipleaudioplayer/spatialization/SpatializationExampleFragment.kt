@@ -10,6 +10,7 @@ import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SpatializationExampleFragment : Fragment(R.layout.layout_spatialization_example) {
 
@@ -30,35 +31,43 @@ class SpatializationExampleFragment : Fragment(R.layout.layout_spatialization_ex
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        playSpatialization()
+        setupUi()
     }
 
     private fun setupUi() {
-
+        binding.loading.visibility = View.GONE
+        binding.btnNotificationSpatialization.setOnClickListener {
+            playSpatialization()
+        }
     }
 
     private fun playSpatialization(){
-        audioEngine.preloadSoundFile(DOCUMENT_PART_ONE_SOUND_FILE)
-        audioEngine.preloadSoundFile(DOCUMENT_PART_TWO_SOUND_FILE)
-        documentPartOneSourceId = audioEngine.createSoundObject(DOCUMENT_PART_ONE_SOUND_FILE)
-        documentPartTwoSourceId = audioEngine.createSoundObject(DOCUMENT_PART_TWO_SOUND_FILE)
+        binding.loading.visibility = View.VISIBLE
+        scope.launch {
+            audioEngine.preloadSoundFile(DOCUMENT_PART_ONE_SOUND_FILE)
+            audioEngine.preloadSoundFile(DOCUMENT_PART_TWO_SOUND_FILE)
+            documentPartOneSourceId = audioEngine.createSoundObject(DOCUMENT_PART_ONE_SOUND_FILE)
+            documentPartTwoSourceId = audioEngine.createSoundObject(DOCUMENT_PART_TWO_SOUND_FILE)
 
-        audioEngine.setSoundObjectPosition(
-            documentPartOneSourceId,
-            leftEarPosition[0],
-            leftEarPosition[1],
-            leftEarPosition[2]
-        )
+            audioEngine.setSoundObjectPosition(
+                documentPartOneSourceId,
+                leftEarPosition[0],
+                leftEarPosition[1],
+                leftEarPosition[2]
+            )
 
-        audioEngine.setSoundObjectPosition(
-            documentPartTwoSourceId,
-            rightEarPosition[0],
-            rightEarPosition[1],
-            rightEarPosition[2]
-        )
+            audioEngine.setSoundObjectPosition(
+                documentPartTwoSourceId,
+                rightEarPosition[0],
+                rightEarPosition[1],
+                rightEarPosition[2]
+            )
 
-        audioEngine.playSound(documentPartOneSourceId, false)
-        audioEngine.playSound(documentPartTwoSourceId, false)
+            audioEngine.playSound(documentPartOneSourceId, false)
+            audioEngine.playSound(documentPartTwoSourceId, false)
+        }
+
+        binding.loading.visibility = View.GONE
     }
 
     override fun onPause() {
