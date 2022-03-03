@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.amazonaws.auth.CognitoCachingCredentialsProvider
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.polly.AmazonPollyPresigningClient
@@ -72,9 +73,9 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         val mixAudioWorker = OneTimeWorkRequest.from(MixAudioWorker::class.java)
         val deleteFilesWorker = OneTimeWorkRequest.from(DeleteAudioFilesWorker::class.java)
 
-/*       WorkManager.getInstance(requireContext())
+       WorkManager.getInstance(requireContext())
             .beginWith(mixAudioWorker)
-            .enqueue()*/
+            .enqueue()
 
         val wrapper = ContextWrapper(requireContext())
         val directory = wrapper.filesDir

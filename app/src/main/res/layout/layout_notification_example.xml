@@ -7,78 +7,45 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/tv_speech_rate"
+        android:id="@+id/tv_audio_channel_to_configure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/speech_rate"/>
-
-    <com.google.android.material.slider.Slider
-        android:id="@+id/slider_speech_rate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_speech_rate"
-        android:valueFrom="0.0"
-        android:valueTo="100.0"
-        android:stepSize="1"
-        android:value="50"/>
-
-    <TextView
-        android:id="@+id/tv_speech_timbre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/slider_speech_rate"
-        android:text="@string/speech_timbre"
-        android:layout_marginTop="12dp"/>
-
-    <com.google.android.material.slider.Slider
-        android:id="@+id/slider_speech_timbre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_speech_timbre"
-        android:valueFrom="0.0"
-        android:valueTo="100.0"
-        android:value="50"
-        android:stepSize="1"/>
-
-    <TextView
-        android:id="@+id/tv_speech_pitch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/slider_speech_timbre"
-        android:text="@string/speech_pitch"
-        android:layout_marginTop="12dp"/>
-
-    <com.google.android.material.slider.Slider
-        android:id="@+id/slider_speech_pitch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_speech_pitch"
-        android:valueFrom="0.0"
-        android:valueTo="40.0"
-        android:value="20"
-        android:stepSize="1"/>
-
-    <TextView
-        android:id="@+id/tv_speech_voice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/slider_speech_pitch"
-        android:text="@string/speech_voice"
-        android:layout_marginTop="12dp"/>
+        android:text="@string/channel_to_configure"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Spinner
-        android:id="@+id/spinner_voices"
+        android:id="@+id/spinner_audio_channel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_speech_voice"
+        app:layout_constraintTop_toBottomOf="@+id/tv_audio_channel_to_configure"
         android:layout_marginTop="12dp"/>
+
+    <include
+        android:id="@+id/main_document_properties"
+        layout="@layout/item_audio_configuration"
+        app:layout_constraintTop_toBottomOf="@id/spinner_audio_channel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <include
+        android:id="@+id/notification_properties"
+        layout="@layout/item_audio_configuration"
+        app:layout_constraintTop_toBottomOf="@id/spinner_audio_channel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="main_document_properties, notification_properties"
+        app:barrierDirection="bottom" />
 
     <TextView
         android:id="@+id/tv_document_sample"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/spinner_voices"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
         android:layout_marginTop="12dp"
         android:text="@string/sample_text"/>
 

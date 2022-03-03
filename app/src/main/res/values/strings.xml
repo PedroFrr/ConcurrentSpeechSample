@@ -19,6 +19,7 @@
     <string name="notification_scenario_spatialization">Notificação com espacialização</string>
     <string name="sample_text_first_column">Até a idade média, a história de Portugal era inseparável da de Espanha. O que hoje conhecemos como Portugal passou a fazer parte da província romana de Lusitânia no século II a.C. No século V o controle da região passou a ser dos visigodos e, no século VIII foi ocupado pelos muçulmanos.</string>
     <string name="sample_text_second_column">No ano de 997, o território entre os rios Douro e Minho (atual Portugal setentrional) foi reconquistado dos árabes por Bermudo II, rei de Leão e, em 1064, Fernando I, rei de Castelha e Leão, levou à reconquista do que hoje conhecemos como Coimbra</string>
+    <string name="channel_to_configure">Canal a configurar</string>
 
     <string-array name="Voices">
         <item>Cristiano</item>

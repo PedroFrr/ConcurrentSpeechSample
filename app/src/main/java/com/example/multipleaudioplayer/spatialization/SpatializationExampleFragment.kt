@@ -1,5 +1,6 @@
 package com.example.multipleaudioplayer.spatialization
 
+import android.content.ContextWrapper
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 
 class SpatializationExampleFragment : Fragment(R.layout.layout_spatialization_example) {
 
@@ -44,6 +46,12 @@ class SpatializationExampleFragment : Fragment(R.layout.layout_spatialization_ex
     private fun playSpatialization(){
         binding.loading.visibility = View.VISIBLE
         scope.launch {
+/*            val wrapper = ContextWrapper(requireContext())
+            val directory = wrapper.filesDir
+
+            val file = File(directory, "output_file.mp3")
+            val filename = file.absolutePath*/
+
             audioEngine.preloadSoundFile(DOCUMENT_PART_ONE_SOUND_FILE)
             audioEngine.preloadSoundFile(DOCUMENT_PART_TWO_SOUND_FILE)
             documentPartOneSourceId = audioEngine.createSoundObject(DOCUMENT_PART_ONE_SOUND_FILE)

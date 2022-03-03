@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.amazonaws.auth.CognitoCachingCredentialsProvider
 import com.amazonaws.regions.Regions
@@ -62,8 +63,6 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
 
     var mediaPlayer: MediaPlayer? = null
 
-    var selectedVoice: String = "Cristiano"
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -75,19 +74,20 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
     }
 
     private fun setupUi() {
-        // setup spinner (with portuguese voices)
-        val voices = resources.getStringArray(R.array.Voices)
-        val adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, voices)
-        binding.spinnerVoices.adapter = adapter
+        setupVoiceSpinners()
 
-        binding.spinnerVoices.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        val configurableAudioChannels = listOf("Áudio Principal", "Notificação")
+        val configurableAudioChannelsAdapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, configurableAudioChannels)
+        binding.spinnerAudioChannel.adapter = configurableAudioChannelsAdapter
+
+        binding.spinnerAudioChannel.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View,
                 position: Int,
                 id: Long
             ) {
-                selectedVoice = voices[position]
+                setAudioChannelPropertiesVisibility()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -102,6 +102,23 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
         binding.btnNotificationSpatialization.setOnClickListener {
             playNotificationExampleWithSpatialization()
         }
+    }
+
+    private fun setupVoiceSpinners() {
+        val voices = resources.getStringArray(R.array.Voices)
+        val adapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, voices)
+        binding.notificationProperties.spinnerVoices.adapter = adapter
+        binding.mainDocumentProperties.spinnerVoices.adapter = adapter
+    }
+
+    private fun setAudioChannelPropertiesVisibility(){
+        val selectedAudioChannel = binding.spinnerAudioChannel.selectedItem.toString()
+        binding.mainDocumentProperties.audioChannelProperties.isVisible =
+            selectedAudioChannel == "Áudio Principal"
+
+        binding.notificationProperties.audioChannelProperties.isVisible =
+            selectedAudioChannel == "Notificação"
+
     }
 
     private fun playNotificationExample() {
@@ -197,9 +214,11 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
             binding.btnNotificationSpatialization.isEnabled = false
             scope.launch {
                 //TODO this might need to be changed (the formulas +50)
-                val speedRate = binding.sliderSpeechRate.value + 50
-                val pitch = binding.sliderSpeechPitch.value - 20
-                val timbre = binding.sliderSpeechTimbre.value + 50
+                val speedRate = binding.mainDocumentProperties.sliderSpeechRate.value + 50
+                val pitch = binding.mainDocumentProperties.sliderSpeechPitch.value - 20
+                val timbre = binding.mainDocumentProperties.sliderSpeechTimbre.value + 50
+
+                val selectedVoice = binding.mainDocumentProperties.spinnerVoices.selectedItem.toString()
 
                 // Create speech synthesis request.
                 val synthesizeSpeechPresignRequest =
