@@ -314,7 +314,6 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         }
         mediaPlayer1?.setOnPreparedListener { mp ->
             mp.start()
-            binding.btnPlayScenario.isEnabled = true
         }
         mediaPlayer1?.setOnErrorListener { _, _, _ ->
             binding.btnPlayScenario.isEnabled = true
@@ -332,7 +331,6 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         }
         mediaPlayer2?.setOnPreparedListener { mp ->
             mp.start()
-            binding.btnPlayScenario.isEnabled = true
         }
         mediaPlayer2?.setOnErrorListener { _, _, _ ->
             binding.btnPlayScenario.isEnabled = true
@@ -350,7 +348,6 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         }
         mediaPlayer3?.setOnPreparedListener { mp ->
             mp.start()
-            binding.btnPlayScenario.isEnabled = true
         }
         mediaPlayer3?.setOnErrorListener { _, _, _ ->
             binding.btnPlayScenario.isEnabled = true
@@ -368,7 +365,6 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         }
         mediaPlayer4?.setOnPreparedListener { mp ->
             mp.start()
-            binding.btnPlayScenario.isEnabled = true
         }
         mediaPlayer4?.setOnErrorListener { _, _, _ ->
             binding.btnPlayScenario.isEnabled = true
@@ -427,9 +423,13 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         threeDocumentSourcePart3MediaPlayer.stop()*/
 
         mediaPlayer1?.stop()
+        mediaPlayer1?.release()
         mediaPlayer2?.stop()
+        mediaPlayer2?.release()
         mediaPlayer3?.stop()
+        mediaPlayer3?.release()
         mediaPlayer4?.stop()
+        mediaPlayer4?.release()
         super.onPause()
     }
 
