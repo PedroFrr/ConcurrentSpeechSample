@@ -24,7 +24,14 @@
         android:id="@+id/btn_audio_properties_scenario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_spatial_scenario"
         android:text="@string/play_scenario_label"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_spatial_scenario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/play_scenario_spatial_label"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

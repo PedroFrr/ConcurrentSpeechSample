@@ -7,12 +7,14 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutAudioPropertiesExampleBinding
+import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties_example) {
@@ -33,6 +35,13 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
         MediaPlayer.create(requireActivity(), R.raw.audio_properties_sample)
     }
 
+    private val audioEngine by lazy {
+        GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
+    }
+
+    private var mainDocumentSourceId = GvrAudioEngine.INVALID_ID
+    private var audioPropertiesSourceId = GvrAudioEngine.INVALID_ID
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -48,6 +57,10 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
             playMockAudioPropertiesSample()
         }
 
+        binding.btnSpatialScenario.setOnClickListener {
+            playSampleWithSpatialization()
+        }
+
         setupMediaPlayerListeners()
     }
 
@@ -61,6 +74,7 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
             })
         }
     }
+
 /*
     private fun playMockAudioPropertiesSample() {
 *//*        val params = PlaybackParams()
@@ -72,8 +86,31 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
 
     }*/
 
+    private fun playSampleWithSpatialization() {
+        binding.btnSpatialScenario.isEnabled = false
+        binding.btnAudioPropertiesScenario.isEnabled = false
+        scope.launch {
+            audioEngine.preloadSoundFile(MALE_VOICE_MAIN_DOCUMENT)
+           audioEngine.preloadSoundFile(MALE_VOICE_AUDIO_PROPERTIES)
+
+            mainDocumentSourceId = audioEngine.createSoundObject(MALE_VOICE_MAIN_DOCUMENT)
+            audioPropertiesSourceId = audioEngine.createSoundObject(MALE_VOICE_AUDIO_PROPERTIES)
+
+            audioEngine.setSoundObjectPosition(mainDocumentSourceId, -8.0f, 0.0f, 0.0f)
+            audioEngine.setSoundObjectPosition(audioPropertiesSourceId, 8.0f, 0.0f, 0.0f)
+
+            audioEngine.playSound(mainDocumentSourceId, false)
+            audioEngine.playSound(audioPropertiesSourceId, false)
+
+            withContext(Dispatchers.Main) {
+                binding.btnSpatialScenario.isEnabled = true
+                binding.btnAudioPropertiesScenario.isEnabled = true
+            }
+        }
+    }
+
     private fun playDocumentSample() {
-        when(binding.spinnerVoices.selectedItem.toString()){
+        when (binding.spinnerVoices.selectedItem.toString()) {
             "Cristiano" -> mediaPlayerDocumentSampleCristiano.start()
             "Ines" -> mediaPlayerDocumentSampleInes.start()
         }
@@ -83,7 +120,7 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
         mediaPlayerAudioProperties.start()
     }
 
-    private fun setupMediaPlayerListeners(){
+    private fun setupMediaPlayerListeners() {
         mediaPlayerDocumentSampleCristiano.setOnCompletionListener {
             binding.btnAudioPropertiesScenario.isEnabled = true
         }
@@ -97,11 +134,13 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
         mediaPlayerDocumentSampleCristiano.stop()
         mediaPlayerDocumentSampleInes.stop()
         mediaPlayerAudioProperties.stop()
+
+        audioEngine.pause()
         super.onPause()
     }
 
     companion object {
-        private const val sampleText = "Este é um exemplo de um texto que vai ser dividido"
-        private const val TAG = "Text to Speech"
+        private const val MALE_VOICE_MAIN_DOCUMENT = "audio_properties_main_document.mp3"
+        private const val MALE_VOICE_AUDIO_PROPERTIES = "audio_properties_male_voice.mp3"
     }
 }
