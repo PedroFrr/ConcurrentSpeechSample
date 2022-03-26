@@ -15,6 +15,7 @@
     <string name="audio_properties_scenario">Cenário Propriedades de Aúdio</string>
     <string name="number_of_voices_label">Número de vozes</string>
     <string name="play_scenario_label">Reproduzir cenário</string>
+    <string name="play_scenario_spatial_label">Reproduzir cenário espacialização</string>
     <string name="notification_scenario_no_spatialization">Notificação sem espacialização</string>
     <string name="notification_scenario_spatialization">Notificação com espacialização</string>
     <string name="sample_text_first_column">Até a idade média, a história de Portugal era inseparável da de Espanha. O que hoje conhecemos como Portugal passou a fazer parte da província romana de Lusitânia no século II a.C. No século V o controle da região passou a ser dos visigodos e, no século VIII foi ocupado pelos muçulmanos.</string>

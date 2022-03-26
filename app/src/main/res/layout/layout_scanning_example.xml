@@ -72,6 +72,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/play_scenario_label"
+        app:layout_constraintBottom_toTopOf="@id/btn_play_spatial_scenario"/>
+
+    <Button
+        android:id="@+id/btn_play_spatial_scenario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/play_scenario_spatial_label"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

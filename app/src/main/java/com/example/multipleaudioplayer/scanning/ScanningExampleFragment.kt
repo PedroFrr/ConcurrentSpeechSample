@@ -4,7 +4,6 @@ import android.content.ContextWrapper
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
-import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -24,10 +23,13 @@ import com.example.multipleaudioplayer.utils.convertToSsml
 import com.example.multipleaudioplayer.workers.DeleteAudioFilesWorker
 import com.example.multipleaudioplayer.workers.MixAudioWorker
 import com.example.multipleaudioplayer.workers.SynthesizeFileWorker
+import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.URL
 
 class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
@@ -44,11 +46,24 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
 
     var mediaPlayer4: MediaPlayer? = null
 
-
     var client: AmazonPollyPresigningClient? = null
 
-    private val maxSpeechInputLength
-        get() = TextToSpeech.getMaxSpeechInputLength()
+    private var job: Job? = null
+
+    private var oneVoiceId = GvrAudioEngine.INVALID_ID
+    private var twoVoicePartOneId = GvrAudioEngine.INVALID_ID
+    private var twoVoicePartTwoId = GvrAudioEngine.INVALID_ID
+    private var threeVoicePartOneId = GvrAudioEngine.INVALID_ID
+    private var threeVoicePartTwoId = GvrAudioEngine.INVALID_ID
+    private var threeVoicePartThreeId = GvrAudioEngine.INVALID_ID
+    private var fourVoicePartOneId = GvrAudioEngine.INVALID_ID
+    private var fourVoicePartTwoId = GvrAudioEngine.INVALID_ID
+    private var fourVoicePartThreeId = GvrAudioEngine.INVALID_ID
+    private var fourVoicePartFourId = GvrAudioEngine.INVALID_ID
+
+    private val audioEngine by lazy {
+        GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,7 +88,7 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         val mixAudioWorker = OneTimeWorkRequest.from(MixAudioWorker::class.java)
         val deleteFilesWorker = OneTimeWorkRequest.from(DeleteAudioFilesWorker::class.java)
 
-       WorkManager.getInstance(requireContext())
+        WorkManager.getInstance(requireContext())
             .beginWith(mixAudioWorker)
             .enqueue()
 
@@ -117,6 +132,88 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
             }*/
 
             playVoice()
+        }
+
+        binding.btnPlaySpatialScenario.setOnClickListener {
+            playNotificationExampleWithSpatialization()
+        }
+    }
+
+    private fun playNotificationExampleWithSpatialization() {
+        binding.btnPlaySpatialScenario.isEnabled = false
+        binding.btnPlayScenario.isEnabled = false
+
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                when (binding.sliderVoicesConfiguration.value.toInt()) {
+                    1 -> {
+                        audioEngine.preloadSoundFile(SCANNING_ONE_VOICE)
+                        oneVoiceId = audioEngine.createSoundObject(SCANNING_ONE_VOICE)
+
+                        audioEngine.setSoundObjectPosition(oneVoiceId, 0.0f, 0.0f, 0.0f)
+                        audioEngine.playSound(oneVoiceId, false)
+                    }
+                    2 -> {
+                        audioEngine.preloadSoundFile(SCANNING_TWO_VOICES_PART_ONE)
+                        audioEngine.preloadSoundFile(SCANNING_TWO_VOICES_PART_TWO)
+
+                        twoVoicePartOneId = audioEngine.createSoundObject(SCANNING_TWO_VOICES_PART_ONE)
+                        twoVoicePartTwoId = audioEngine.createSoundObject(SCANNING_TWO_VOICES_PART_TWO)
+
+                        audioEngine.setSoundObjectPosition(twoVoicePartOneId, -8.0f, 0.0f, 0.0f)
+                        audioEngine.setSoundObjectPosition(twoVoicePartTwoId, 8.0f, 0.0f, 0.0f)
+
+                        audioEngine.playSound(twoVoicePartOneId, false)
+                        audioEngine.playSound(twoVoicePartTwoId, false)
+                    }
+                    3 -> {
+                        audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_PART_ONE)
+                        audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_PART_TWO)
+                        audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_PART_THREE)
+
+                        threeVoicePartOneId = audioEngine.createSoundObject(SCANNING_THREE_VOICE_PART_ONE)
+                        threeVoicePartTwoId = audioEngine.createSoundObject(SCANNING_THREE_VOICE_PART_TWO)
+                        threeVoicePartThreeId = audioEngine.createSoundObject(SCANNING_THREE_VOICE_PART_THREE)
+
+                        audioEngine.setSoundObjectPosition(threeVoicePartOneId, -8.0f, 0.0f, 0.0f)
+                        audioEngine.setSoundObjectPosition(threeVoicePartTwoId, 0.0f, 0.0f, 0.0f)
+                        audioEngine.setSoundObjectPosition(threeVoicePartThreeId, 8.0f, 0.0f, 0.0f)
+
+                        audioEngine.playSound(threeVoicePartOneId, false)
+                        audioEngine.playSound(threeVoicePartTwoId, false)
+                        audioEngine.playSound(threeVoicePartThreeId, false)
+                    }
+                    4 -> {
+                        audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_PART_ONE)
+                        audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_PART_TWO)
+                        audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_PART_THREE)
+                        audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_PART_FOUR)
+
+                        fourVoicePartOneId = audioEngine.createSoundObject(SCANNING_FOUR_VOICE_PART_ONE)
+                        fourVoicePartTwoId = audioEngine.createSoundObject(SCANNING_FOUR_VOICE_PART_TWO)
+                        fourVoicePartThreeId = audioEngine.createSoundObject(SCANNING_FOUR_VOICE_PART_THREE)
+                        fourVoicePartFourId = audioEngine.createSoundObject(SCANNING_FOUR_VOICE_PART_FOUR)
+
+                        audioEngine.setSoundObjectPosition(fourVoicePartOneId, -8.0f, 0.0f, 0.0f)
+                        audioEngine.setSoundObjectPosition(fourVoicePartTwoId, 0.0f, -8.0f, 0.0f)
+                        audioEngine.setSoundObjectPosition(fourVoicePartThreeId, 0.0f, 8.0f, 0.0f)
+                        audioEngine.setSoundObjectPosition(fourVoicePartFourId, 8.0f, 0.0f, 0.0f)
+
+                        audioEngine.playSound(fourVoicePartOneId, false)
+                        audioEngine.playSound(fourVoicePartTwoId, false)
+                        audioEngine.playSound(fourVoicePartThreeId, false)
+                        audioEngine.playSound(fourVoicePartFourId, false)
+                    }
+                    else -> {
+                        /* DO NOTHING */
+                    }
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                binding.btnPlaySpatialScenario.isEnabled = true
+                binding.btnPlayScenario.isEnabled = true
+            }
         }
     }
 
@@ -431,11 +528,22 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         mediaPlayer3?.release()
         mediaPlayer4?.stop()
         mediaPlayer4?.release()
+
+        audioEngine.pause()
+
         super.onPause()
     }
 
     companion object {
-        private const val sampleText = "Este é um exemplo de um texto que vai ser dividido"
-        private const val TAG = "Text to Speech"
+        private const val SCANNING_ONE_VOICE = "scanning_one_voice.mp3"
+        private const val SCANNING_TWO_VOICES_PART_ONE = "scanning_two_voices_part_one.mp3"
+        private const val SCANNING_TWO_VOICES_PART_TWO = "scanning_two_voices_part_two.mp3"
+        private const val SCANNING_THREE_VOICE_PART_ONE = "scanning_three_voice_part_one.mp3"
+        private const val SCANNING_THREE_VOICE_PART_TWO = "scanning_three_voice_part_two.mp3"
+        private const val SCANNING_THREE_VOICE_PART_THREE = "scanning_three_voice_part_three.mp3"
+        private const val SCANNING_FOUR_VOICE_PART_ONE = "scanning_four_voice_part_one.mp3"
+        private const val SCANNING_FOUR_VOICE_PART_TWO = "scanning_four_voice_part_two.mp3"
+        private const val SCANNING_FOUR_VOICE_PART_THREE = "scanning_four_voice_part_three.mp3"
+        private const val SCANNING_FOUR_VOICE_PART_FOUR = "scanning_four_voice_part_four.mp3"
     }
 }
