@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.multipleaudioplayer.R
@@ -28,7 +29,6 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
 
     private lateinit var viewPager: ViewPager2
 
-
     private val audioEngine by lazy {
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
     }
@@ -50,7 +50,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
 
         val tabLayout = binding.tabLayout
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = "OBJECT ${(position + 1)}"
+            tab.text = "Página ${(position + 1)}"
         }.attach()
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
