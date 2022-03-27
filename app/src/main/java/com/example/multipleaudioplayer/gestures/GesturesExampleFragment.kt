@@ -8,11 +8,15 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutGesturesExampleBinding
+import com.example.multipleaudioplayer.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val NUM_PAGES = 2
 
@@ -34,11 +38,6 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
 
         setupUi()
 
-/*        arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
-            val position = getInt(ARG_OBJECT)
-            binding.
-        }*/
-
     }
 
     private fun setupUi() {
@@ -54,6 +53,23 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
             tab.text = "OBJECT ${(position + 1)}"
         }.attach()
 
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                showToast(position.toString())
+                super.onPageSelected(position)
+            }
+        })
+
+        binding.srlHomescreen.setOnRefreshListener {
+            showToast("Updating............")
+
+            scope.launch {
+                delay(2000)
+                withContext(Dispatchers.Main) {
+                    binding.srlHomescreen.isRefreshing = false
+                }
+            }
+        }
     }
 
     companion object {
@@ -67,7 +83,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         override fun getItemCount(): Int = NUM_PAGES
 
         override fun createFragment(position: Int): Fragment {
-            val fragment = when(position){
+            val fragment = when (position) {
                 0 -> HomeScreenFirstPageFragment()
                 else -> HomeScreenSecondPageFragment()
             }

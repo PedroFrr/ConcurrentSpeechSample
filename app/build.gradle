@@ -55,6 +55,8 @@ dependencies {
 
     implementation "androidx.viewpager2:viewpager2:$viewPager_version"
 
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_version"
+
     // Google VR SDK
     // https://github.com/googlevr/gvr-android-sdk
     implementation 'com.google.vr:sdk-base:1.190.0'
