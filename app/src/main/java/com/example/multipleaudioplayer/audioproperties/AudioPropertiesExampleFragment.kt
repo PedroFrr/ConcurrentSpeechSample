@@ -35,6 +35,14 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
         MediaPlayer.create(requireActivity(), R.raw.audio_properties_sample)
     }
 
+    private val mediaPlayerDocumentSampleWithPauses: MediaPlayer by lazy {
+        MediaPlayer.create(requireActivity(), R.raw.audio_properties_with_pauses_male_voice)
+    }
+
+    private val mediaPlayerAudioPropertiesWithPauses: MediaPlayer by lazy {
+        MediaPlayer.create(requireActivity(), R.raw.audio_properties_with_pauses)
+    }
+
     private val audioEngine by lazy {
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
     }
@@ -61,7 +69,21 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
             playSampleWithSpatialization()
         }
 
+        binding.btnScenarioWithPauses.setOnClickListener {
+            playAudioPropertiesScenarioWithPauses()
+        }
+
         setupMediaPlayerListeners()
+    }
+
+    private fun playAudioPropertiesScenarioWithPauses() {
+        scope.launch {
+            awaitAll(async {
+                playDocumentSampleWithPauses()
+            }, async {
+                playAudioPropertiesWithPauses()
+            })
+        }
     }
 
     private fun playMockAudioPropertiesSample() {
@@ -91,7 +113,7 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
         binding.btnAudioPropertiesScenario.isEnabled = false
         scope.launch {
             audioEngine.preloadSoundFile(MALE_VOICE_MAIN_DOCUMENT)
-           audioEngine.preloadSoundFile(MALE_VOICE_AUDIO_PROPERTIES)
+            audioEngine.preloadSoundFile(MALE_VOICE_AUDIO_PROPERTIES)
 
             mainDocumentSourceId = audioEngine.createSoundObject(MALE_VOICE_MAIN_DOCUMENT)
             audioPropertiesSourceId = audioEngine.createSoundObject(MALE_VOICE_AUDIO_PROPERTIES)
@@ -120,6 +142,14 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
         mediaPlayerAudioProperties.start()
     }
 
+    private fun playDocumentSampleWithPauses() {
+        mediaPlayerDocumentSampleWithPauses.start()
+    }
+
+    private fun playAudioPropertiesWithPauses() {
+        mediaPlayerAudioPropertiesWithPauses.start()
+    }
+
     private fun setupMediaPlayerListeners() {
         mediaPlayerDocumentSampleCristiano.setOnCompletionListener {
             binding.btnAudioPropertiesScenario.isEnabled = true
@@ -134,6 +164,8 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
         mediaPlayerDocumentSampleCristiano.stop()
         mediaPlayerDocumentSampleInes.stop()
         mediaPlayerAudioProperties.stop()
+        mediaPlayerAudioPropertiesWithPauses.stop()
+        mediaPlayerDocumentSampleWithPauses.stop()
 
         audioEngine.pause()
         super.onPause()
