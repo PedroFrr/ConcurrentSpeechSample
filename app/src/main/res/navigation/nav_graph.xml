@@ -22,6 +22,9 @@
         <action
             android:id="@+id/options_to_audio_properties_example"
             app:destination="@id/audioPropertiesExampleFragment" />
+        <action
+            android:id="@+id/options_to_homescreen"
+            app:destination="@id/gesturesExampleFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationExampleFragment"
@@ -43,4 +46,9 @@
         android:name="com.example.multipleaudioplayer.audioproperties.AudioPropertiesExampleFragment"
         android:label="AudioPropertiesExampleFragment"
         tools:layout="@layout/layout_audio_properties_example"/>
+    <fragment
+        android:id="@+id/gesturesExampleFragment"
+        android:name="com.example.multipleaudioplayer.gestures.GesturesExampleFragment"
+        android:label="GesturesExampleFragment"
+        tools:layout="@layout/layout_gestures_example"/>
 </navigation>
