@@ -74,11 +74,12 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
             showToast("Updating............")
 
             scope.launch {
+                binding.overlay.visibility = View.VISIBLE
                 loadingMediaPlayer.start()
                 delay(6000)
                 withContext(Dispatchers.Main) {
                     binding.srlHomescreen.isRefreshing = false
-                    loadingMediaPlayer.stop()
+                    binding.overlay.visibility = View.GONE
                 }
             }
         }
