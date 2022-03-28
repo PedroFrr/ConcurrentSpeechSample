@@ -1,11 +1,13 @@
 package com.example.multipleaudioplayer.gestures
 
+ import android.media.MediaPlayer
  import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.multipleaudioplayer.databinding.ItemHomescreenBinding
+ import com.example.multipleaudioplayer.R
+ import com.example.multipleaudioplayer.databinding.ItemHomescreenBinding
 
 class DailyAllowanceSummaryListAdapter :
     ListAdapter<String, RecyclerView.ViewHolder>(
@@ -32,7 +34,12 @@ class DailyAllowanceSummaryListAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: String) {
-            binding.tvIcon.text = item
+            val keyPressed = MediaPlayer.create(binding.root.context, R.raw.key_press)
+
+            binding.btnIcon.text = item
+            binding.btnIcon.setOnClickListener {
+                keyPressed.start()
+            }
         }
 
     }

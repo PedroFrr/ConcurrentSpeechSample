@@ -40,6 +40,10 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         MediaPlayer.create(requireActivity(), R.raw.swipe_left)
     }
 
+    private val loadingMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(requireActivity(), R.raw.loading)
+    }
+
     private val audioEngine by lazy {
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
     }
@@ -70,9 +74,11 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
             showToast("Updating............")
 
             scope.launch {
-                delay(2000)
+                loadingMediaPlayer.start()
+                delay(6000)
                 withContext(Dispatchers.Main) {
                     binding.srlHomescreen.isRefreshing = false
+                    loadingMediaPlayer.stop()
                 }
             }
         }

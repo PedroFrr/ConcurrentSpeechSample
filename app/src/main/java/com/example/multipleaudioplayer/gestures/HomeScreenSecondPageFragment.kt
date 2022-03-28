@@ -36,12 +36,7 @@ class HomeScreenSecondPageFragment : Fragment(R.layout.layout_homescreen_second_
 
         listAdapter.submitList(icons)
 
-        binding.rvHomescreen.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-                return mDetector.onTouchEvent(p1)
-            }
-
-        })
+//        binding.rvHomescreen.setOnTouchListener { _, p1 -> mDetector.onTouchEvent(p1) }
     }
 
     private fun setupGestureDetector() {
