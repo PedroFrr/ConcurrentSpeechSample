@@ -1,5 +1,6 @@
 package com.example.multipleaudioplayer.gestures
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -29,6 +30,16 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
 
     private lateinit var viewPager: ViewPager2
 
+    private var currentPage = 0
+
+    private val swipeRight: MediaPlayer by lazy {
+        MediaPlayer.create(requireActivity(), R.raw.swipe_right)
+    }
+
+    private val swipeLeft: MediaPlayer by lazy {
+        MediaPlayer.create(requireActivity(), R.raw.swipe_left)
+    }
+
     private val audioEngine by lazy {
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
     }
@@ -53,12 +64,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
             tab.text = "Página ${(position + 1)}"
         }.attach()
 
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                showToast(position.toString())
-                super.onPageSelected(position)
-            }
-        })
+        viewPager.registerOnPageChangeCallback(onPageListener)
 
         binding.srlHomescreen.setOnRefreshListener {
             showToast("Updating............")
@@ -70,6 +76,29 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
                 }
             }
         }
+    }
+
+    private val onPageListener = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            if(currentPage != position){
+                when(position){
+                    0 -> swipeLeft.start()
+                    1 -> swipeRight.start()
+                }
+                currentPage = position
+            }
+
+            super.onPageSelected(position)
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+        }
+    }
+
+    override fun onDestroy() {
+        viewPager.unregisterOnPageChangeCallback(onPageListener)
+        super.onDestroy()
     }
 
     companion object {
