@@ -43,6 +43,10 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
         MediaPlayer.create(requireActivity(), R.raw.audio_properties_with_pauses)
     }
 
+    private val mediaPlayerEarcon: MediaPlayer by lazy {
+        MediaPlayer.create(requireActivity(), R.raw.earcon_with_pauses)
+    }
+
     private val audioEngine by lazy {
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
     }
@@ -73,6 +77,10 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
             playAudioPropertiesScenarioWithPauses()
         }
 
+        binding.btnScenarioWithPausesWithEarcon.setOnClickListener {
+            playAudioPropertiesWithEarcons()
+        }
+
         setupMediaPlayerListeners()
     }
 
@@ -82,6 +90,19 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
                 playDocumentSampleWithPauses()
             }, async {
                 playAudioPropertiesWithPauses()
+            })
+        }
+    }
+
+    private fun playAudioPropertiesWithEarcons() {
+        scope.launch {
+            awaitAll(async {
+                playDocumentSampleWithPauses()
+            }, async {
+                playAudioPropertiesWithPauses()
+            },
+            async {
+                playEarcons()
             })
         }
     }
@@ -148,6 +169,10 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
 
     private fun playAudioPropertiesWithPauses() {
         mediaPlayerAudioPropertiesWithPauses.start()
+    }
+
+    private fun playEarcons() {
+        mediaPlayerEarcon.start()
     }
 
     private fun setupMediaPlayerListeners() {

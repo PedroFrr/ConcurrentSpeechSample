@@ -193,18 +193,6 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
             Regions.AP_NORTHEAST_2
         )
         clientNew = AmazonPollyPresigningClient(credentialsProvider)
-
-        /*AWSMobileClient.getInstance().initialize(requireContext(), object : Callback<UserStateDetails?> {
-            override fun onResult(result: UserStateDetails?) {
-                // Create a client that supports generation of presigned URLs.
-                client = AmazonPollyPresigningClient(AWSMobileClient.getInstance())
-                Log.i("INIT", "onResult: " + result?.userState);
-            }
-
-            override fun onError(e: Exception) {
-                Log.e(TAG, "onError: Initialization error", e)
-            }
-        })*/
     }
 
     private fun playVoice() {

@@ -38,7 +38,14 @@
         android:id="@+id/btn_scenario_with_pauses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_scenario_with_pauses_with_earcon"
         android:text="@string/play_scenario_with_pauses"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_scenario_with_pauses_with_earcon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Cenário com pausas e earcons"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,7 @@
     <string name="channel_to_configure">Canal a configurar</string>
     <string name="play_scenario_with_pauses">Reproduzir cenário com pausas</string>
     <string name="homescreen_scenario">Cenário homescreen</string>
+    <string name="headers_paragraph_scenario">Cenário parágrafo e header</string>
 
     <string-array name="Voices">
         <item>Cristiano</item>

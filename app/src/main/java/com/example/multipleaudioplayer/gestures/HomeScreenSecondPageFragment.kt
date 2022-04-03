@@ -19,7 +19,7 @@ class HomeScreenSecondPageFragment : Fragment(R.layout.layout_homescreen_second_
 
     private val binding by viewBinding(LayoutHomescreenSecondPageBinding::bind)
 
-    private val listAdapter by lazy { DailyAllowanceSummaryListAdapter() }
+    private val listAdapter by lazy { ItemsListAdapter() }
 
     private lateinit var mDetector: GestureDetectorCompat
 

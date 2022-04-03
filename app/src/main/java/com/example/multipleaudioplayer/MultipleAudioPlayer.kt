@@ -1,10 +1,13 @@
 package com.example.multipleaudioplayer
 
 import android.app.Application
+import logcat.AndroidLogcatLogger
+import logcat.LogPriority
 
-class MultipleAudioPlayer: Application() {
+class MultipleAudioPlayer : Application() {
     override fun onCreate() {
         super.onCreate()
-        //TODO initialize sample audio???
+
+        AndroidLogcatLogger.installOnDebuggableApp(this, minPriority = LogPriority.VERBOSE)
     }
 }

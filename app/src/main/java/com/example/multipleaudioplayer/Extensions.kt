@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.view.MotionEvent
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -19,5 +20,21 @@ fun Context.flowBroadcastReceiver(filter: IntentFilter): Flow<Intent> {
         awaitClose {
             unregisterReceiver(receiver)
         }
+    }
+}
+
+fun MotionEvent.singleTouchDescription(): String {
+    val eventLiteral = when (action) {
+        MotionEvent.ACTION_DOWN -> "Down"
+        MotionEvent.ACTION_UP -> "Up"
+        MotionEvent.ACTION_MOVE -> "Move"
+        MotionEvent.ACTION_CANCEL -> "Cancel"
+        MotionEvent.ACTION_OUTSIDE -> "Outside"
+        else -> ""
+    }
+    return if (eventLiteral.isEmpty()) {
+        ""
+    } else {
+        "$eventLiteral action at (${x.toInt()}, ${y.toInt()})"
     }
 }

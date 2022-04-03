@@ -39,6 +39,10 @@ class OptionsFragment : Fragment(R.layout.layout_sample_options_fragment) {
         binding.btnHomescreen.setOnClickListener {
             navigateTo(R.id.options_to_homescreen)
         }
+
+        binding.btnHeadersParagraphs.setOnClickListener {
+            navigateTo(R.id.options_to_buttons_scenario)
+        }
     }
 
     private fun navigateTo(@IdRes navigationId: Int) {

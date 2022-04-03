@@ -25,6 +25,9 @@
         <action
             android:id="@+id/options_to_homescreen"
             app:destination="@id/gesturesExampleFragment" />
+        <action
+            android:id="@+id/options_to_buttons_scenario"
+            app:destination="@id/headersScenarioFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationExampleFragment"
@@ -51,4 +54,8 @@
         android:name="com.example.multipleaudioplayer.gestures.GesturesExampleFragment"
         android:label="GesturesExampleFragment"
         tools:layout="@layout/layout_gestures_example"/>
+    <fragment
+        android:id="@+id/headersScenarioFragment"
+        android:name="com.example.multipleaudioplayer.headers.HeadersScenarioFragment"
+        android:label="HeadersScenarioFragment" />
 </navigation>

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
  import com.example.multipleaudioplayer.R
  import com.example.multipleaudioplayer.databinding.ItemHomescreenBinding
 
-class DailyAllowanceSummaryListAdapter :
+class ItemsListAdapter :
     ListAdapter<String, RecyclerView.ViewHolder>(
         DailyAllowanceSummaryCallback()
     ) {
