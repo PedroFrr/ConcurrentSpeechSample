@@ -11,13 +11,23 @@ import com.example.multipleaudioplayer.singleTouchDescription
 import logcat.logcat
 import kotlin.math.abs
 
-const val VELOCITY_THRESHOLD = 3000
+
+private const val VELOCITY_THRESHOLD = 3000
+private const val DOUBLE_SWIPE_THRESHOLD = 100
+private const val NONE = 0
+private const val SWIPE = 1
 
 class MyViewGroup @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
+
+    private var mode = NONE
+    private var startY = 0f
+    private var startX = 0f
+    private var stopY = 0f
+    private var stopX = 0f
 
     private val doubleTapMediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(context, R.raw.double_tap)
@@ -47,14 +57,14 @@ class MyViewGroup @JvmOverloads constructor(
             return false
         }
 
-        override fun onDown(event: MotionEvent?): Boolean {
+        override fun onDown(event: MotionEvent): Boolean {
             logcat { "" }
             logcat { event.description("Down") }
             return false
         }
 
         override fun onFling(
-            event1: MotionEvent?, event2: MotionEvent?, velocityX: Float,
+            event1: MotionEvent, event2: MotionEvent, velocityX: Float,
             velocityY: Float
         ): Boolean {
             if (abs(velocityX) < VELOCITY_THRESHOLD
@@ -118,9 +128,99 @@ class MyViewGroup @JvmOverloads constructor(
 
     private val gestureDetector = GestureDetector(context, gestureListener)
 
-    override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
+    override fun onInterceptTouchEvent(event: MotionEvent): Boolean = detectEvents(event)
+
+/*    override fun onHoverEvent(event: MotionEvent): Boolean {
+        logcat { "onHoverEvent: ${event.action}" }
+        //Move AccessibilityManager object to the constructor
+        val am = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+        return if (am.isTouchExplorationEnabled) {
+            detectEvents(event)
+        } else {
+            super.onHoverEvent(event)
+        }
+    }*/
+
+    private fun detectEvents(event: MotionEvent): Boolean {
         val eventDescription = event.singleTouchDescription()
         logcat { eventDescription }
+        when (event.pointerCount) {
+            2 -> {
+                when (event.action and MotionEvent.ACTION_MASK) {
+                    MotionEvent.ACTION_POINTER_DOWN -> {
+                        // This happens when you touch the screen with two fingers
+                        mode = SWIPE
+                        startY = event.getY(0)
+                        startX = event.getX(0)
+                    }
+                    MotionEvent.ACTION_POINTER_UP -> {
+                        // This happens when you release the second finger
+                        mode = NONE
+
+                        if (abs(startX - stopX) > abs(startY - stopY)) {
+                            if (startX > stopX) {
+                                logcat { "double swipe left" }
+                            } else {
+                                logcat { "double swipe right" }
+                            }
+
+                        } else if (abs(startY - stopY) > DOUBLE_SWIPE_THRESHOLD) {
+                            if (startY > stopY) {
+                                logcat { "double swipe up" }
+                            } else {
+                                logcat { "double swipe down" }
+                            }
+                        }
+
+                        mode = NONE
+                    }
+                    MotionEvent.ACTION_MOVE -> if (mode == SWIPE) {
+                        stopY = event.getY(0)
+                        stopX = event.getX(0)
+                    }
+                }
+            }
+            1 -> {
+                //this is single swipe, I have implemented onFling() here
+                gestureDetector.onTouchEvent(event)
+            }
+            3 -> {
+                when (event.action and MotionEvent.ACTION_MASK) {
+                    MotionEvent.ACTION_POINTER_DOWN -> {
+                        // This happens when you touch the screen with two fingers
+                        mode = SWIPE
+                        startY = event.getY(0)
+                        startX = event.getX(0)
+                    }
+                    MotionEvent.ACTION_POINTER_UP -> {
+                        // This happens when you release the second finger
+                        mode = NONE
+
+                        if (abs(startX - stopX) > abs(startY - stopY)) {
+                            if (startX > stopX) {
+                                logcat { "triple swipe left" }
+                            } else {
+                                logcat { "triple swipe right" }
+                            }
+
+                        } else if (abs(startY - stopY) > DOUBLE_SWIPE_THRESHOLD) {
+                            if (startY > stopY) {
+                                logcat { "triple swipe up" }
+                            } else {
+                                logcat { "triple swipe down" }
+                            }
+                        }
+
+                        mode = NONE
+                    }
+                    MotionEvent.ACTION_MOVE -> if (mode == SWIPE) {
+                        stopY = event.getY(0)
+                        stopX = event.getX(0)
+                    }
+                }
+            }
+        }
+
         when (event.action) {
             MotionEvent.ACTION_MOVE -> {
                 exploringMediaPlayer.start()
@@ -131,7 +231,7 @@ class MyViewGroup @JvmOverloads constructor(
             }
         }
 
-        gestureDetector.onTouchEvent(event)
+//        gestureDetector.onTouchEvent(event)
 
         return false
     }

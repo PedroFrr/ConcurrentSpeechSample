@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import android.view.accessibility.AccessibilityEvent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -20,7 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import logcat.logcat
 
 private const val NUM_PAGES = 2
 
@@ -84,8 +81,8 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
                 }
             }
         }
-
-/*        binding.clContainer.accessibilityDelegate = object : View.AccessibilityDelegate() {
+/*
+        binding.clContainer.accessibilityDelegate = object : View.AccessibilityDelegate() {
             override fun onRequestSendAccessibilityEvent(host: ViewGroup?, child: View?, event: AccessibilityEvent?): Boolean {
                 logcat { "$host $child $event" }
                 return super.onRequestSendAccessibilityEvent(host, child, event)
