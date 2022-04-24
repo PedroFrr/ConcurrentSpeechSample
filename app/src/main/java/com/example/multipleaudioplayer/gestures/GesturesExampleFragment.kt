@@ -95,7 +95,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
             }
         }
 
-        binding.overlayNew.setOnTouchListener { _, event ->
+        binding.clContainer.setOnTouchListener { _, event ->
             val eventDescription = event.singleTouchDescription()
             logcat { eventDescription }
             when (event.action) {
@@ -137,7 +137,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
     private fun setUpGestureDetector() {
-        val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
+        /*val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
             override fun onShowPress(event: MotionEvent?) {
                 logcat { event.description("Press") }
             }
@@ -150,7 +150,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
             override fun onSingleTapConfirmed(event: MotionEvent?): Boolean {
                 logcat { event.description("Single tap confirmed") }
                 singleTapMediaPlayer.start()
-                return true
+                return false
             }
 
             override fun onDown(event: MotionEvent?): Boolean {
@@ -206,14 +206,9 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
 
         val gestureDetector = GestureDetector(requireContext(), gestureListener)
 
-        binding.overlayNew.setOnTouchListener { _, event ->
-            val isEventHandledByGestureListener = gestureDetector.onTouchEvent(event)
-            if (isEventHandledByGestureListener) {
-                return@setOnTouchListener true
-            } else {
-                return@setOnTouchListener true
-            }
-        }
+        binding.clContainer.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+        }*/
     }
 
     fun Float.round(): Int {
