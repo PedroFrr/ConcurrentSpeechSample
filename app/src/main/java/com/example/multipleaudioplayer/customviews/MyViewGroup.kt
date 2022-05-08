@@ -16,6 +16,7 @@ private const val VELOCITY_THRESHOLD = 3000
 private const val DOUBLE_SWIPE_THRESHOLD = 100
 private const val NONE = 0
 private const val SWIPE = 1
+private const val SWIPE_THREE = 2
 
 class MyViewGroup @JvmOverloads constructor(
     context: Context,
@@ -39,6 +40,38 @@ class MyViewGroup @JvmOverloads constructor(
 
     private val exploringMediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(context, R.raw.wind)
+    }
+
+    private val swipeRightMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.swipe_right)
+    }
+
+    private val swipeLeftMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.swipe_left)
+    }
+
+    private val swipeUpMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.swipe_up)
+    }
+
+    private val swipeDownMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.swipe_down)
+    }
+
+    private val swipeRightTwoFingersMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.swipe_right_two_fingers)
+    }
+
+    private val swipeLeftTwoFingersMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.swipe_left_two_fingers)
+    }
+
+    private val swipeUpTwoFingersMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.swipe_up_two_fingers)
+    }
+
+    private val swipeDownTwoFingersMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.swipe_down_two_fingers)
     }
 
     private val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
@@ -78,14 +111,18 @@ class MyViewGroup @JvmOverloads constructor(
             if (abs(velocityX) > abs(velocityY)) {
                 if (velocityX >= 0) {
                     logcat { "swipe right" }
+                    swipeRightMediaPlayer.start()
                 } else {//if velocityX is negative, then it's towards left
                     logcat { "swipe left" }
+                    swipeLeftMediaPlayer.start()
                 }
             } else {
                 if (velocityY >= 0) {
                     logcat { "swipe down" }
+                    swipeDownMediaPlayer.start()
                 } else {
                     logcat { "swipe up" }
+                    swipeUpMediaPlayer.start()
                 }
             }
 
@@ -145,6 +182,7 @@ class MyViewGroup @JvmOverloads constructor(
         val eventDescription = event.singleTouchDescription()
         logcat { eventDescription }
         when (event.pointerCount) {
+            // two fingers
             2 -> {
                 when (event.action and MotionEvent.ACTION_MASK) {
                     MotionEvent.ACTION_POINTER_DOWN -> {
@@ -160,15 +198,19 @@ class MyViewGroup @JvmOverloads constructor(
                         if (abs(startX - stopX) > abs(startY - stopY)) {
                             if (startX > stopX) {
                                 logcat { "double swipe left" }
+                                swipeLeftTwoFingersMediaPlayer.start()
                             } else {
                                 logcat { "double swipe right" }
+                                swipeRightTwoFingersMediaPlayer.start()
                             }
 
                         } else if (abs(startY - stopY) > DOUBLE_SWIPE_THRESHOLD) {
                             if (startY > stopY) {
                                 logcat { "double swipe up" }
+                                swipeUpTwoFingersMediaPlayer.start()
                             } else {
                                 logcat { "double swipe down" }
+                                swipeDownTwoFingersMediaPlayer.start()
                             }
                         }
 
@@ -188,7 +230,7 @@ class MyViewGroup @JvmOverloads constructor(
                 when (event.action and MotionEvent.ACTION_MASK) {
                     MotionEvent.ACTION_POINTER_DOWN -> {
                         // This happens when you touch the screen with two fingers
-                        mode = SWIPE
+                        mode = SWIPE_THREE
                         startY = event.getY(0)
                         startX = event.getX(0)
                     }
@@ -213,7 +255,7 @@ class MyViewGroup @JvmOverloads constructor(
 
                         mode = NONE
                     }
-                    MotionEvent.ACTION_MOVE -> if (mode == SWIPE) {
+                    MotionEvent.ACTION_MOVE -> if (mode == SWIPE_THREE) {
                         stopY = event.getY(0)
                         stopX = event.getX(0)
                     }
