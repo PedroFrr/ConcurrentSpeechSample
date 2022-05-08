@@ -24,6 +24,9 @@
     <string name="play_scenario_with_pauses">Reproduzir cenário com pausas</string>
     <string name="homescreen_scenario">Cenário homescreen</string>
     <string name="headers_paragraph_scenario">Cenário parágrafo e header</string>
+    <string name="history">History</string>
+    <string name="medicine">Medicine</string>
+    <string name="phone_number">Phone number</string>
 
     <string-array name="Voices">
         <item>Cristiano</item>
