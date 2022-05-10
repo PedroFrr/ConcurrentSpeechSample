@@ -1,10 +1,12 @@
 package com.example.multipleaudioplayer.customviews
 
 import android.content.Context
+import android.graphics.Rect
 import android.media.MediaPlayer
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.accessibility.AccessibilityManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.singleTouchDescription
@@ -29,6 +31,13 @@ class MyViewGroup @JvmOverloads constructor(
     private var startX = 0f
     private var stopY = 0f
     private var stopX = 0f
+
+    private val mHoverBounds: Rect = Rect()
+
+    private val isTalkbackEnabled: Boolean by lazy {
+        val am = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+        am.isTouchExplorationEnabled
+    }
 
     private val doubleTapMediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(context, R.raw.double_tap)
@@ -165,18 +174,35 @@ class MyViewGroup @JvmOverloads constructor(
 
     private val gestureDetector = GestureDetector(context, gestureListener)
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        mHoverBounds.left = paddingLeft
+        mHoverBounds.right = w - paddingRight
+        mHoverBounds.top = paddingTop
+        mHoverBounds.bottom = h - paddingBottom
+    }
+
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean = detectEvents(event)
 
-/*    override fun onHoverEvent(event: MotionEvent): Boolean {
+    override fun onHoverEvent(event: MotionEvent): Boolean {
         logcat { "onHoverEvent: ${event.action}" }
         //Move AccessibilityManager object to the constructor
-        val am = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
-        return if (am.isTouchExplorationEnabled) {
-            detectEvents(event)
-        } else {
-            super.onHoverEvent(event)
+        if (isTalkbackEnabled && event.pointerCount == 1) {
+            when (event.action) {
+                MotionEvent.ACTION_HOVER_ENTER -> {
+                    event.action = MotionEvent.ACTION_DOWN
+                }
+                MotionEvent.ACTION_HOVER_MOVE -> {
+                    event.action = MotionEvent.ACTION_MOVE
+                }
+                MotionEvent.ACTION_HOVER_EXIT -> {
+                    event.action = MotionEvent.ACTION_UP
+                }
+            }
+            return onTouchEvent(event)
         }
-    }*/
+        return true
+    }
 
     private fun detectEvents(event: MotionEvent): Boolean {
         val eventDescription = event.singleTouchDescription()
@@ -263,18 +289,17 @@ class MyViewGroup @JvmOverloads constructor(
             }
         }
 
-        when (event.action) {
-            MotionEvent.ACTION_MOVE -> {
-                exploringMediaPlayer.start()
-            }
-            MotionEvent.ACTION_UP -> {
-                exploringMediaPlayer.pause()
-                exploringMediaPlayer.seekTo(0)
+        if (!isTalkbackEnabled) {
+            when (event.action) {
+                MotionEvent.ACTION_MOVE -> {
+                    exploringMediaPlayer.start()
+                }
+                MotionEvent.ACTION_UP -> {
+                    exploringMediaPlayer.pause()
+                    exploringMediaPlayer.seekTo(0)
+                }
             }
         }
-
-//        gestureDetector.onTouchEvent(event)
-
         return false
     }
 

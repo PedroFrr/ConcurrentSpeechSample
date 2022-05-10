@@ -1,16 +1,24 @@
 package com.example.multipleaudioplayer.gestures
 
+import android.R.attr
 import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.view.accessibility.AccessibilityEvent
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutHomescreenFirstPageBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import logcat.logcat
 
 
 class HomeScreenFirstPageFragment : Fragment(R.layout.layout_homescreen_first_page) {
@@ -84,6 +92,25 @@ class HomeScreenFirstPageFragment : Fragment(R.layout.layout_homescreen_first_pa
                 textViewMediaPlayer.start()
             }
         }
+
+        ViewCompat.setAccessibilityDelegate(binding.root, object : AccessibilityDelegateCompat() {
+             override fun onInitializeAccessibilityNodeInfo(v: View, info: AccessibilityNodeInfoCompat) {
+                 super.onInitializeAccessibilityNodeInfo(v, info)
+                 // A custom action description. For example, you could use "pause"
+                 // to have TalkBack speak "double-tap to pause."
+                 // A custom action description. For example, you could use "pause"
+                 // to have TalkBack speak "double-tap to pause."
+                 val customClick = AccessibilityActionCompat(
+                     AccessibilityNodeInfoCompat.ACTION_CLICK, "description"
+                 )
+                 info.addAction(customClick)
+             }
+
+            override fun onRequestSendAccessibilityEvent(host: ViewGroup?, child: View?, event: AccessibilityEvent): Boolean {
+                logcat { event.toString() }
+                return super.onRequestSendAccessibilityEvent(host, child, event)
+            }
+        })
     }
 
     private fun setupListAdapter() {
