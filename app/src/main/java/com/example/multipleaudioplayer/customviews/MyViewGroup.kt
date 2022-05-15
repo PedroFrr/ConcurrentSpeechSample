@@ -47,10 +47,6 @@ class MyViewGroup @JvmOverloads constructor(
         MediaPlayer.create(context, R.raw.single_tap)
     }
 
-    private val exploringMediaPlayer: MediaPlayer by lazy {
-        MediaPlayer.create(context, R.raw.wind)
-    }
-
     private val swipeRightMediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(context, R.raw.swipe_right)
     }
@@ -196,6 +192,8 @@ class MyViewGroup @JvmOverloads constructor(
                     event.action = MotionEvent.ACTION_MOVE
                 }
                 MotionEvent.ACTION_HOVER_EXIT -> {
+
+
                     event.action = MotionEvent.ACTION_UP
                 }
             }
@@ -285,18 +283,6 @@ class MyViewGroup @JvmOverloads constructor(
                         stopY = event.getY(0)
                         stopX = event.getX(0)
                     }
-                }
-            }
-        }
-
-        if (!isTalkbackEnabled) {
-            when (event.action) {
-                MotionEvent.ACTION_MOVE -> {
-                    exploringMediaPlayer.start()
-                }
-                MotionEvent.ACTION_UP -> {
-                    exploringMediaPlayer.pause()
-                    exploringMediaPlayer.seekTo(0)
                 }
             }
         }

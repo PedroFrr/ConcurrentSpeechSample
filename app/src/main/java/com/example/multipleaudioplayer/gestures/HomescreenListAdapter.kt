@@ -1,13 +1,15 @@
 package com.example.multipleaudioplayer.gestures
 
- import android.media.MediaPlayer
- import android.view.LayoutInflater
+import android.content.Context
+import android.media.MediaPlayer
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
- import com.example.multipleaudioplayer.R
- import com.example.multipleaudioplayer.databinding.ItemHomescreenBinding
+import com.example.multipleaudioplayer.R
+import com.example.multipleaudioplayer.databinding.ItemHomescreenBinding
 
 class ItemsListAdapter :
     ListAdapter<String, RecyclerView.ViewHolder>(
@@ -33,12 +35,17 @@ class ItemsListAdapter :
         private val binding: ItemHomescreenBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: String) {
-            val keyPressed = MediaPlayer.create(binding.root.context, R.raw.key_press)
+        private val isTalkbackEnabled: Boolean by lazy {
+            val am = binding.root.context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+            am.isTouchExplorationEnabled
+        }
 
+        private val keyPressed = MediaPlayer.create(binding.root.context, R.raw.key_press)
+
+        fun bind(item: String) {
             binding.btnIcon.text = item
             binding.btnIcon.setOnClickListener {
-                keyPressed.start()
+                if (!isTalkbackEnabled) keyPressed.start()
             }
         }
 
