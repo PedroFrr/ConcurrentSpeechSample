@@ -101,9 +101,9 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
             }, async {
                 playAudioPropertiesWithPauses()
             },
-            async {
-                playEarcons()
-            })
+                async {
+                    playEarcons()
+                })
         }
     }
 

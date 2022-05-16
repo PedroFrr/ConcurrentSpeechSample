@@ -10,6 +10,6 @@ import androidx.fragment.app.Fragment
 fun String.convertToSsml(speedRate: Float = 100f, pitch: Float = 0f, timbre: Int = 100): String =
     "<speak> <amazon:effect vocal-tract-length=\"$timbre%\"><prosody rate=\"$speedRate%\" pitch=\"$pitch%\"> $this </prosody></amazon:effect> </speak>"
 
-fun Fragment.showToast(message: String){
+fun Fragment.showToast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
 }

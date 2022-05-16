@@ -1,8 +1,10 @@
-package com.example.multipleaudioplayer.utils;
+package com.example.multipleaudioplayer.accessibility;
 
 import android.accessibilityservice.AccessibilityService;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+
+import com.example.multipleaudioplayer.utils.A11yNodeInfo;
 
 /**
  * Created by chrismcmeeking on 3/3/17.

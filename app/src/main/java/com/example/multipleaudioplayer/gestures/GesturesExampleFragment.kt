@@ -15,7 +15,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutGesturesExampleBinding
-import com.example.multipleaudioplayer.utils.Utils
 import com.example.multipleaudioplayer.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -23,12 +22,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import logcat.logcat
-import kotlin.time.Duration.Companion.seconds
 
 private const val NUM_PAGES = 2
 
@@ -120,19 +116,10 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
                 logcat { event.toString() }
                 when (event.eventType) {
                     AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED -> {
-//                        job?.cancel()
                         timer.cancel()
                     }
                     AccessibilityEvent.TYPE_VIEW_HOVER_EXIT -> {
                         timer.start()
-
-                        /*job = coroutineScope.launch {
-                            timer.
-                            Utils.tickerFlow(1.seconds)
-                                .onCompletion {
-
-                                }
-                        }*/
                     }
                     AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
                         when (event.className) {
@@ -183,7 +170,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         }
     }
 
-    val timer = object: CountDownTimer(100, 100) {
+    val timer = object : CountDownTimer(100, 100) {
         override fun onTick(p0: Long) {
             // do nothing
         }

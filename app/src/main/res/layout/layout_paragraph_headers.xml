@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_buttons_scenario"
         app:layout_constraintTop_toTopOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_buttons_scenario"
@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_buttons_spalization"
         android:layout_marginTop="24dp"
-        android:text="Botoes simulataneo"/>
+        android:text="Botoes simulataneo" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_buttons_spalization"
@@ -33,5 +33,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="24dp"
-        android:text="Espacialização"/>
+        android:text="Espacialização" />
 </androidx.constraintlayout.widget.ConstraintLayout>

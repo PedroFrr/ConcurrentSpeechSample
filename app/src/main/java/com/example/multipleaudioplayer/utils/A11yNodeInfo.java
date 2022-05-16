@@ -82,11 +82,13 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
     }
 
     protected A11yNodeInfo(AccessibilityNodeInfoCompat nodeInfoCompat) {
-        if (nodeInfoCompat == null) throw new RuntimeException("Wrapping a null node doesn't make sense");
+        if (nodeInfoCompat == null)
+            throw new RuntimeException("Wrapping a null node doesn't make sense");
         mNodeInfo = nodeInfoCompat;
     }
 
-    @Override public int compare(A11yNodeInfo lhs, A11yNodeInfo rhs) {
+    @Override
+    public int compare(A11yNodeInfo lhs, A11yNodeInfo rhs) {
 
         int result;
 
@@ -132,6 +134,7 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
 
         /**
          * Called for every node during heirarchy traversals.
+         *
          * @param nodeInfo The node that work will be doneon.
          * @return Return true to stop traversing, false to continue.
          */
@@ -144,13 +147,17 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (getActionList().contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK)) return true;
+            if (getActionList().contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK))
+                return true;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (getActionList().contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_CONTEXT_CLICK)) return true;
+                if (getActionList().contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_CONTEXT_CLICK))
+                    return true;
             }
 
-            if (getActionList().contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_LONG_CLICK)) return true;
-            if (getActionList().contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_SELECT)) return true;
+            if (getActionList().contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_LONG_CLICK))
+                return true;
+            if (getActionList().contains(AccessibilityNodeInfo.AccessibilityAction.ACTION_SELECT))
+                return true;
         }
 
         final int actions = getActions();
@@ -195,6 +202,7 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
 
     /**
      * I don't often use CharSequence's, and prefer strings.  Note: null strings will return as empty strings!
+     *
      * @return The content descriptiong as a NotNull String.
      */
     public String getContentDescriptionAsString() {
@@ -205,6 +213,7 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
 
     /**
      * Gets the depth of the child in the node info heirarchy.
+     *
      * @return The depth of the node.
      */
     public int getDepthInTree() {
@@ -252,6 +261,7 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
     /**
      * Don't like CharSequences, and random null string checks.  This will get the Text
      * as a NotNull String.
+     *
      * @return The text as a NotNull String.
      */
     public String getTextAsString() {
@@ -266,9 +276,11 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
 
     /**
      * Implenting the iterable interface to more easily navigate the node infos children.
+     *
      * @return An itarator over the children of this A11yNodeInfo.
      */
-    @Override public Iterator<A11yNodeInfo> iterator() {
+    @Override
+    public Iterator<A11yNodeInfo> iterator() {
         return new Iterator<A11yNodeInfo>() {
             private int mNextIndex = 0;
 
@@ -293,6 +305,7 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
 
     /**
      * Get the entire node heirarchy as a string.
+     *
      * @return The node heirarchy.
      */
     public String toViewHeirarchy() {
@@ -322,6 +335,7 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
 
     /**
      * Get the first {@link A11yNodeInfo node} that matches the given {@link A11yNodeInfoMatcher matcher}
+     *
      * @param matcher The matcher with props to match.
      * @return The first node that matches.
      */
@@ -351,8 +365,8 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
         A11yNodeInfo tempNode = wrap(mNodeInfo);
         A11yNodeInfo scrollableView = null;
 
-        while(tempNode.getParent() != null) {
-            if(tempNode.isScrollable() && !tempNode.isClassType(ViewPager.class)) {
+        while (tempNode.getParent() != null) {
+            if (tempNode.isScrollable() && !tempNode.isClassType(ViewPager.class)) {
                 scrollableView = tempNode;
             }
             tempNode = tempNode.getParent();
@@ -362,7 +376,8 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
     }
 
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         if (mNodeInfo == null) throw new RuntimeException("This shouldn't be null");
         return mNodeInfo.toString();
     }
@@ -373,9 +388,10 @@ public class A11yNodeInfo implements Iterable<A11yNodeInfo>, Comparator<A11yNode
      * simple "find first" type of method.  Though most of the time, you likely want
      * to travel all, in which case, just return "false" from your onVisit method, and
      * you will visit every node.
+     *
      * @param onVisitListener {@link A11yNodeInfo.OnVisitListener#onVisit(A11yNodeInfo) onVisit}
-     * will be alled for every node, until {@link A11yNodeInfo.OnVisitListener#onVisit(A11yNodeInfo) onVisit}
-     * returns true.
+     *                        will be alled for every node, until {@link A11yNodeInfo.OnVisitListener#onVisit(A11yNodeInfo) onVisit}
+     *                        returns true.
      * @return The first node for which {@link A11yNodeInfo.OnVisitListener#onVisit(A11yNodeInfo) onVisit}  returns true.
      */
     public A11yNodeInfo visitNodes(OnVisitListener onVisitListener) {

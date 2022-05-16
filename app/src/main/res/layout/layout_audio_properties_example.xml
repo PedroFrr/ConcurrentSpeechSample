@@ -11,41 +11,41 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/speech_voice"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp" />
 
     <Spinner
         android:id="@+id/spinner_voices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_speech_voice"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_audio_properties_scenario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/btn_spatial_scenario"
-        android:text="@string/play_scenario_label"/>
+        android:text="@string/play_scenario_label" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_spatial_scenario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/btn_scenario_with_pauses"
-        android:text="@string/play_scenario_spatial_label"/>
+        android:text="@string/play_scenario_spatial_label" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_scenario_with_pauses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/btn_scenario_with_pauses_with_earcon"
-        android:text="@string/play_scenario_with_pauses"/>
+        android:text="@string/play_scenario_with_pauses" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_scenario_with_pauses_with_earcon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Cenário com pausas e earcons"/>
+        android:text="Cenário com pausas e earcons" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

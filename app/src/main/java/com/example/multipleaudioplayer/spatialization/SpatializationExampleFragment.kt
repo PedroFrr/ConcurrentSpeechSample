@@ -1,18 +1,15 @@
 package com.example.multipleaudioplayer.spatialization
 
-import android.content.ContextWrapper
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutSpatializationExampleBinding
-import com.example.multipleaudioplayer.notification.NotificationExampleFragment
 import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
 
 class SpatializationExampleFragment : Fragment(R.layout.layout_spatialization_example) {
 
@@ -43,7 +40,7 @@ class SpatializationExampleFragment : Fragment(R.layout.layout_spatialization_ex
         }
     }
 
-    private fun playSpatialization(){
+    private fun playSpatialization() {
         binding.loading.visibility = View.VISIBLE
         scope.launch {
 /*            val wrapper = ContextWrapper(requireContext())

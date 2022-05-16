@@ -33,27 +33,27 @@
         android:id="@+id/notificationExampleFragment"
         android:name="com.example.multipleaudioplayer.notification.NotificationExampleFragment"
         android:label="NotificationExampleFragment"
-        tools:layout="@layout/layout_notification_example"/>
+        tools:layout="@layout/layout_notification_example" />
     <fragment
         android:id="@+id/scanningExampleFragment"
         android:name="com.example.multipleaudioplayer.scanning.ScanningExampleFragment"
         android:label="ScanningExampleFragment"
-        tools:layout="@layout/layout_scanning_example"/>
+        tools:layout="@layout/layout_scanning_example" />
     <fragment
         android:id="@+id/spatializationExampleFragment"
         android:name="com.example.multipleaudioplayer.spatialization.SpatializationExampleFragment"
         android:label="SpatializationExampleFragment"
-        tools:layout="@layout/layout_spatialization_example"/>
+        tools:layout="@layout/layout_spatialization_example" />
     <fragment
         android:id="@+id/audioPropertiesExampleFragment"
         android:name="com.example.multipleaudioplayer.audioproperties.AudioPropertiesExampleFragment"
         android:label="AudioPropertiesExampleFragment"
-        tools:layout="@layout/layout_audio_properties_example"/>
+        tools:layout="@layout/layout_audio_properties_example" />
     <fragment
         android:id="@+id/gesturesExampleFragment"
         android:name="com.example.multipleaudioplayer.gestures.GesturesExampleFragment"
         android:label="GesturesExampleFragment"
-        tools:layout="@layout/layout_gestures_example"/>
+        tools:layout="@layout/layout_gestures_example" />
     <fragment
         android:id="@+id/headersScenarioFragment"
         android:name="com.example.multipleaudioplayer.headers.HeadersScenarioFragment"

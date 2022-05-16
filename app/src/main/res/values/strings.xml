@@ -28,6 +28,7 @@
     <string name="medicine">Medicine</string>
     <string name="phone_number">Phone number</string>
     <string name="accessibility_service_description">service description</string>
+    <string name="accessibility_service_label">accessibility_Service</string>
 
     <string-array name="Voices">
         <item>Cristiano</item>
