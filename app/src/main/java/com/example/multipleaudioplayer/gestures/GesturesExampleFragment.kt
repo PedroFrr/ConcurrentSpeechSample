@@ -114,9 +114,11 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         ViewCompat.setAccessibilityDelegate(binding.root, object : AccessibilityDelegateCompat() {
             override fun onRequestSendAccessibilityEvent(host: ViewGroup?, child: View?, event: AccessibilityEvent): Boolean {
                 logcat { event.toString() }
+                noGesture.cancel()
                 when (event.eventType) {
                     AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, -> {
                         timer.cancel()
+                        noGesture.start()
                     }
                     AccessibilityEvent.TYPE_VIEW_HOVER_EXIT -> {
                         timer.start()
@@ -172,6 +174,17 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
     }
 
     val timer = object : CountDownTimer(100, 100) {
+        override fun onTick(p0: Long) {
+            // do nothing
+        }
+
+        override fun onFinish() {
+            exploringMediaPlayer.pause()
+            exploringMediaPlayer.seekTo(0)
+        }
+    }
+
+    val noGesture = object : CountDownTimer(1000, 100) {
         override fun onTick(p0: Long) {
             // do nothing
         }
