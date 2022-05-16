@@ -115,13 +115,14 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
             override fun onRequestSendAccessibilityEvent(host: ViewGroup?, child: View?, event: AccessibilityEvent): Boolean {
                 logcat { event.toString() }
                 when (event.eventType) {
-                    AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED -> {
+                    AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, -> {
                         timer.cancel()
                     }
                     AccessibilityEvent.TYPE_VIEW_HOVER_EXIT -> {
                         timer.start()
                     }
                     AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
+                        timer.cancel()
                         when (event.className) {
                             BUTTON -> {
                                 buttonMediaPlayer.start()
@@ -146,7 +147,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
                             }
 
                         }
-                        exploringMediaPlayer.start()
+                        if (!exploringMediaPlayer.isPlaying) exploringMediaPlayer.start()
                     }
                 }
                 return super.onRequestSendAccessibilityEvent(host, child, event)
