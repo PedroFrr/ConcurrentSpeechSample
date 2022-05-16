@@ -1,8 +1,11 @@
 package com.example.multipleaudioplayer.accessibility;
 
+import android.accessibilityservice.AccessibilityGestureEvent;
 import android.accessibilityservice.AccessibilityService;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+
+import androidx.annotation.NonNull;
 
 import com.example.multipleaudioplayer.utils.A11yNodeInfo;
 
@@ -11,6 +14,12 @@ import com.example.multipleaudioplayer.utils.A11yNodeInfo;
  */
 
 public class BasicAccessibilityService extends AccessibilityService {
+
+    @Override
+    public boolean onGesture(@NonNull AccessibilityGestureEvent gestureEvent) {
+        Log.d("BasicAccessibilityService", gestureEvent.toString());
+        return super.onGesture(gestureEvent);
+    }
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {

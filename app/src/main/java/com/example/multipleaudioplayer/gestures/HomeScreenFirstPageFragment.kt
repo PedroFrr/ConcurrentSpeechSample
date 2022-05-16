@@ -9,6 +9,7 @@ import android.view.accessibility.AccessibilityManager
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutHomescreenFirstPageBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -93,9 +94,14 @@ class HomeScreenFirstPageFragment : Fragment(R.layout.layout_homescreen_first_pa
     }
 
     private fun setupListAdapter() {
+        val myGridLinearLayoutManager = object : GridLayoutManager(requireContext(), 3) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
         binding.rvHomescreen.apply {
             adapter = listAdapter
-            layoutManager = GridLayoutManager(requireContext(), 3)
+            layoutManager = myGridLinearLayoutManager
             hasFixedSize()
         }
     }

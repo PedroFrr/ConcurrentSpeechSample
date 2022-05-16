@@ -1,12 +1,8 @@
 package com.example.multipleaudioplayer.accessibility
 
-import android.accessibilityservice.AccessibilityGestureEvent
 import android.accessibilityservice.AccessibilityService
-import android.os.Build
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
-import androidx.annotation.RequiresApi
-import logcat.logcat
 
 class MyAccessibilityService : AccessibilityService() {
     override fun onAccessibilityEvent(p0: AccessibilityEvent?) {}
@@ -14,7 +10,7 @@ class MyAccessibilityService : AccessibilityService() {
     override fun onInterrupt() {}
 
     override fun onGesture(gestureId: Int): Boolean {
-        Log.d("caller","on guesture called");
+        Log.d("caller", "on gesture called");
         return true
     }
 }

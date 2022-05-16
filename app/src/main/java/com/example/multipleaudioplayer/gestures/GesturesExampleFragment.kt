@@ -46,8 +46,6 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         MediaPlayer.create(context, R.raw.wind)
     }
 
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
-
     private val imageViewMediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(context, R.raw.image_view)
     }
@@ -116,7 +114,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
                 logcat { event.toString() }
                 noGesture.cancel()
                 when (event.eventType) {
-                    AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, -> {
+                    AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED -> {
                         timer.cancel()
                         noGesture.start()
                     }
@@ -126,25 +124,25 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
                     AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
                         timer.cancel()
                         when (event.className) {
-                            BUTTON -> {
+                            Widget.BUTTON.value -> {
                                 buttonMediaPlayer.start()
                             }
-                            IMAGE_VIEW -> {
+                            Widget.IMAGE_VIEW.value -> {
                                 imageViewMediaPlayer.start()
                             }
-                            TEXT_VIEW -> {
+                            Widget.TEXT_VIEW.value -> {
                                 textViewMediaPlayer.start()
                             }
-                            EDIT_TEXT -> {
+                            Widget.EDIT_TEXT.value -> {
                                 editTextMediaPlayer.start()
                             }
-                            SWITCH -> {
+                            Widget.SWITCH.value -> {
                                 switchMediaPlayer.start()
                             }
-                            RADIO_BUTTON -> {
+                            Widget.RADIO_BUTTON.value -> {
                                 radioButtonMediaPlayer.start()
                             }
-                            CHECK_BOX -> {
+                            Widget.CHECK_BOX.value -> {
                                 checkboxMediaPlayer.start()
                             }
 
@@ -195,7 +193,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         }
     }
 
-    companion object {
+/*    companion object {
         private const val BUTTON = "android.widget.Button"
         private const val IMAGE_VIEW = "android.widget.ImageView"
         private const val TEXT_VIEW = "android.widget.TextView"
@@ -203,5 +201,15 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         private const val SWITCH = "android.widget.Switch"
         private const val RADIO_BUTTON = "android.widget.RadioButton"
         private const val CHECK_BOX = "android.widget.CheckBox"
+    }*/
+
+    enum class Widget(val value: String) {
+        BUTTON("android.widget.Button"),
+        IMAGE_VIEW("android.widget.ImageView"),
+        TEXT_VIEW("android.widget.TextView"),
+        EDIT_TEXT("android.widget.EditText"),
+        SWITCH("android.widget.Switch"),
+        RADIO_BUTTON("android.widget.RadioButton"),
+        CHECK_BOX("android.widget.CheckBox"),
     }
 }

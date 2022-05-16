@@ -1,9 +1,8 @@
 <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/accessibility_service_description"
-    android:accessibilityEventTypes="typeGestureDetectionStart|typeTouchExplorationGestureStart"
+    android:accessibilityEventTypes="typeGestureDetectionStart"
     android:accessibilityFlags="flagIncludeNotImportantViews|flagRequestTouchExplorationMode"
     android:notificationTimeout="100"
     android:canRetrieveWindowContent="true"
-    android:canPerformGestures="true"
     android:settingsActivity="com.example.android.accessibility.ServiceSettingsActivity"
     android:canRequestTouchExplorationMode="true"/>
