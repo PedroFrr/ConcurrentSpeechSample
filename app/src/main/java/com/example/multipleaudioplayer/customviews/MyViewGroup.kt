@@ -198,8 +198,6 @@ class MyViewGroup @JvmOverloads constructor(
                     event.action = MotionEvent.ACTION_MOVE
                 }
                 MotionEvent.ACTION_HOVER_EXIT -> {
-
-
                     event.action = MotionEvent.ACTION_UP
                 }
             }

@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MultipleAudioPlayer">
-        <service android:name=".accessibility.BasicAccessibilityService"
+<!--        <service android:name=".accessibility.BasicAccessibilityService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:label="@string/accessibility_service_label">
             <intent-filter>
@@ -25,7 +25,7 @@
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/service_config" />
-        </service>
+        </service>-->
 
         <activity
             android:name=".MainActivity"

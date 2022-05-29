@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">MultipleAudioPlayer</string>
-    <string name="sample_data_loaded_title">Notificação em simultâneo (sem atributos)</string>
-    <string name="sample_data_loaded_message">Eu sou uma notificação exemplo.</string>
-    <string name="sample_data_loaded_big_text">Eu sou uma notificação exemplo.</string>
+    <string name="notification_title">Mãe</string>
+    <string name="notification_message">Olá filho. Sempre vamos jantar hoje?</string>
+    <string name="notification_content">Eu sou uma notificação exemplo.</string>
     <string name="concurrent_notification_normal">Cenário das notificações</string>
     <string name="spatialization">Espacialização</string>
     <string name="speech_rate">Velocidade da voz</string>
@@ -10,7 +10,7 @@
     <string name="speech_pitch">Pitch</string>
     <string name="speech_voice">Vozes</string>
     <string name="scanning_scenario">Cenário Scanning</string>
-    <string name="sample_text">A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão.Contudo a história da presença humana no território correspondente a Portugal começou muito antes.A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses. Povos celtas estabeleceram-se e misturaram-se com os nativos.</string>
+    <string name="sample_text">A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão. Contudo a história da presença humana no território correspondente a Portugal começou muito antes.A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses. Povos celtas estabeleceram-se e misturaram-se com os nativos.</string>
     <string name="spatialization_scenario">Cenário Espacialização</string>
     <string name="audio_properties_scenario">Cenário Propriedades de Aúdio</string>
     <string name="number_of_voices_label">Número de vozes</string>
@@ -34,4 +34,6 @@
         <item>Cristiano</item>
         <item>Ines</item>
     </string-array>
+
+    <string name="first_notice">O Benfica sagrou-se campeão nacional de juniores de futebol pela 25.ª vez na sua história, ao bater em casa o Sp, Braga, por 3-0, na 14.ª e última jornada do Apuramento de Campeão da época 2021/22. Iuri Moreira (87 e 89 minutos) e Franculino Djú (90+6) marcaram os golos dos ‘encarnados’, que terminaram a prova com os mesmos 33 pontos do FC Porto (6-0 ao Estoril Praia), mas vantagem na diferença total de golos (35-14 contra 29-9).</string>
 </resources>

@@ -72,6 +72,10 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
 
     private val buttonMediaPlayer: MediaPlayer by lazy { MediaPlayer.create(binding.root.context, R.raw.key_press) }
 
+    private val singleTapMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.single_tap)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -122,6 +126,7 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
                         timer.start()
                     }
                     AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
+                        singleTapMediaPlayer.start() // single tap sound (with talkback on)
                         timer.cancel()
                         when (event.className) {
                             Widget.BUTTON.value -> {
