@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutAudioPropertiesExampleBinding
+import com.example.multipleaudioplayer.notification.spatialization.NotificationSpatializationExampleFragment
 import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
@@ -56,6 +57,18 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        scope.launch {
+            withContext(Dispatchers.Main) {
+                toggleButtons(isEnabled = false)
+            }
+            audioEngine.preloadSoundFile(MALE_VOICE_MAIN_DOCUMENT)
+            audioEngine.preloadSoundFile(MALE_VOICE_AUDIO_PROPERTIES)
+
+            withContext(Dispatchers.Main) {
+                toggleButtons(isEnabled = true)
+            }
+        }
 
         setupUi()
     }
@@ -118,23 +131,11 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
         }
     }
 
-/*
-    private fun playMockAudioPropertiesSample() {
-*//*        val params = PlaybackParams()
-        params.pitch = 0.75f
-
-        mediaPlayerDocumentSampleCristiano.playbackParams = params*//*
-
-        playDocumentSample()
-
-    }*/
-
     private fun playSampleWithSpatialization() {
-        binding.btnSpatialScenario.isEnabled = false
-        binding.btnAudioPropertiesScenario.isEnabled = false
         scope.launch {
-            audioEngine.preloadSoundFile(MALE_VOICE_MAIN_DOCUMENT)
-            audioEngine.preloadSoundFile(MALE_VOICE_AUDIO_PROPERTIES)
+            withContext(Dispatchers.Main) {
+                toggleButtons(isEnabled = false)
+            }
 
             mainDocumentSourceId = audioEngine.createSoundObject(MALE_VOICE_MAIN_DOCUMENT)
             audioPropertiesSourceId = audioEngine.createSoundObject(MALE_VOICE_AUDIO_PROPERTIES)
@@ -146,8 +147,7 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
             audioEngine.playSound(audioPropertiesSourceId, false)
 
             withContext(Dispatchers.Main) {
-                binding.btnSpatialScenario.isEnabled = true
-                binding.btnAudioPropertiesScenario.isEnabled = true
+                toggleButtons(isEnabled = true)
             }
         }
     }
@@ -182,6 +182,15 @@ class AudioPropertiesExampleFragment : Fragment(R.layout.layout_audio_properties
 
         mediaPlayerDocumentSampleInes.setOnCompletionListener {
             binding.btnAudioPropertiesScenario.isEnabled = true
+        }
+    }
+
+    private fun toggleButtons(isEnabled: Boolean){
+        binding.apply {
+            btnAudioPropertiesScenario.isEnabled = isEnabled
+            btnScenarioWithPauses.isEnabled = isEnabled
+            btnSpatialScenario.isEnabled = isEnabled
+            btnScenarioWithPausesWithEarcon.isEnabled = isEnabled
         }
     }
 

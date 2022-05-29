@@ -82,7 +82,6 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         setupUi()
 
         binding.srlHomescreen.isEnabled = false
-        binding.pager.isUserInputEnabled = false
     }
 
     @SuppressLint("ClickableViewAccessibility")
