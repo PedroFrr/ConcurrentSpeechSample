@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/tv_document_sample"
         android:layout_width="match_parent"
@@ -19,7 +24,15 @@
         android:id="@+id/btn_notification_example"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/notification_scenario_spatialization"
+        android:layout_marginBottom="8dp"
+        android:text="@string/notification_spatialization_first_scenario"
+        app:layout_constraintBottom_toTopOf="@id/btn_notification_example_second_scenario" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_notification_example_second_scenario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_spatialization_second_scenario"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

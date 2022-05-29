@@ -36,7 +36,8 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
         }.attach()
     }
 
-    private inner class ConfigurationsSlidePageAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+    private inner class ConfigurationsSlidePageAdapter(fa: FragmentActivity) :
+        FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int): Fragment {
@@ -47,5 +48,4 @@ class NotificationExampleFragment : Fragment(R.layout.layout_notification_exampl
             return fragment
         }
     }
-
 }

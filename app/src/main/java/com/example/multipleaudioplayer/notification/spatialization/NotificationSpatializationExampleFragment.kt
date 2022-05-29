@@ -15,7 +15,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class NotificationSpatializationExampleFragment : Fragment(R.layout.layout_notification_spatialization_example) {
+class NotificationSpatializationExampleFragment :
+    Fragment(R.layout.layout_notification_spatialization_example) {
 
     private val binding by viewBinding(LayoutNotificationSpatializationExampleBinding::bind)
 
@@ -39,6 +40,20 @@ class NotificationSpatializationExampleFragment : Fragment(R.layout.layout_notif
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        scope.launch {
+            withContext(Dispatchers.Main) {
+                binding.loading.show()
+            }
+            audioEngine.preloadSoundFile(DOCUMENT_SOUND_FILE)
+            audioEngine.preloadSoundFile(NOTIFICATION_SOUND_FILE)
+            audioEngine.preloadSoundFile(DOCUMENT_SOUND_INES_FILE)
+            audioEngine.preloadSoundFile(NOTIFICATION_SOUND_CRISTIANO_FILE)
+
+            withContext(Dispatchers.Main) {
+                binding.loading.hide()
+            }
+        }
+
         setupUi()
     }
 
@@ -46,17 +61,20 @@ class NotificationSpatializationExampleFragment : Fragment(R.layout.layout_notif
         binding.btnNotificationExample.setOnClickListener {
             playNotificationExampleWithSpatialization()
         }
+
+        binding.btnNotificationExampleSecondScenario.setOnClickListener {
+            playSpatializationSecondScenario()
+        }
     }
 
     private fun playNotificationExampleWithSpatialization() {
         binding.btnNotificationExample.isEnabled = false
+        binding.btnNotificationExampleSecondScenario.isEnabled = false
 
         job = scope.launch {
             // Start spatial audio playback of OBJECT_SOUND_FILE at the model position. The
             // returned sourceId handle is stored and allows for repositioning the sound object
             // whenever the cube position changes.
-            audioEngine.preloadSoundFile(DOCUMENT_SOUND_FILE)
-            audioEngine.preloadSoundFile(NOTIFICATION_SOUND_FILE)
             documentSourceId = audioEngine.createSoundObject(DOCUMENT_SOUND_FILE)
             notificationSourceId = audioEngine.createSoundObject(NOTIFICATION_SOUND_FILE)
             audioEngine.setSoundObjectPosition(
@@ -83,9 +101,50 @@ class NotificationSpatializationExampleFragment : Fragment(R.layout.layout_notif
 
             withContext(Dispatchers.Main) {
                 binding.btnNotificationExample.isEnabled = true
+                binding.btnNotificationExampleSecondScenario.isEnabled = true
             }
         }
     }
+
+    private fun playSpatializationSecondScenario() {
+        binding.btnNotificationExample.isEnabled = false
+        binding.btnNotificationExampleSecondScenario.isEnabled = false
+
+        job = scope.launch {
+            // Start spatial audio playback of OBJECT_SOUND_FILE at the model position. The
+            // returned sourceId handle is stored and allows for repositioning the sound object
+            // whenever the cube position changes.
+            documentSourceId = audioEngine.createSoundObject(DOCUMENT_SOUND_INES_FILE)
+            notificationSourceId = audioEngine.createSoundObject(NOTIFICATION_SOUND_CRISTIANO_FILE)
+            audioEngine.setSoundObjectPosition(
+                documentSourceId,
+                modelPosition[0],
+                modelPosition[1],
+                modelPosition[2]
+            )
+            audioEngine.playSound(documentSourceId, false)
+
+            // Preload an unspatialized sound to be played on a successful trigger on the cube.
+            //audioEngine.preloadSoundFile(SUCCESS_SOUND_FILE)
+
+            audioEngine.setSoundObjectPosition(
+                notificationSourceId,
+                notificationPosition[0],
+                notificationPosition[1],
+                notificationPosition[2]
+            )
+
+            delay(10000)
+            launchNotification()
+            audioEngine.playSound(notificationSourceId, false)
+
+            withContext(Dispatchers.Main) {
+                binding.btnNotificationExample.isEnabled = true
+                binding.btnNotificationExampleSecondScenario.isEnabled = true
+            }
+        }
+    }
+
 
     private fun launchNotification() {
         scope.launch {
@@ -112,5 +171,7 @@ class NotificationSpatializationExampleFragment : Fragment(R.layout.layout_notif
     companion object {
         private const val DOCUMENT_SOUND_FILE = "first_notice_example.mp3"
         private const val NOTIFICATION_SOUND_FILE = "notification_ines.mp3"
+        private const val DOCUMENT_SOUND_INES_FILE = "first_notice_ines.mp3"
+        private const val NOTIFICATION_SOUND_CRISTIANO_FILE = "notification_cristiano.mp3"
     }
 }

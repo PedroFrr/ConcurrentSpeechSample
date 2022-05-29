@@ -17,9 +17,12 @@
     <string name="play_scenario_label">Reproduzir cenário</string>
     <string name="play_scenario_spatial_label">Reproduzir cenário espacialização</string>
     <string name="notification_scenario_no_spatialization">Notificação sem espacialização</string>
-    <string name="notification_scenario_spatialization">Notificação com espacialização</string>
-    <string name="sample_text_first_column">Até a idade média, a história de Portugal era inseparável da de Espanha. O que hoje conhecemos como Portugal passou a fazer parte da província romana de Lusitânia no século II a.C. No século V o controle da região passou a ser dos visigodos e, no século VIII foi ocupado pelos muçulmanos.</string>
-    <string name="sample_text_second_column">No ano de 997, o território entre os rios Douro e Minho (atual Portugal setentrional) foi reconquistado dos árabes por Bermudo II, rei de Leão e, em 1064, Fernando I, rei de Castelha e Leão, levou à reconquista do que hoje conhecemos como Coimbra</string>
+    <string name="notification_spatialization_first_scenario">Documento: Homem | Notificação: Mulher</string>
+    <string name="notification_spatialization_second_scenario">Documento: Mulher | Notificação: Homem</string>
+    <string name="scenario_spatialization_first_news_first_column">A seleção nacional de sub-17 perdeu, esta tarde, diante a França nos penáltis, por 6-5, e diz adeus à final do Campeonato da Europa do escalão, após o empate a dois golos nos 90 minutos.</string>
+    <string name="scenario_spatialization_first_news_second_column">Na primeira meia-final, em Netanya, Israel, o médio Zaire Emery adiantou os gauleses, aos oito minutos, a formação das quinas deu a volta, pelo extremo Afonso Moreira, aos 12, e o médio-defensivo Dário Essugo, aos 20.</string>
+    <string name="scenario_spatialization_second_news_first_column">Milhares de apoiantes de Sporting e Famalicão conviveram hoje em redor do Estádio Nacional, num ambiente salutar e de festa nas horas que antecederam a final da Taça de Portugal feminina de futebol, entre lisboetas e minhotas.</string>
+    <string name="scenario_spatialization_second_news_second_column">Apesar de ter uma representação menor, o Famalicão contou, ainda assim, com algumas centenas de apoiantes, sendo que entre eles um total de 56 pessoas viajaram desde Ovar apenas para apoiar uma jogadora: Mariana Campino.</string>
     <string name="channel_to_configure">Canal a configurar</string>
     <string name="play_scenario_with_pauses">Reproduzir cenário com pausas</string>
     <string name="homescreen_scenario">Cenário homescreen</string>
@@ -36,4 +39,11 @@
     </string-array>
 
     <string name="first_notice">O Benfica sagrou-se campeão nacional de juniores de futebol pela 25.ª vez na sua história, ao bater em casa o Sp, Braga, por 3-0, na 14.ª e última jornada do Apuramento de Campeão da época 2021/22. Iuri Moreira (87 e 89 minutos) e Franculino Djú (90+6) marcaram os golos dos ‘encarnados’, que terminaram a prova com os mesmos 33 pontos do FC Porto (6-0 ao Estoril Praia), mas vantagem na diferença total de golos (35-14 contra 29-9).</string>
+
+    <!--Scanning-->
+    <string name="scanning_spatialization_one_voice">Uma voz</string>
+    <string name="scanning_spatialization_two_voices">Duas vozes</string>
+    <string name="scanning_spatialization_three_voices">Três vozes</string>
+    <string name="scanning_spatialization_four_voices">Quatro vozes</string>
+
 </resources>
