@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/item_audio_configuration.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_audio_properties_earcons_example.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_audio_properties_example.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_audio_proprieties_samples_example.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_homescreen_first_page.xml" value="0.536" />
         <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_notification_example.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_notification_no_spatialization_example.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_notification_spatialization_example.xml" value="0.29891304347826086" />
         <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_paragraph_headers.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_scanning_example.xml" value="0.29891304347826086" />

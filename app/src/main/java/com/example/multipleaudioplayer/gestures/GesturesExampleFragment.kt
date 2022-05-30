@@ -3,7 +3,6 @@ package com.example.multipleaudioplayer.gestures
 import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityEvent
@@ -18,12 +17,7 @@ import com.example.multipleaudioplayer.databinding.LayoutGesturesExampleBinding
 import com.example.multipleaudioplayer.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import logcat.logcat
 
 private const val NUM_PAGES = 2
@@ -36,14 +30,8 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
 
     private lateinit var viewPager: ViewPager2
 
-    private var job: Job? = null
-
     private val loadingMediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(requireActivity(), R.raw.loading)
-    }
-
-    private val exploringMediaPlayer: MediaPlayer by lazy {
-        MediaPlayer.create(context, R.raw.wind)
     }
 
     private val imageViewMediaPlayer: MediaPlayer by lazy {
@@ -58,19 +46,35 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         MediaPlayer.create(context, R.raw.edit_text)
     }
 
-    private val switchMediaPlayer: MediaPlayer by lazy {
-        MediaPlayer.create(context, R.raw.switch_sound)
+    private val switchOnMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.switch_on)
     }
 
-    private val radioButtonMediaPlayer: MediaPlayer by lazy {
-        MediaPlayer.create(context, R.raw.radio_button)
+    private val switchOffMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.switch_off)
+    }
+
+    private val radioButtonOnMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.radio_button_on)
+    }
+
+    private val radioButtonOffMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.radio_button_off)
     }
 
     private val checkboxMediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(context, R.raw.check_box)
     }
 
-    private val buttonMediaPlayer: MediaPlayer by lazy { MediaPlayer.create(binding.root.context, R.raw.key_press) }
+    private val notCheckedCheckboxMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(context, R.raw.not_checked_checkbox)
+    }
+    private val buttonMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(
+            binding.root.context,
+            R.raw.key_press
+        )
+    }
 
     private val singleTapMediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(context, R.raw.single_tap)
@@ -113,20 +117,15 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         }
 
         ViewCompat.setAccessibilityDelegate(binding.root, object : AccessibilityDelegateCompat() {
-            override fun onRequestSendAccessibilityEvent(host: ViewGroup?, child: View?, event: AccessibilityEvent): Boolean {
+            override fun onRequestSendAccessibilityEvent(
+                host: ViewGroup?,
+                child: View?,
+                event: AccessibilityEvent
+            ): Boolean {
                 logcat { event.toString() }
-                noGesture.cancel()
                 when (event.eventType) {
-                    AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED -> {
-                        timer.cancel()
-                        noGesture.start()
-                    }
-                    AccessibilityEvent.TYPE_VIEW_HOVER_EXIT -> {
-                        timer.start()
-                    }
                     AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
                         singleTapMediaPlayer.start() // single tap sound (with talkback on)
-                        timer.cancel()
                         when (event.className) {
                             Widget.BUTTON.value -> {
                                 buttonMediaPlayer.start()
@@ -141,17 +140,17 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
                                 editTextMediaPlayer.start()
                             }
                             Widget.SWITCH.value -> {
-                                switchMediaPlayer.start()
+                                if(event.isChecked) switchOnMediaPlayer.start() else switchOffMediaPlayer.start()
                             }
                             Widget.RADIO_BUTTON.value -> {
-                                radioButtonMediaPlayer.start()
+                                if(event.isChecked) radioButtonOnMediaPlayer.start() else radioButtonOffMediaPlayer.start()
                             }
                             Widget.CHECK_BOX.value -> {
-                                checkboxMediaPlayer.start()
+                                val isCheckBoxChecked = event.isChecked
+                                if (isCheckBoxChecked) checkboxMediaPlayer.start() else notCheckedCheckboxMediaPlayer.start()
                             }
 
                         }
-                        if (!exploringMediaPlayer.isPlaying) exploringMediaPlayer.start()
                     }
                 }
                 return super.onRequestSendAccessibilityEvent(host, child, event)
@@ -174,38 +173,6 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
             return fragment
         }
     }
-
-    val timer = object : CountDownTimer(100, 100) {
-        override fun onTick(p0: Long) {
-            // do nothing
-        }
-
-        override fun onFinish() {
-            exploringMediaPlayer.pause()
-            exploringMediaPlayer.seekTo(0)
-        }
-    }
-
-    val noGesture = object : CountDownTimer(1000, 100) {
-        override fun onTick(p0: Long) {
-            // do nothing
-        }
-
-        override fun onFinish() {
-            exploringMediaPlayer.pause()
-            exploringMediaPlayer.seekTo(0)
-        }
-    }
-
-/*    companion object {
-        private const val BUTTON = "android.widget.Button"
-        private const val IMAGE_VIEW = "android.widget.ImageView"
-        private const val TEXT_VIEW = "android.widget.TextView"
-        private const val EDIT_TEXT = "android.widget.EditText"
-        private const val SWITCH = "android.widget.Switch"
-        private const val RADIO_BUTTON = "android.widget.RadioButton"
-        private const val CHECK_BOX = "android.widget.CheckBox"
-    }*/
 
     enum class Widget(val value: String) {
         BUTTON("android.widget.Button"),

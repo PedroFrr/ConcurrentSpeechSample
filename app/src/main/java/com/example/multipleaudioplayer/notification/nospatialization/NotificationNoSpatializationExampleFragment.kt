@@ -50,6 +50,12 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
         setupNewMediaPlayer()
 
         setupNewNotificationMediaPlayer()
+
+        setupDefaultVoices()
+    }
+
+    private fun setupDefaultVoices(){
+        binding.notificationProperties.spinnerVoices.setSelection(1)
     }
 
     private fun setupUi() {

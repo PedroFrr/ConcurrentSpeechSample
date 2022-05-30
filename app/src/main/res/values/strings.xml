@@ -25,6 +25,7 @@
     <string name="scenario_spatialization_second_news_second_column">Apesar de ter uma representação menor, o Famalicão contou, ainda assim, com algumas centenas de apoiantes, sendo que entre eles um total de 56 pessoas viajaram desde Ovar apenas para apoiar uma jogadora: Mariana Campino.</string>
     <string name="channel_to_configure">Canal a configurar</string>
     <string name="play_scenario_with_pauses">Reproduzir cenário com pausas</string>
+    <string name="play_scenario_with_pauses_faster">Reproduzir cenário com pausas mais rápido</string>
     <string name="homescreen_scenario">Cenário homescreen</string>
     <string name="headers_paragraph_scenario">Cenário parágrafo e header</string>
     <string name="history">History</string>

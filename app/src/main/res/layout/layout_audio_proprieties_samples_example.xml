@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/tv_speech_voice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/speech_voice"
+        android:layout_marginTop="12dp" />
+
+    <Spinner
+        android:id="@+id/spinner_voices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_speech_voice"
+        android:layout_marginTop="12dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_audio_properties_scenario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/btn_spatial_scenario"
+        android:text="Propriedades em simultâneo com o texto" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_spatial_scenario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/btn_scenario_with_pauses"
+        android:text="Propriedades em simultâneo com o texto e espacialização" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_scenario_with_pauses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/btn_scenario_with_pauses_faster"
+        android:text="@string/play_scenario_with_pauses" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_scenario_with_pauses_faster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/btn_scenario_with_pauses_with_earcon"
+        android:text="@string/play_scenario_with_pauses_faster" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_scenario_with_pauses_with_earcon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/btn_scenario_only_with_earcons"
+        android:text="Cenário com pausas | earcons e voz" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_scenario_only_with_earcons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Cenário com pausas e só earcons" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,11 +34,11 @@ class HomeScreenFirstPageFragment : Fragment(R.layout.layout_homescreen_first_pa
     }
 
     private val switchMediaPlayer: MediaPlayer by lazy {
-        MediaPlayer.create(context, R.raw.switch_sound)
+        MediaPlayer.create(context, R.raw.switch_on)
     }
 
     private val radioButtonMediaPlayer: MediaPlayer by lazy {
-        MediaPlayer.create(context, R.raw.radio_button)
+        MediaPlayer.create(context, R.raw.radio_button_on)
     }
 
     private val checkboxMediaPlayer: MediaPlayer by lazy {

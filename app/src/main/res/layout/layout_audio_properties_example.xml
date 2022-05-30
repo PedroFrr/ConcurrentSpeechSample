@@ -5,47 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="12dp">
 
-    <TextView
-        android:id="@+id/tv_speech_voice"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/speech_voice"
-        android:layout_marginTop="12dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner_voices"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_speech_voice"
-        android:layout_marginTop="12dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_audio_properties_scenario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/btn_spatial_scenario"
-        android:text="@string/play_scenario_label" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_spatial_scenario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/btn_scenario_with_pauses"
-        android:text="@string/play_scenario_spatial_label" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_scenario_with_pauses"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/btn_scenario_with_pauses_with_earcon"
-        android:text="@string/play_scenario_with_pauses" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_scenario_with_pauses_with_earcon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Cenário com pausas e earcons" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

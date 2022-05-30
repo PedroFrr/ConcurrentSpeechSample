@@ -22,32 +22,24 @@
     <ImageView
         android:id="@+id/iv"
         android:layout_width="100dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/medicine"
         android:src="@drawable/ic_stat_medicine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_homescreen"
-        app:layout_constraintVertical_weight="0.5"
         app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/history"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv"
-        app:layout_constraintTop_toBottomOf="@id/rv_homescreen"
-        app:layout_constraintVertical_weight="0.5"
         app:tint="@color/black" />
 
     <EditText
         android:id="@+id/et"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:autofillHints="Phone number"
         android:cursorVisible="false"
         android:focusable="false"
@@ -56,32 +48,20 @@
         android:hint="@string/phone_number"
         android:inputType="phone"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv"
-        app:layout_constraintTop_toBottomOf="@id/rv_homescreen"
-        app:layout_constraintVertical_weight="0.5"
         app:tint="@color/black" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/sv"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/et"
-        app:layout_constraintTop_toBottomOf="@id/rv_homescreen"
-        app:layout_constraintVertical_weight="0.5"
         app:tint="@color/black" />
 
     <RadioGroup
         android:id="@+id/rg"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/sv"
-        app:layout_constraintTop_toBottomOf="@id/rv_homescreen"
-        app:layout_constraintVertical_weight="0.5"
         app:tint="@color/black">
 
         <RadioButton
@@ -99,13 +79,19 @@
     <CheckBox
         android:id="@+id/cb"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/rg"
-        app:layout_constraintTop_toBottomOf="@id/rv_homescreen"
-        app:layout_constraintVertical_weight="0.5"
         app:tint="@color/black" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="iv,tv,et,rg,sv,cb"
+        app:flow_wrapMode="chain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_weight="0.5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

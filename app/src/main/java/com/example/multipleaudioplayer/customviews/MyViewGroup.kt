@@ -3,7 +3,6 @@ package com.example.multipleaudioplayer.customviews
 import android.content.Context
 import android.graphics.Rect
 import android.media.MediaPlayer
-import android.os.CountDownTimer
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -80,10 +79,6 @@ class MyViewGroup @JvmOverloads constructor(
         MediaPlayer.create(context, R.raw.swipe_down_two_fingers)
     }
 
-    private val exploringMediaPlayer: MediaPlayer by lazy {
-        MediaPlayer.create(context, R.raw.wind)
-    }
-
     private val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
         override fun onShowPress(event: MotionEvent?) {
             logcat { event.description("Press") }
@@ -103,7 +98,6 @@ class MyViewGroup @JvmOverloads constructor(
         override fun onDown(event: MotionEvent): Boolean {
             logcat { "" }
             logcat { event.description("Down") }
-            if (!exploringMediaPlayer.isPlaying) exploringMediaPlayer.start()
             return true
         }
 
@@ -209,8 +203,6 @@ class MyViewGroup @JvmOverloads constructor(
     private fun detectEvents(event: MotionEvent): Boolean {
         val eventDescription = event.singleTouchDescription()
         logcat { eventDescription }
-//        noGesture.cancel()
-//        noGesture.start()
         when (event.pointerCount) {
             // two fingers
             2 -> {
@@ -253,10 +245,6 @@ class MyViewGroup @JvmOverloads constructor(
                 }
             }
             1 -> {
-                if(event.action == MotionEvent.ACTION_UP){
-                    exploringMediaPlayer.pause()
-                    exploringMediaPlayer.seekTo(0)
-                }
                 gestureDetector.onTouchEvent(event)
             }
             3 -> {
@@ -301,15 +289,4 @@ class MyViewGroup @JvmOverloads constructor(
     fun Float.round(): Int {
         return this.toInt()
     }
-
-/*    private val noGesture = object : CountDownTimer(1000, 100) {
-        override fun onTick(p0: Long) {
-            // do nothing
-        }
-
-        override fun onFinish() {
-            exploringMediaPlayer.pause()
-            exploringMediaPlayer.seekTo(0)
-        }
-    }*/
 }
