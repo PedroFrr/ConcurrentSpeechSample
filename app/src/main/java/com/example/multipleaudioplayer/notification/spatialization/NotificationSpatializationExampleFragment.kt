@@ -42,7 +42,7 @@ class NotificationSpatializationExampleFragment :
 
         scope.launch {
             withContext(Dispatchers.Main) {
-                binding.loading.show()
+                toggleButtons(true)
             }
             audioEngine.preloadSoundFile(DOCUMENT_SOUND_FILE)
             audioEngine.preloadSoundFile(NOTIFICATION_SOUND_FILE)
@@ -50,7 +50,7 @@ class NotificationSpatializationExampleFragment :
             audioEngine.preloadSoundFile(NOTIFICATION_SOUND_CRISTIANO_FILE)
 
             withContext(Dispatchers.Main) {
-                binding.loading.hide()
+                toggleButtons(false)
             }
         }
 
@@ -65,11 +65,21 @@ class NotificationSpatializationExampleFragment :
         binding.btnNotificationExampleSecondScenario.setOnClickListener {
             playSpatializationSecondScenario()
         }
+
+        binding.cvMediaPlayerButtons.apply {
+            btnStop.setOnClickListener {
+                if (audioEngine.isSoundPlaying(documentSourceId))
+                    audioEngine.stopSound(documentSourceId)
+                job?.cancel()
+                toggleButtons(true)
+            }
+            btnPlay.setOnClickListener { }
+            btnPause.setOnClickListener { }
+        }
     }
 
     private fun playNotificationExampleWithSpatialization() {
-        binding.btnNotificationExample.isEnabled = false
-        binding.btnNotificationExampleSecondScenario.isEnabled = false
+        toggleButtons(false)
 
         job = scope.launch {
             // Start spatial audio playback of OBJECT_SOUND_FILE at the model position. The
@@ -100,15 +110,13 @@ class NotificationSpatializationExampleFragment :
             audioEngine.playSound(notificationSourceId, false)
 
             withContext(Dispatchers.Main) {
-                binding.btnNotificationExample.isEnabled = true
-                binding.btnNotificationExampleSecondScenario.isEnabled = true
+                toggleButtons(true)
             }
         }
     }
 
     private fun playSpatializationSecondScenario() {
-        binding.btnNotificationExample.isEnabled = false
-        binding.btnNotificationExampleSecondScenario.isEnabled = false
+        toggleButtons(false)
 
         job = scope.launch {
             // Start spatial audio playback of OBJECT_SOUND_FILE at the model position. The
@@ -139,8 +147,7 @@ class NotificationSpatializationExampleFragment :
             audioEngine.playSound(notificationSourceId, false)
 
             withContext(Dispatchers.Main) {
-                binding.btnNotificationExample.isEnabled = true
-                binding.btnNotificationExampleSecondScenario.isEnabled = true
+                toggleButtons(true)
             }
         }
     }
@@ -157,15 +164,16 @@ class NotificationSpatializationExampleFragment :
         }
     }
 
-    override fun onPause() {
-        audioEngine.pause() // to play sound in the background we just don't have to pause it
-        job?.cancel()
-        super.onPause()
+    private fun toggleButtons(isEnabled: Boolean) {
+        binding.btnNotificationExample.isEnabled = isEnabled
+        binding.btnNotificationExampleSecondScenario.isEnabled = isEnabled
     }
 
-    override fun onResume() {
-        super.onResume()
-        audioEngine.resume()
+    override fun onPause() {
+        if (audioEngine.isSoundPlaying(documentSourceId))
+            audioEngine.stopSound(documentSourceId)
+        job?.cancel()
+        super.onPause()
     }
 
     companion object {

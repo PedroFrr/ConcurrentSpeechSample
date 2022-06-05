@@ -36,8 +36,8 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
         val tabLayout = binding.tabLayout
         TabLayoutMediator(tabLayout, binding.pager) { tab, position ->
             tab.text = when (position) {
-                0 -> "Primeira notícia"
-                else -> "Segunda notícia"
+                0 -> "Espacialização"
+                else -> "Sem espacialização"
             }
         }.attach()
 
@@ -63,8 +63,8 @@ class ScanningExampleFragment : Fragment(R.layout.layout_scanning_example) {
 
         override fun createFragment(position: Int): Fragment {
             val fragment = when (position) {
-                0 -> SpatializationFirstNewsExampleFragment()
-                else -> SpatializationSecondNewsExampleFragment()
+                0 -> ScanningSpatializationExampleFragment()
+                else -> ScanningNoSpatializationExampleFragment()
             }
             return fragment
         }

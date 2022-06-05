@@ -54,7 +54,7 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
         setupDefaultVoices()
     }
 
-    private fun setupDefaultVoices(){
+    private fun setupDefaultVoices() {
         binding.notificationProperties.spinnerVoices.setSelection(1)
     }
 
@@ -87,6 +87,25 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
 
         binding.btnNotificationNoSpatialization.setOnClickListener {
             playVoice()
+        }
+
+        binding.cvMediaPlayerButtons.apply {
+            btnStop.setOnClickListener {
+                if (mediaPlayer?.isPlaying == true) {
+                    mediaPlayer?.stop()
+                    mediaPlayer?.release()
+                }
+
+                if (notificationSampleMediaPlayer?.isPlaying == true) {
+                    notificationSampleMediaPlayer?.stop()
+                    notificationSampleMediaPlayer?.release()
+                }
+
+                job?.cancel()
+                toggleButtons(true)
+            }
+            btnPlay.setOnClickListener { }
+            btnPause.setOnClickListener { }
         }
     }
 
@@ -182,9 +201,7 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
         // Set media player's data source to previously obtained URL.
 
         // Create a media player to play the synthesized audio stream.
-        if (mediaPlayer?.isPlaying == true) {
-            setupNewMediaPlayer()
-        }
+        setupNewMediaPlayer()
         mediaPlayer?.setDataSource(presignedSynthesizeSpeechUrl.toString())
         mediaPlayer?.prepareAsync()
     }
@@ -219,9 +236,7 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
         // Set media player's data source to previously obtained URL.
 
         // Create a media player to play the synthesized audio stream.
-        if (notificationSampleMediaPlayer?.isPlaying == true) {
-            setupNewNotificationMediaPlayer()
-        }
+        setupNewNotificationMediaPlayer()
         notificationSampleMediaPlayer?.setDataSource(presignedSynthesizeSpeechUrl.toString())
         notificationSampleMediaPlayer?.prepareAsync()
     }
@@ -254,11 +269,16 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
         }
     }
 
+    private fun toggleButtons(isEnabled: Boolean) {
+        binding.btnNotificationNoSpatialization.isEnabled = isEnabled
+    }
+
     override fun onPause() {
         if (mediaPlayer?.isPlaying == true) {
             mediaPlayer?.stop()
             mediaPlayer?.release()
         }
+
         if (notificationSampleMediaPlayer?.isPlaying == true) {
             notificationSampleMediaPlayer?.stop()
             notificationSampleMediaPlayer?.release()

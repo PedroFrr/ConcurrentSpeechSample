@@ -3,23 +3,33 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/item_audio_configuration.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_audio_properties_earcons_example.xml" value="0.18697916666666667" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_audio_properties_example.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_audio_proprieties_samples_example.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_homescreen_first_page.xml" value="0.536" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_notification_example.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_notification_no_spatialization_example.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_notification_spatialization_example.xml" value="0.29891304347826086" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_paragraph_headers.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_scanning_example.xml" value="0.29891304347826086" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_scanning_no_spatialization.xml" value="0.365625" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_scanning_spatialization.xml" value="0.365625" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_spatialization_example.xml" value="0.15" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_spatialization_example_first_news.xml" value="0.14895833333333333" />
-        <entry key="..\:/Users/Pedro Francisco/AndroidStudioProjects/ConcurrentSpeechSample/app/src/main/res/layout/layout_spatialization_second_news.xml" value="0.375" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.7555555555555555" />
+        <entry key="../../.gradle/caches/transforms-3/7c35e9ced6058ee9ee419dce8130dd8e/transformed/appcompat-1.4.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.24166666666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.46112886048988283" />
+        <entry key="app/src/main/res/layout/custom_view_play_buttons.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/item_audio_configuration.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_homescreen.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/layout_audio_properties_example.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/layout_gestures_example.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/layout_homescreen_first_page.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/layout_homescreen_second_page.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/layout_notification_example.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_notification_no_spatialization_example.xml" value="0.40260416666666665" />
+        <entry key="app/src/main/res/layout/layout_notification_spatialization_example.xml" value="0.2203125" />
+        <entry key="app/src/main/res/layout/layout_paragraph_headers.xml" value="0.21875" />
+        <entry key="app/src/main/res/layout/layout_sample_options_fragment.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/layout_scanning_example.xml" value="0.21458333333333332" />
+        <entry key="app/src/main/res/layout/layout_scanning_no_spatialization.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/layout_scanning_spatialization.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/layout_spatialization_example.xml" value="0.22552083333333334" />
+        <entry key="app/src/main/res/xml/service_config.xml" value="0.21784420289855072" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
 </project>
