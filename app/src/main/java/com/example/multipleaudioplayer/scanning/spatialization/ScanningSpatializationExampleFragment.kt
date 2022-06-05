@@ -3,7 +3,6 @@ package com.example.multipleaudioplayer.scanning.spatialization
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutScanningSpatializationBinding
 import com.google.vr.sdk.audio.GvrAudioEngine
@@ -60,12 +59,6 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
                 toggleButtons(true)
             }
         }
-/*
-        setFragmentResultListener("requestKey") { requestKey, bundle ->
-            if(requestKey == "noSpatializationPageSelected") audioEngine.pause()
-            if(requestKey == "spatializationPageSelected") audioEngine.resume()
-        }*/
-
 
         setupUi()
     }
@@ -85,6 +78,25 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
 
         binding.btnSpatialScenarioFourVoices.setOnClickListener {
             playSpatializationWithNumberOfVoices(numberOfVoices = 4)
+        }
+
+        binding.cvMediaPlayerButtons.apply {
+            btnStop.setOnClickListener {
+                if (audioEngine.isSoundPlaying(oneVoiceId)) audioEngine.stopSound(oneVoiceId)
+                if (audioEngine.isSoundPlaying(twoVoicePartOneId)) audioEngine.stopSound(twoVoicePartOneId)
+                if (audioEngine.isSoundPlaying(twoVoicePartTwoId)) audioEngine.stopSound(twoVoicePartTwoId)
+                if (audioEngine.isSoundPlaying(threeVoicePartOneId)) audioEngine.stopSound(threeVoicePartOneId)
+                if (audioEngine.isSoundPlaying(threeVoicePartTwoId)) audioEngine.stopSound(threeVoicePartTwoId)
+                if (audioEngine.isSoundPlaying(threeVoicePartThreeId)) audioEngine.stopSound(threeVoicePartThreeId)
+                if (audioEngine.isSoundPlaying(fourVoicePartOneId)) audioEngine.stopSound(fourVoicePartOneId)
+                if (audioEngine.isSoundPlaying(fourVoicePartTwoId)) audioEngine.stopSound(fourVoicePartTwoId)
+                if (audioEngine.isSoundPlaying(fourVoicePartThreeId)) audioEngine.stopSound(fourVoicePartThreeId)
+                if (audioEngine.isSoundPlaying(fourVoicePartFourId)) audioEngine.stopSound(fourVoicePartFourId)
+
+                toggleButtons(isEnable = true)
+            }
+            btnPlay.setOnClickListener { }
+            btnPause.setOnClickListener { }
         }
     }
 
@@ -164,7 +176,17 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
     }
 
     override fun onPause() {
-        audioEngine.pause()
+        if (audioEngine.isSoundPlaying(oneVoiceId)) audioEngine.stopSound(oneVoiceId)
+        if (audioEngine.isSoundPlaying(twoVoicePartOneId)) audioEngine.stopSound(twoVoicePartOneId)
+        if (audioEngine.isSoundPlaying(twoVoicePartTwoId)) audioEngine.stopSound(twoVoicePartTwoId)
+        if (audioEngine.isSoundPlaying(threeVoicePartOneId)) audioEngine.stopSound(threeVoicePartOneId)
+        if (audioEngine.isSoundPlaying(threeVoicePartTwoId)) audioEngine.stopSound(threeVoicePartTwoId)
+        if (audioEngine.isSoundPlaying(threeVoicePartThreeId)) audioEngine.stopSound(threeVoicePartThreeId)
+        if (audioEngine.isSoundPlaying(fourVoicePartOneId)) audioEngine.stopSound(fourVoicePartOneId)
+        if (audioEngine.isSoundPlaying(fourVoicePartTwoId)) audioEngine.stopSound(fourVoicePartTwoId)
+        if (audioEngine.isSoundPlaying(fourVoicePartThreeId)) audioEngine.stopSound(fourVoicePartThreeId)
+        if (audioEngine.isSoundPlaying(fourVoicePartFourId)) audioEngine.stopSound(fourVoicePartFourId)
+
         super.onPause()
     }
 

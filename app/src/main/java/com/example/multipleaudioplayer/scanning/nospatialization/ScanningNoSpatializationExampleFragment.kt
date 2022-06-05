@@ -61,6 +61,34 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
         binding.btnPlayScenario.setOnClickListener {
             playVoice()
         }
+
+        binding.cvMediaPlayerButtons.apply {
+            btnStop.setOnClickListener {
+                if (mediaPlayer1?.isPlaying == true) {
+                    mediaPlayer1?.stop()
+                    mediaPlayer1?.release()
+                }
+
+                if (mediaPlayer2?.isPlaying == true) {
+                    mediaPlayer2?.stop()
+                    mediaPlayer2?.release()
+                }
+
+                if (mediaPlayer3?.isPlaying == true) {
+                    mediaPlayer3?.stop()
+                    mediaPlayer3?.release()
+                }
+
+                if (mediaPlayer4?.isPlaying == true) {
+                    mediaPlayer4?.stop()
+                    mediaPlayer4?.release()
+                }
+
+                binding.btnPlayScenario.isEnabled = true
+            }
+            btnPlay.setOnClickListener { }
+            btnPause.setOnClickListener { }
+        }
     }
 
     private fun initPollyClient() {
@@ -217,33 +245,25 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
     }
 
     private fun setFirstMediaPlayer(presignedSynthesizeSpeechUrl: URL?) {
-        if (mediaPlayer1?.isPlaying == true) {
-            setupFirstNewMediaPlayer()
-        }
+        setupFirstNewMediaPlayer()
         mediaPlayer1?.setDataSource(presignedSynthesizeSpeechUrl.toString())
         mediaPlayer1?.prepareAsync()
     }
 
     private fun setSecondMediaPlayer(presignedSynthesizeSpeechUrl: URL?) {
-        if (mediaPlayer2?.isPlaying == true) {
-            setupSecondNewMediaPlayer()
-        }
+        setupSecondNewMediaPlayer()
         mediaPlayer2?.setDataSource(presignedSynthesizeSpeechUrl.toString())
         mediaPlayer2?.prepareAsync()
     }
 
     private fun setThirdMediaPlayer(presignedSynthesizeSpeechUrl: URL?) {
-        if (mediaPlayer3?.isPlaying == true) {
-            setupThirdNewMediaPlayer()
-        }
+        setupThirdNewMediaPlayer()
         mediaPlayer3?.setDataSource(presignedSynthesizeSpeechUrl.toString())
         mediaPlayer3?.prepareAsync()
     }
 
     private fun setFourthMediaPlayer(presignedSynthesizeSpeechUrl: URL?) {
-        if (mediaPlayer4?.isPlaying == true) {
-            setupFourthNewMediaPlayer()
-        }
+        setupFourthNewMediaPlayer()
         mediaPlayer4?.setDataSource(presignedSynthesizeSpeechUrl.toString())
         mediaPlayer4?.prepareAsync()
     }
@@ -314,5 +334,28 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
             binding.btnPlayScenario.isEnabled = true
             false
         }
+    }
+
+    override fun onPause() {
+        if (mediaPlayer1?.isPlaying == true) {
+            mediaPlayer1?.stop()
+            mediaPlayer1?.release()
+        }
+
+        if (mediaPlayer2?.isPlaying == true) {
+            mediaPlayer2?.stop()
+            mediaPlayer2?.release()
+        }
+
+        if (mediaPlayer3?.isPlaying == true) {
+            mediaPlayer3?.stop()
+            mediaPlayer3?.release()
+        }
+
+        if (mediaPlayer4?.isPlaying == true) {
+            mediaPlayer4?.stop()
+            mediaPlayer4?.release()
+        }
+        super.onPause()
     }
 }

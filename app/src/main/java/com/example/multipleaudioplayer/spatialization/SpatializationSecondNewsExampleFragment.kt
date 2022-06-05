@@ -51,6 +51,16 @@ class SpatializationSecondNewsExampleFragment :
         binding.btnScenario.setOnClickListener {
             playSpatialization()
         }
+
+        binding.cvMediaPlayerButtons.apply {
+            btnStop.setOnClickListener {
+                if (audioEngine.isSoundPlaying(documentPartOneSourceId)) audioEngine.stopSound(documentPartOneSourceId)
+                if (audioEngine.isSoundPlaying(documentPartTwoSourceId)) audioEngine.stopSound(documentPartTwoSourceId)
+                binding.btnScenario.isEnabled = true
+            }
+            btnPlay.setOnClickListener { }
+            btnPause.setOnClickListener { }
+        }
     }
 
     private fun playSpatialization() {
