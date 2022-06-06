@@ -3,13 +3,17 @@ package com.example.multipleaudioplayer.audioproperties
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutAudioProprietiesSamplesExampleBinding
 import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class AudioPropertiesSamplesExampleFragment :
@@ -85,7 +89,7 @@ class AudioPropertiesSamplesExampleFragment :
         scope.launch {
             withContext(Dispatchers.Main) {
                 toggleButtons(isEnabled = false)
-6            }
+            }
             awaitAll(
                 async { audioEngine.preloadSoundFile(MALE_VOICE_MAIN_DOCUMENT_NEW) },
                 async { audioEngine.preloadSoundFile(MALE_VOICE_AUDIO_PROPERTIES_NEW) }
@@ -100,11 +104,6 @@ class AudioPropertiesSamplesExampleFragment :
     }
 
     private fun setupUi() {
-        val voices = resources.getStringArray(R.array.Voices)
-        val adapter =
-            ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, voices)
-        binding.spinnerVoices.adapter = adapter
-
         binding.btnAudioPropertiesScenario.setOnClickListener {
             audioPropertiesOnlyVoiceSameTime.start()
         }
@@ -155,36 +154,6 @@ class AudioPropertiesSamplesExampleFragment :
         }
     }
 
-    private fun playAudioPropertiesWithEarcons() {
-        scope.launch {
-            awaitAll(async {
-                playDocumentSampleWithPauses()
-            }, async {
-                playAudioPropertiesWithPauses()
-            },
-                async {
-                    playEarcons()
-                })
-        }
-    }
-
-    private fun playMockAudioPropertiesSample() {
-        scope.launch {
-            withContext(Dispatchers.Main) {
-                toggleButtons(isEnabled = false)
-            }
-            awaitAll(async {
-                playDocumentSample()
-            }, async {
-                playAudioProperties()
-            })
-
-            withContext(Dispatchers.Main) {
-                toggleButtons(isEnabled = true)
-            }
-        }
-    }
-
     private fun playSampleWithSpatialization() {
         scope.launch {
             withContext(Dispatchers.Main) {
@@ -194,7 +163,7 @@ class AudioPropertiesSamplesExampleFragment :
             mainDocumentSourceId = audioEngine.createSoundObject(MALE_VOICE_MAIN_DOCUMENT_NEW)
             audioPropertiesSourceId = audioEngine.createSoundObject(MALE_VOICE_AUDIO_PROPERTIES_NEW)
 
-            audioEngine.setSoundObjectPosition(mainDocumentSourceId, -8.0f, 0.0f, 0.0f)
+            //audioEngine.setSoundObjectPosition(mainDocumentSourceId, -8.0f, 0.0f, 0.0f)
             audioEngine.setSoundObjectPosition(audioPropertiesSourceId, 8.0f, 0.0f, 0.0f)
 
 
@@ -208,29 +177,6 @@ class AudioPropertiesSamplesExampleFragment :
                 toggleButtons(isEnabled = true)
             }
         }
-    }
-
-    private fun playDocumentSample() {
-        when (binding.spinnerVoices.selectedItem.toString()) {
-            "Cristiano" -> mediaPlayerDocumentSampleCristiano.start()
-            "Ines" -> mediaPlayerDocumentSampleInes.start()
-        }
-    }
-
-    private fun playAudioProperties() {
-        mediaPlayerAudioProperties.start()
-    }
-
-    private fun playDocumentSampleWithPauses() {
-        mediaPlayerDocumentSampleWithPauses.start()
-    }
-
-    private fun playAudioPropertiesWithPauses() {
-        mediaPlayerAudioPropertiesWithPauses.start()
-    }
-
-    private fun playEarcons() {
-        mediaPlayerEarcon.start()
     }
 
     private fun setupMediaPlayerListeners() {
@@ -254,8 +200,8 @@ class AudioPropertiesSamplesExampleFragment :
         }
     }
 
-    private fun stopMediaPlayer(mediaPlayer: MediaPlayer){
-        if(mediaPlayer.isPlaying){
+    private fun stopMediaPlayer(mediaPlayer: MediaPlayer) {
+        if (mediaPlayer.isPlaying) {
             mediaPlayer.pause()
             mediaPlayer.seekTo(0)
         }
@@ -273,8 +219,7 @@ class AudioPropertiesSamplesExampleFragment :
     }
 
     companion object {
-        private const val MALE_VOICE_MAIN_DOCUMENT_NEW =
-            "document_audio_properties_only_with_voice_same_time.mp3"
+        private const val MALE_VOICE_MAIN_DOCUMENT_NEW = "document_audio_properties_only_with_voice_same_time.mp3"
         private const val MALE_VOICE_AUDIO_PROPERTIES_NEW =
             "properties_audio_properties_only_with_voice_same_time.mp3"
     }
