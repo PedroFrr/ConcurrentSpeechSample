@@ -12,22 +12,34 @@
         tools:layout="@layout/layout_sample_options_fragment">
         <action
             android:id="@+id/options_to_notification_example"
-            app:destination="@id/notificationExampleFragment" />
+            app:destination="@id/notificationExampleFragment"
+            app:popUpTo="@id/notificationExampleFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/options_to_scanning_example"
-            app:destination="@id/scanningExampleFragment" />
+            app:destination="@id/scanningExampleFragment"
+            app:popUpTo="@id/scanningExampleFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/options_to_spatialization_example"
-            app:destination="@id/spatializationExampleFragment" />
+            app:destination="@id/spatializationExampleFragment"
+            app:popUpTo="@id/spatializationExampleFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/options_to_audio_properties_example"
-            app:destination="@id/audioPropertiesExampleFragment" />
+            app:destination="@id/audioPropertiesExampleFragment"
+            app:popUpTo="@id/audioPropertiesExampleFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/options_to_homescreen"
-            app:destination="@id/gesturesExampleFragment" />
+            app:destination="@id/gesturesExampleFragment"
+            app:popUpTo="@id/gesturesExampleFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/options_to_buttons_scenario"
-            app:destination="@id/headersScenarioFragment" />
+            app:destination="@id/headersScenarioFragment"
+            app:popUpTo="@id/headersScenarioFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/notificationExampleFragment"

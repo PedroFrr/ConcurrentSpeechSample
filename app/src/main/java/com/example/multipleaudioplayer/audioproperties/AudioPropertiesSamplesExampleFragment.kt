@@ -207,7 +207,7 @@ class AudioPropertiesSamplesExampleFragment :
         }
     }
 
-    override fun onPause() {
+    override fun onDestroyView() {
         mediaPlayerDocumentSampleCristiano.stop()
         mediaPlayerDocumentSampleInes.stop()
         mediaPlayerAudioProperties.stop()
@@ -215,7 +215,8 @@ class AudioPropertiesSamplesExampleFragment :
         mediaPlayerDocumentSampleWithPauses.stop()
 
         audioEngine.pause()
-        super.onPause()
+
+        super.onDestroyView()
     }
 
     companion object {

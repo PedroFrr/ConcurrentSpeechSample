@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutHomescreenFirstPageBinding
+import com.google.vr.sdk.deps.et
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
 
@@ -69,13 +70,13 @@ class HomeScreenFirstPageFragment : Fragment(R.layout.layout_homescreen_first_pa
         }
 
         binding.apply {
-            cb.setOnClickListener {
+            cbShoppingItemOne.setOnClickListener {
                 if (!isTalkbackEnabled) checkboxMediaPlayer.start()
             }
-            et.setOnClickListener {
+            etSearch.setOnClickListener {
                 if (!isTalkbackEnabled) editTextMediaPlayer.start()
             }
-            iv.setOnClickListener {
+            ivSearch.setOnClickListener {
                 if (!isTalkbackEnabled) imageViewMediaPlayer.start()
             }
             rbOption1.setOnClickListener {
@@ -87,7 +88,10 @@ class HomeScreenFirstPageFragment : Fragment(R.layout.layout_homescreen_first_pa
             sv.setOnClickListener {
                 if (!isTalkbackEnabled) switchMediaPlayer.start()
             }
-            tv.setOnClickListener {
+            tvCurrentDate.setOnClickListener {
+                if (!isTalkbackEnabled) textViewMediaPlayer.start()
+            }
+            tvCurrentTime.setOnClickListener {
                 if (!isTalkbackEnabled) textViewMediaPlayer.start()
             }
         }

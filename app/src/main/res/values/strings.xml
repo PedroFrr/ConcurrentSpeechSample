@@ -28,9 +28,10 @@
     <string name="play_scenario_with_pauses_faster">Reproduzir cenário com pausas mais rápido</string>
     <string name="homescreen_scenario">Cenário homescreen</string>
     <string name="headers_paragraph_scenario">Cenário parágrafo e header</string>
-    <string name="history">History</string>
+    <string name="current_date">Segunda, 6 de Junho</string>
+    <string name="current_time">12:00</string>
     <string name="medicine">Medicine</string>
-    <string name="phone_number">Phone number</string>
+    <string name="search">Pesquisa</string>
     <string name="accessibility_service_description">service description</string>
     <string name="accessibility_service_label">accessibility_Service</string>
 

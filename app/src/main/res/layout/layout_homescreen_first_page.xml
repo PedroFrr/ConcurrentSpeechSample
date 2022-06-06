@@ -10,34 +10,52 @@
         android:id="@+id/rv_homescreen"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/iv"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="0.5"
         android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_search"
+        app:layout_constraintBottom_toTopOf="@id/flow1"
+        app:layout_constraintVertical_weight="0.4"
         tools:itemCount="10"
         tools:listitem="@layout/item_homescreen" />
 
     <ImageView
-        android:id="@+id/iv"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/iv_search"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/medicine"
-        android:src="@drawable/ic_stat_medicine"
+        android:src="@drawable/ic_baseline_search_24"
+        app:layout_constraintStart_toEndOf="@id/et_search"
+        app:layout_constraintBottom_toBottomOf="@id/et_search"
+        app:layout_constraintTop_toTopOf="@id/et_search"
         app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/tv_current_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/history"
+        android:text="@string/current_time"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_current_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/current_date"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_time"
         app:tint="@color/black" />
 
     <EditText
-        android:id="@+id/et"
+        android:id="@+id/et_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints="Phone number"
@@ -45,9 +63,12 @@
         android:focusable="false"
         android:focusableInTouchMode="true"
         android:gravity="center"
-        android:hint="@string/phone_number"
-        android:inputType="phone"
+        android:hint="@string/search"
+        android:inputType="text"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_date"
         app:tint="@color/black" />
 
     <androidx.appcompat.widget.SwitchCompat
@@ -77,21 +98,29 @@
     </RadioGroup>
 
     <CheckBox
-        android:id="@+id/cb"
+        android:id="@+id/cb_shopping_item_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:text="Comprar banana"
+        app:tint="@color/black" />
+    <CheckBox
+        android:id="@+id/cb_shopping_item_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Comprar pão"
         app:tint="@color/black" />
 
     <androidx.constraintlayout.helper.widget.Flow
         android:id="@+id/flow1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="iv,tv,et,rg,sv,cb"
+        app:constraint_referenced_ids="rg,sv, cb_shopping_item_one, cb_shopping_item_two"
         app:flow_wrapMode="chain"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_weight="0.5"/>
+        app:layout_constraintVertical_weight="0.6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
