@@ -139,6 +139,11 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
         binding.secondAudioChannelProperties.spinnerVoices.adapter = adapter
         binding.thirdAudioChannelProperties.spinnerVoices.adapter = adapter
         binding.fourthAudioChannelProperties.spinnerVoices.adapter = adapter
+
+        // set default values for spinner
+        val inesVoicePosition = 1
+        binding.secondAudioChannelProperties.spinnerVoices.setSelection(inesVoicePosition)
+        binding.fourthAudioChannelProperties.spinnerVoices.setSelection(inesVoicePosition)
     }
 
     private fun setAudioChannelPropertiesVisibility(selectedAudioChannel: Int = 1) {
@@ -211,9 +216,10 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
                             "A Espanha não baixou os braços e chegou ao empate no último minuto do tempo regulamentar, num cabeceamento de Iñigo Martínez que levou a bola a bater na trave e a passar a linha de golo antes de sair para ser confirmado pelo VAR."
                 ),
                 listOf(
-                    "Itália, actual campeã europeia, e Alemanha empataram (1-1) na estreia na Liga das Nações de futebol, um resultado que deixa a surpreendente Hungria no topo do grupo A3, depois de bater a Inglaterra (1-0)." +
-                            "Em Bolonha, a Itália até esteve em vantagem, com um golo de Pellegrini, aos 70 minutos, mas os germânicos responderam pouco depois, aos 73, por Kimmich, num duelo entre antigos campeões mundiais.",
-                    "Com este empate, que marcou o 10.º jogo seguido sem perder da Alemanha em jogos oficiais, italianos e germânicos deixaram a Hungria fugir no topo do agrupamento, depois de um surpreendente triunfo (1-0) sobre a Inglaterra."
+                    "Uma equipa internacional de astrónomos revelou esta quinta-feira a primeira imagem de um buraco negro supermassivo no centro da Via Láctea - um corpo cósmico conhecido como Sagittarius A." +
+                            "A imagem produzida por uma equipa global de cientistas conhecida como Event Horizon Telescope (EHT) Collaboration é a primeira confirmação visual direta da presença desse objeto.",
+                    "Os buracos negros são regiões do espaço onde a força da gravidade é tão intensa que nada pode escapar, incluindo a luz." +
+                            "A imagem mostra não o buraco negro, que é completamente escuro, mas o gás brilhante que envolve o fenómeno - que é quatro milhões de vezes mais massivo que o Sol, num anel brilhante de luz curvada."
                 )
             )
             3 -> listOf(
@@ -238,10 +244,10 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
                     "Depois de ter vencido pela 112.ª vez nos 115 encontros que disputou ao longo da sua carreira em Roland Garros."
                 ),
                 listOf(
-                    "O futebolista internacional português João Félix foi eleito o melhor jogador da época no Atlético de Madrid, numa votação levada a cabo pelos adeptos.",
-                    "O jogador lembrou que começou e terminou a época lesionado, pelo que espera, na próxima, melhorar e conseguir mais ainda.",
-                    "Félix espera, igualmente, que o Atleti esteja na luta pelos títulos, manifestando uma grande vontade em ganhar.",
-                    "O Atlético de Madrid, campeão na época de 2020/21, terminou a última em terceiro lugar, a 15 pontos do campeão Real Madrid, sendo ainda eliminado na Supertaça (meias-finais), Taça do Rei (oitavos de final) e Liga dos Campeões (quartos de final)."
+                    "A Madeira já investiu cerca de oito milhões de euros na introdução de manuais digitais nas escolas.",
+                    "A Região Autónoma da Madeira introduziu os manuais digitais pela primeira vez no ano letivo 2018/2019 e, de acordo com o governante, o processo está agora “suficientemente consolidado” ao nível do 2.º e 3.º ciclos do ensino básico.",
+                    "Sobre o uso dos manuais digitais, o governante referiu que em algumas disciplinas se verifica um “aproveitamento muito mais significativo” e, por outro lado, a indisciplina na sala de aula diminuiu mais de 30%.",
+                    "Cerca de 2.000 alunos ingressam por ano no 5.º ano de escolaridade e com os manuais digitais estamos a poupar o equivalente a 280 árvores."
                 )
             )
         }

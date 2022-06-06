@@ -18,8 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:stepSize="1"
-        android:value="1"
-        android:valueFrom="1"
+        android:value="2"
+        android:valueFrom="2"
         android:valueTo="4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_number_of_voices" />
