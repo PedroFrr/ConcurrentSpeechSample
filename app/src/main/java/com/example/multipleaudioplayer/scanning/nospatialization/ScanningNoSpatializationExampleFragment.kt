@@ -14,7 +14,6 @@ import com.amazonaws.services.polly.model.OutputFormat
 import com.amazonaws.services.polly.model.SynthesizeSpeechPresignRequest
 import com.amazonaws.services.polly.model.TextType
 import com.example.multipleaudioplayer.R
-import com.example.multipleaudioplayer.databinding.LayoutScanningExampleBinding
 import com.example.multipleaudioplayer.databinding.LayoutScanningNoSpatializationBinding
 import com.example.multipleaudioplayer.scanning.AudioChannelProperty
 import com.example.multipleaudioplayer.utils.convertToSsml
@@ -39,6 +38,11 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
     var mediaPlayer4: MediaPlayer? = null
 
     private var client: AmazonPollyPresigningClient? = null
+
+    private var numberOfTimesOneVoiceButtonWasClicked = -1
+    private var numberOfTimesTwoVoiceButtonWasClicked = -1
+    private var numberOfTimesThreeVoiceButtonWasClicked = -1
+    private var numberOfTimesFourVoiceButtonWasClicked = -1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -102,7 +106,7 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
 
     private fun setupSpinner() {
         // setup spinner (with portuguese voices)
-        val listOfAudioChannels = listOf(1, 2, 3, 4)
+        val listOfAudioChannels = listOf(2, 3, 4)
         val adapter = ArrayAdapter(
             requireContext(),
             R.layout.support_simple_spinner_dropdown_item,
@@ -183,38 +187,73 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
         val numberOfVoices = binding.sliderVoicesConfiguration.value.toInt()
         val filteredAudioProperties = properties.take(numberOfVoices)
 
-        //TODO do this programatically
-        val sampleText = when (numberOfVoices) {
+        when (numberOfVoices) {
             1 -> {
-                listOf(
-                    "A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão. Contudo a história da presença humana no território correspondente a Portugal começou muito antes. A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses. Povos celtas estabeleceram-se e misturaram-se com os nativos. No século III a.C. era habitado por vários povos, quando se deu a invasão romana da Península Ibérica."
-                )
+                if (numberOfTimesOneVoiceButtonWasClicked < 1) numberOfTimesOneVoiceButtonWasClicked++ else numberOfTimesOneVoiceButtonWasClicked = 0
             }
             2 -> {
-                listOf(
-                    "A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão. Contudo a história da presença humana no território correspondente a Portugal começou muito antes.",
-                    "A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses. Povos celtas estabeleceram-se e misturaram-se com os nativos. No século III a.C. era habitado por vários povos, quando se deu a invasão romana da Península Ibérica."
-                )
+                if (numberOfTimesTwoVoiceButtonWasClicked < 1) numberOfTimesTwoVoiceButtonWasClicked++ else numberOfTimesTwoVoiceButtonWasClicked = 0
             }
             3 -> {
-                listOf(
-                    "A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão. Contudo a história da presença humana no território correspondente a Portugal começou muito antes.",
-                    "A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses.",
-                    "Povos celtas estabeleceram-se e misturaram-se com os nativos. No século III a.C. era habitado por vários povos, quando se deu a invasão romana da Península Ibérica."
-                )
+                if (numberOfTimesThreeVoiceButtonWasClicked < 1) numberOfTimesThreeVoiceButtonWasClicked++ else numberOfTimesThreeVoiceButtonWasClicked = 0
             }
             else -> {
-                listOf(
-                    "A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão",
-                    "Contudo a história da presença humana no território correspondente a Portugal começou muito antes.",
-                    "A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses.",
-                    "Povos celtas estabeleceram-se e misturaram-se com os nativos. No século III a.C. era habitado por vários povos, quando se deu a invasão romana da Península Ibérica."
-                )
+                if (numberOfTimesFourVoiceButtonWasClicked < 1) numberOfTimesFourVoiceButtonWasClicked++ else numberOfTimesFourVoiceButtonWasClicked = 0
             }
         }
 
-        scope.launch {
+        val sampleTexts = when (numberOfVoices) {
+            2 -> listOf(
+                listOf(
+                    "A Espanha evitou, este domingo, em Praga, com uma igualdade (2-2), a derrota frente à República Checa, salvando um ponto com um golo de Iñigo Martínez aos 90 minutos do jogo da segunda ronda do grupo 2 da Liga A da Liga das Nações. Um desfecho que tirou os checos da liderança do grupo, assumida por Portugal." +
+                            "Depois do empate com Portugal, a Espanha voltou a ceder frente a um adversário que manteve a invencibilidade caseira e que esteve na iminência de somar o segundo triunfo depois de ter derrotado a Suíça.",
+                    "Pesek colocou a República Checa em vantagem aos quatro minutos, deixando a Espanha totalmente exposta ao jogo que mais convinha à equipa de Jaroslav Silhavy, a privilegiar a velocidade e os duelos de uma equipa mais disponível do ponto de vista atlético. " +
+                            "A Espanha não baixou os braços e chegou ao empate no último minuto do tempo regulamentar, num cabeceamento de Iñigo Martínez que levou a bola a bater na trave e a passar a linha de golo antes de sair para ser confirmado pelo VAR."
+                ),
+                listOf(
+                    "Itália, actual campeã europeia, e Alemanha empataram (1-1) na estreia na Liga das Nações de futebol, um resultado que deixa a surpreendente Hungria no topo do grupo A3, depois de bater a Inglaterra (1-0)." +
+                            "Em Bolonha, a Itália até esteve em vantagem, com um golo de Pellegrini, aos 70 minutos, mas os germânicos responderam pouco depois, aos 73, por Kimmich, num duelo entre antigos campeões mundiais.",
+                    "Com este empate, que marcou o 10.º jogo seguido sem perder da Alemanha em jogos oficiais, italianos e germânicos deixaram a Hungria fugir no topo do agrupamento, depois de um surpreendente triunfo (1-0) sobre a Inglaterra."
+                )
+            )
+            3 -> listOf(
+                listOf(
+                    "Portugal venceu esta noite a Suíça por 4-0, com o madeirense Cristiano Ronaldo a 'bisar' na partida, em jogo da segunda jornada do grupo 2 da Liga da Liga das Nações." +
+                            "William Carvalho inaugurou o marcador aos 15' de jogo. Ronaldo bateu forte o livre para defesa incompleta de Kobel. Na recarga, William Carvalho apareceu solto de marcação e fez o 1-0.",
+                    "Ronaldo ampliou à passagem do minuto 35'. Bela jogada coletiva com Bruno Fernandes a aparecer no espaço, após desvio de Otávio que em esforço cruzou para Diogo Jota que segurou a bola e passou atrasado para uma finalização forte de Cristiano Ronaldo.",
+                    "O mesmo Ronaldo fez o 3-0, aos 39'. O madeirense apareceu solto de marcação para o terceiro de Portugal. Cancelo fixou o resultado aos 68'. Bernardo Silva serviu a desmarcação de João Cancelo, que com muita classe, atira colocado para o 4-0."
+                ),
+                listOf(
+                    "O País de Gales qualificou-se hoje para a fase final do Mundial de futebol, 64 anos depois, ao bater em Cardiff a Ucrânia por 1-0, na final do caminho A do ‘play-off’ europeu de acesso ao Mundial2022." +
+                            "Um autogolo de Yarmolenko, aos 34 minutos, a desviar um livre de Gareth Bale, selou o apuramento dos galeses, que só tinham estado no Mundial em 1958, ano em que terminaram no sexto lugar.",
+                    "Num jogo muito equilibrado, ambas as equipas criaram várias oportunidades de golo, mas, muitas vezes por ação dos guarda-redes Hennessey (País de Gales) e Bushchan (Ucrânia) e outras por falta de pontaria dos avançados, não houve mais golos.",
+                    "Na fase final, os galeses vão integrar o Grupo B, juntamente com Inglaterra, Irão e Estados Unidos, face aos quais se vão estrear, em 21 de novembro."
+                )
+            )
+            else -> listOf(
+                listOf(
+                    "O tenista espanhol Rafael Nadal impôs-se hoje ao norueguês Casper Ruud em três ‘sets’ na final de Roland Garros, conquistando o seu 14.º título na terra batida parisiense e o 22.º em torneios do ‘Grand Slam’.",
+                    "Rafa, já recordista de cetros na ‘catedral da terra batida e em majors, ampliou ainda mais a sua lenda, com um triunfo por 6-3, 6-3 e 6-0, em duas horas e 18 minutos, diante do oitavo tenista mundial, a estrear-se em finais do ‘Grand Slam’, aos 23 anos, e logo diante do seu ídolo de infância.",
+                    "Com 36 anos recém-cumpridos, Nadal, número cinco da hierarquia ATP e vencedor do Open da Austrália deste ano, tem agora mais dois títulos do ‘Grand Slam’ do que o sérvio Novak Djokovic.",
+                    "Depois de ter vencido pela 112.ª vez nos 115 encontros que disputou ao longo da sua carreira em Roland Garros."
+                ),
+                listOf(
+                    "O futebolista internacional português João Félix foi eleito o melhor jogador da época no Atlético de Madrid, numa votação levada a cabo pelos adeptos.",
+                    "O jogador lembrou que começou e terminou a época lesionado, pelo que espera, na próxima, melhorar e conseguir mais ainda.",
+                    "Félix espera, igualmente, que o Atleti esteja na luta pelos títulos, manifestando uma grande vontade em ganhar.",
+                    "O Atlético de Madrid, campeão na época de 2020/21, terminou a última em terceiro lugar, a 15 pontos do campeão Real Madrid, sendo ainda eliminado na Supertaça (meias-finais), Taça do Rei (oitavos de final) e Liga dos Campeões (quartos de final)."
+                )
+            )
+        }
 
+        val sampleText = when (numberOfVoices) {
+            1 -> listOf()
+            2 -> sampleTexts[numberOfTimesTwoVoiceButtonWasClicked]
+            3 -> sampleTexts[numberOfTimesThreeVoiceButtonWasClicked]
+            else -> sampleTexts[numberOfTimesFourVoiceButtonWasClicked]
+        }
+
+        scope.launch {
             filteredAudioProperties.forEachIndexed { index, audioChannelProperty ->
 
                 val synthesizeSpeechPresignRequest =

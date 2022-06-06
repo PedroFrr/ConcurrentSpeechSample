@@ -86,8 +86,10 @@ class AudioPropertiesSamplesExampleFragment :
             withContext(Dispatchers.Main) {
                 toggleButtons(isEnabled = false)
 6            }
-            audioEngine.preloadSoundFile(MALE_VOICE_MAIN_DOCUMENT_NEW)
-            audioEngine.preloadSoundFile(MALE_VOICE_AUDIO_PROPERTIES_NEW)
+            awaitAll(
+                async { audioEngine.preloadSoundFile(MALE_VOICE_MAIN_DOCUMENT_NEW) },
+                async { audioEngine.preloadSoundFile(MALE_VOICE_AUDIO_PROPERTIES_NEW) }
+            )
 
             withContext(Dispatchers.Main) {
                 toggleButtons(isEnabled = true)
@@ -128,6 +130,29 @@ class AudioPropertiesSamplesExampleFragment :
         }
 
         setupMediaPlayerListeners()
+
+        binding.cvMediaPlayerButtons.apply {
+            btnStop.setOnClickListener {
+                stopMediaPlayer(mediaPlayerDocumentSampleCristiano)
+                stopMediaPlayer(mediaPlayerDocumentSampleInes)
+                stopMediaPlayer(mediaPlayerAudioProperties)
+                stopMediaPlayer(mediaPlayerDocumentSampleWithPauses)
+                stopMediaPlayer(mediaPlayerAudioPropertiesWithPauses)
+                stopMediaPlayer(mediaPlayerEarcon)
+                stopMediaPlayer(audioPropertiesWithPauses)
+                stopMediaPlayer(audioPropertiesWithPausesFaster)
+                stopMediaPlayer(audioPropertiesWithPausesFasterAndEarcons)
+                stopMediaPlayer(audioPropertiesOnlyEarcons)
+                stopMediaPlayer(audioPropertiesOnlyVoiceSameTime)
+
+                if (audioEngine.isSoundPlaying(mainDocumentSourceId)) audioEngine.stopSound(mainDocumentSourceId)
+                if (audioEngine.isSoundPlaying(audioPropertiesSourceId)) audioEngine.stopSound(audioPropertiesSourceId)
+
+                toggleButtons(true)
+            }
+            btnPlay.setOnClickListener { }
+            btnPause.setOnClickListener { }
+        }
     }
 
     private fun playAudioPropertiesWithEarcons() {
@@ -226,6 +251,13 @@ class AudioPropertiesSamplesExampleFragment :
             btnScenarioWithPausesWithEarcon.isEnabled = isEnabled
             btnScenarioOnlyWithEarcons.isEnabled = isEnabled
             btnScenarioWithPausesFaster.isEnabled = isEnabled
+        }
+    }
+
+    private fun stopMediaPlayer(mediaPlayer: MediaPlayer){
+        if(mediaPlayer.isPlaying){
+            mediaPlayer.pause()
+            mediaPlayer.seekTo(0)
         }
     }
 
