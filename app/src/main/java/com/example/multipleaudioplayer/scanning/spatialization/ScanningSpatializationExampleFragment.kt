@@ -9,6 +9,8 @@ import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -33,6 +35,11 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
     }
 
+    private var numberOfTimesOneVoiceButtonWasClicked = -1
+    private var numberOfTimesTwoVoiceButtonWasClicked = -1
+    private var numberOfTimesThreeVoiceButtonWasClicked = -1
+    private var numberOfTimesFourVoiceButtonWasClicked = -1
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,19 +48,27 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
                 toggleButtons(false)
             }
 
-            audioEngine.preloadSoundFile(SCANNING_ONE_VOICE)
-
-            audioEngine.preloadSoundFile(SCANNING_TWO_VOICES_PART_ONE)
-            audioEngine.preloadSoundFile(SCANNING_TWO_VOICES_PART_TWO)
-
-            audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_PART_ONE)
-            audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_PART_TWO)
-            audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_PART_THREE)
-
-            audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_PART_ONE)
-            audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_PART_TWO)
-            audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_PART_THREE)
-            audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_PART_FOUR)
+            awaitAll(
+                async { audioEngine.preloadSoundFile(SCANNING_ONE_VOICE) },
+                async { audioEngine.preloadSoundFile(SCANNING_TWO_VOICES_FIRST_NEWS_PART_ONE) },
+                async { audioEngine.preloadSoundFile(SCANNING_TWO_VOICES_FIRST_NEWS_PART_TWO) },
+                async { audioEngine.preloadSoundFile(SCANNING_TWO_VOICES_SECOND_NEWS_PART_ONE) },
+                async { audioEngine.preloadSoundFile(SCANNING_TWO_VOICES_SECOND_NEWS_PART_TWO) },
+                async { audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_FIRST_NEWS_PART_ONE) },
+                async { audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_FIRST_NEWS_PART_TWO) },
+                async { audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_FIRST_NEWS_PART_THREE) },
+                async { audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_SECOND_NEWS_PART_ONE) },
+                async { audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_SECOND_NEWS_PART_TWO) },
+                async { audioEngine.preloadSoundFile(SCANNING_THREE_VOICE_SECOND_NEWS_PART_THREE) },
+                async { audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_FIRST_NEWS_PART_ONE) },
+                async { audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_FIRST_NEWS_PART_TWO) },
+                async { audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_FIRST_NEWS_PART_THREE) },
+                async { audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_FIRST_NEWS_PART_FOUR) },
+                async { audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_SECOND_NEWS_PART_ONE) },
+                async { audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_SECOND_NEWS_PART_TWO) },
+                async { audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_SECOND_NEWS_PART_THREE) },
+                async { audioEngine.preloadSoundFile(SCANNING_FOUR_VOICE_SECOND_NEWS_PART_FOUR) },
+            )
 
             withContext(Dispatchers.Main) {
                 toggleButtons(true)
@@ -105,16 +120,35 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
 
         when (numberOfVoices) {
             1 -> {
+                if (numberOfTimesOneVoiceButtonWasClicked < 1) numberOfTimesOneVoiceButtonWasClicked++ else numberOfTimesOneVoiceButtonWasClicked = 0
+            }
+            2 -> {
+                if (numberOfTimesTwoVoiceButtonWasClicked < 1) numberOfTimesTwoVoiceButtonWasClicked++ else numberOfTimesTwoVoiceButtonWasClicked = 0
+            }
+            3 -> {
+                if (numberOfTimesThreeVoiceButtonWasClicked < 1) numberOfTimesThreeVoiceButtonWasClicked++ else numberOfTimesThreeVoiceButtonWasClicked = 0
+            }
+            else -> {
+                if (numberOfTimesFourVoiceButtonWasClicked < 1) numberOfTimesFourVoiceButtonWasClicked++ else numberOfTimesFourVoiceButtonWasClicked = 0
+            }
+        }
+
+        when (numberOfVoices) {
+            1 -> {
                 oneVoiceId = audioEngine.createSoundObject(SCANNING_ONE_VOICE)
 
                 audioEngine.setSoundObjectPosition(oneVoiceId, 0.0f, 0.0f, 0.0f)
                 audioEngine.playSound(oneVoiceId, false)
             }
             2 -> {
+                val (twoVoicesPartOneId, twoVoicesPartTwoId) = if (numberOfTimesTwoVoiceButtonWasClicked == 0)
+                    Pair(SCANNING_TWO_VOICES_FIRST_NEWS_PART_ONE, SCANNING_TWO_VOICES_FIRST_NEWS_PART_TWO) else
+                    Pair(SCANNING_TWO_VOICES_SECOND_NEWS_PART_ONE, SCANNING_TWO_VOICES_SECOND_NEWS_PART_TWO)
+
                 twoVoicePartOneId =
-                    audioEngine.createSoundObject(SCANNING_TWO_VOICES_PART_ONE)
+                    audioEngine.createSoundObject(twoVoicesPartOneId)
                 twoVoicePartTwoId =
-                    audioEngine.createSoundObject(SCANNING_TWO_VOICES_PART_TWO)
+                    audioEngine.createSoundObject(twoVoicesPartTwoId)
 
                 audioEngine.setSoundObjectPosition(twoVoicePartOneId, -8.0f, 0.0f, 0.0f)
                 audioEngine.setSoundObjectPosition(twoVoicePartTwoId, 8.0f, 0.0f, 0.0f)
@@ -123,12 +157,16 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
                 audioEngine.playSound(twoVoicePartTwoId, false)
             }
             3 -> {
+                val (threeVoicesPartOneId, threeVoicesPartTwoId, threeVoicesPartThreeId) = if (numberOfTimesThreeVoiceButtonWasClicked == 0)
+                    Triple(SCANNING_THREE_VOICE_FIRST_NEWS_PART_ONE, SCANNING_THREE_VOICE_FIRST_NEWS_PART_TWO, SCANNING_THREE_VOICE_FIRST_NEWS_PART_THREE) else
+                    Triple(SCANNING_THREE_VOICE_SECOND_NEWS_PART_ONE, SCANNING_THREE_VOICE_SECOND_NEWS_PART_TWO, SCANNING_THREE_VOICE_SECOND_NEWS_PART_THREE)
+
                 threeVoicePartOneId =
-                    audioEngine.createSoundObject(SCANNING_THREE_VOICE_PART_ONE)
+                    audioEngine.createSoundObject(threeVoicesPartOneId)
                 threeVoicePartTwoId =
-                    audioEngine.createSoundObject(SCANNING_THREE_VOICE_PART_TWO)
+                    audioEngine.createSoundObject(threeVoicesPartTwoId)
                 threeVoicePartThreeId =
-                    audioEngine.createSoundObject(SCANNING_THREE_VOICE_PART_THREE)
+                    audioEngine.createSoundObject(threeVoicesPartThreeId)
 
                 audioEngine.setSoundObjectPosition(threeVoicePartOneId, -8.0f, 0.0f, 0.0f)
                 audioEngine.setSoundObjectPosition(threeVoicePartTwoId, 0.0f, 0.0f, 0.0f)
@@ -139,14 +177,23 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
                 audioEngine.playSound(threeVoicePartThreeId, false)
             }
             4 -> {
+                val (fourVoicesPartOneId, fourVoicesPartTwoId, fourVoicesPartThreeId, fourVoicesPartFourId) = if (numberOfTimesFourVoiceButtonWasClicked == 0)
+                    Quadruple(
+                        SCANNING_FOUR_VOICE_FIRST_NEWS_PART_ONE,
+                        SCANNING_FOUR_VOICE_FIRST_NEWS_PART_TWO,
+                        SCANNING_FOUR_VOICE_FIRST_NEWS_PART_THREE,
+                        SCANNING_FOUR_VOICE_FIRST_NEWS_PART_FOUR
+                    ) else
+                    Quadruple(SCANNING_FOUR_VOICE_SECOND_NEWS_PART_ONE, SCANNING_FOUR_VOICE_SECOND_NEWS_PART_TWO, SCANNING_FOUR_VOICE_SECOND_NEWS_PART_THREE, SCANNING_FOUR_VOICE_SECOND_NEWS_PART_FOUR)
+
                 fourVoicePartOneId =
-                    audioEngine.createSoundObject(SCANNING_FOUR_VOICE_PART_ONE)
+                    audioEngine.createSoundObject(fourVoicesPartOneId)
                 fourVoicePartTwoId =
-                    audioEngine.createSoundObject(SCANNING_FOUR_VOICE_PART_TWO)
+                    audioEngine.createSoundObject(fourVoicesPartTwoId)
                 fourVoicePartThreeId =
-                    audioEngine.createSoundObject(SCANNING_FOUR_VOICE_PART_THREE)
+                    audioEngine.createSoundObject(fourVoicesPartThreeId)
                 fourVoicePartFourId =
-                    audioEngine.createSoundObject(SCANNING_FOUR_VOICE_PART_FOUR)
+                    audioEngine.createSoundObject(fourVoicesPartFourId)
 
                 audioEngine.setSoundObjectPosition(fourVoicePartOneId, -8.0f, 0.0f, 0.0f)
                 audioEngine.setSoundObjectPosition(fourVoicePartTwoId, 0.0f, -8.0f, 0.0f)
@@ -192,14 +239,34 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
 
     companion object {
         private const val SCANNING_ONE_VOICE = "scanning_one_voice.mp3"
-        private const val SCANNING_TWO_VOICES_PART_ONE = "scanning_two_voices_part_one.mp3"
-        private const val SCANNING_TWO_VOICES_PART_TWO = "scanning_two_voices_part_two.mp3"
-        private const val SCANNING_THREE_VOICE_PART_ONE = "scanning_three_voice_part_one.mp3"
-        private const val SCANNING_THREE_VOICE_PART_TWO = "scanning_three_voice_part_two.mp3"
-        private const val SCANNING_THREE_VOICE_PART_THREE = "scanning_three_voice_part_three.mp3"
-        private const val SCANNING_FOUR_VOICE_PART_ONE = "scanning_four_voice_part_one.mp3"
-        private const val SCANNING_FOUR_VOICE_PART_TWO = "scanning_four_voice_part_two.mp3"
-        private const val SCANNING_FOUR_VOICE_PART_THREE = "scanning_four_voice_part_three.mp3"
-        private const val SCANNING_FOUR_VOICE_PART_FOUR = "scanning_four_voice_part_four.mp3"
+
+        private const val SCANNING_TWO_VOICES_FIRST_NEWS_PART_ONE = "two_voices_part_one_cristiano.mp3"
+        private const val SCANNING_TWO_VOICES_FIRST_NEWS_PART_TWO = "two_voices_part_two_ines.mp3"
+        private const val SCANNING_TWO_VOICES_SECOND_NEWS_PART_ONE = "two_voices_part_one_ines.mp3"
+        private const val SCANNING_TWO_VOICES_SECOND_NEWS_PART_TWO = "two_voices_part_two_cristiano.mp3"
+
+        private const val SCANNING_THREE_VOICE_FIRST_NEWS_PART_ONE = "three_voices_part_one_ines.mp3"
+        private const val SCANNING_THREE_VOICE_FIRST_NEWS_PART_TWO = "three_voices_part_two_joao.mp3"
+        private const val SCANNING_THREE_VOICE_FIRST_NEWS_PART_THREE = "three_voices_part_three_maria.mp3"
+        private const val SCANNING_THREE_VOICE_SECOND_NEWS_PART_ONE = "three_voices_part_one_maria.mp3"
+        private const val SCANNING_THREE_VOICE_SECOND_NEWS_PART_TWO = "three_voices_part_two_ines.mp3"
+        private const val SCANNING_THREE_VOICE_SECOND_NEWS_PART_THREE = "three_voices_part_three_joao.mp3"
+
+        private const val SCANNING_FOUR_VOICE_FIRST_NEWS_PART_ONE = "four_voices_part_one_ines.mp3"
+        private const val SCANNING_FOUR_VOICE_FIRST_NEWS_PART_TWO = "four_voices_part_two_cristiano.mp3"
+        private const val SCANNING_FOUR_VOICE_FIRST_NEWS_PART_THREE = "four_voices_part_three_joao.mp3"
+        private const val SCANNING_FOUR_VOICE_FIRST_NEWS_PART_FOUR = "four_voices_part_four_maria.mp3"
+        private const val SCANNING_FOUR_VOICE_SECOND_NEWS_PART_ONE = "four_voices_part_one_maria.mp3"
+        private const val SCANNING_FOUR_VOICE_SECOND_NEWS_PART_TWO = "four_voices_part_two_joao.mp3"
+        private const val SCANNING_FOUR_VOICE_SECOND_NEWS_PART_THREE = "four_voices_part_three_cristiano.mp3"
+        private const val SCANNING_FOUR_VOICE_SECOND_NEWS_PART_FOUR = "four_voices_part_four_ines.mp3"
+
     }
 }
+
+data class Quadruple(
+    val x: String,
+    val y: String,
+    val z: String,
+    val a: String
+)

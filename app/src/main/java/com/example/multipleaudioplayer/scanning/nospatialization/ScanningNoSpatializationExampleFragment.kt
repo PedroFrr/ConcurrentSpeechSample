@@ -29,13 +29,13 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    var mediaPlayer1: MediaPlayer? = null
+    private var mediaPlayer1: MediaPlayer? = null
 
-    var mediaPlayer2: MediaPlayer? = null
+    private var mediaPlayer2: MediaPlayer? = null
 
-    var mediaPlayer3: MediaPlayer? = null
+    private var mediaPlayer3: MediaPlayer? = null
 
-    var mediaPlayer4: MediaPlayer? = null
+    private var mediaPlayer4: MediaPlayer? = null
 
     private var client: AmazonPollyPresigningClient? = null
 

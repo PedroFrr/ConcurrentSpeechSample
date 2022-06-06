@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/scanning_spatialization_one_voice"
-        app:layout_constraintBottom_toTopOf="@id/btn_spatial_scenario_two_voices" />
+        app:layout_constraintBottom_toTopOf="@id/btn_spatial_scenario_two_voices"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_spatial_scenario_two_voices"
