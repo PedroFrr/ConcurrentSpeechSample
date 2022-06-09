@@ -2,20 +2,15 @@ package com.example.multipleaudioplayer
 
 import android.app.Application
 import android.util.Log
-import androidx.navigation.NavDestination
 import com.datadog.android.Datadog
-import com.datadog.android.Datadog.setUserInfo
 import com.datadog.android.DatadogSite
 import com.datadog.android.core.configuration.Configuration
 import com.datadog.android.core.configuration.Credentials
 import com.datadog.android.privacy.TrackingConsent
 import com.datadog.android.rum.GlobalRum
 import com.datadog.android.rum.RumMonitor
-import com.datadog.android.rum.tracking.ComponentPredicate
 import com.datadog.android.rum.tracking.FragmentViewTrackingStrategy
-import com.datadog.android.rum.tracking.NavigationViewTrackingStrategy
 import com.datadog.android.tracing.AndroidTracer
-import com.example.multipleaudioplayer.utils.DatadogLogger
 import io.opentracing.util.GlobalTracer
 import logcat.AndroidLogcatLogger
 import logcat.LogPriority
@@ -71,15 +66,5 @@ class MultipleAudioPlayerApplication : Application() {
             // no-op
         }
         return configBuilder.build()
-    }
-}
-
-class SampleNavigationPredicate : ComponentPredicate<NavDestination> {
-    override fun accept(component: NavDestination): Boolean {
-        return true
-    }
-
-    override fun getViewName(component: NavDestination): String {
-        return component.label.toString()
     }
 }

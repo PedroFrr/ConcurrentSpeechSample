@@ -19,6 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.*
 import logcat.logcat
+import com.example.multipleaudioplayer.utils.DatadogLogger.logInfo
 
 private const val NUM_PAGES = 2
 
@@ -125,29 +126,52 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
                 logcat { event.toString() }
                 when (event.eventType) {
                     AccessibilityEvent.TYPE_VIEW_HOVER_ENTER -> {
-                        singleTapMediaPlayer.start() // single tap sound (with talkback on)
+                        logInfo("Single tap")
+                        singleTapMediaPlayer.start()
                         when (event.className) {
                             Widget.BUTTON.value -> {
                                 buttonMediaPlayer.start()
+                                logInfo("Button interaction")
                             }
                             Widget.IMAGE_VIEW.value -> {
                                 imageViewMediaPlayer.start()
+                                logInfo("ImageView interaction")
                             }
                             Widget.TEXT_VIEW.value -> {
                                 textViewMediaPlayer.start()
+                                logInfo("TextView interaction")
                             }
                             Widget.EDIT_TEXT.value -> {
                                 editTextMediaPlayer.start()
+                                logInfo("EditText interaction")
                             }
                             Widget.SWITCH.value -> {
-                                if(event.isChecked) switchOnMediaPlayer.start() else switchOffMediaPlayer.start()
+                                if(event.isChecked) {
+                                    logInfo("Checked switch interaction")
+                                    switchOnMediaPlayer.start()
+                                } else {
+                                    logInfo("Not checked switch interaction")
+                                    switchOffMediaPlayer.start()
+                                }
                             }
                             Widget.RADIO_BUTTON.value -> {
-                                if(event.isChecked) radioButtonOnMediaPlayer.start() else radioButtonOffMediaPlayer.start()
+                                if(event.isChecked) {
+                                    logInfo("Checked radio button interaction")
+                                    radioButtonOnMediaPlayer.start()
+                                } else {
+                                    logInfo("Not checked radio button interaction")
+                                    radioButtonOffMediaPlayer.start()
+                                }
                             }
                             Widget.CHECK_BOX.value -> {
                                 val isCheckBoxChecked = event.isChecked
-                                if (isCheckBoxChecked) checkboxMediaPlayer.start() else notCheckedCheckboxMediaPlayer.start()
+                                if (isCheckBoxChecked) {
+                                    logInfo("Checked checkbox button interaction")
+                                    checkboxMediaPlayer.start()
+                                } else {
+                                    logInfo("Not checked radio button interaction")
+                                    notCheckedCheckboxMediaPlayer.start()
+                                }
                             }
 
                         }

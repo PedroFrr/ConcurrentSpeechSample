@@ -2,7 +2,8 @@
     <string name="app_name">MultipleAudioPlayer</string>
     <string name="notification_title">Mãe</string>
     <string name="notification_message">Olá filho. Sempre vamos jantar hoje?</string>
-    <string name="notification_content">Eu sou uma notificação exemplo.</string>
+    <string name="second_notification_title">Amigo João</string>
+    <string name="second_notification_content">Olá. Mais tarde sempre vamos ao cinema? Fico à espera da resposta</string>
     <string name="concurrent_notification_normal">Cenário das notificações</string>
     <string name="spatialization">Espacialização</string>
     <string name="speech_rate">Velocidade da voz</string>
@@ -10,7 +11,7 @@
     <string name="speech_pitch">Pitch</string>
     <string name="speech_voice">Vozes</string>
     <string name="scanning_scenario">Cenário Scanning</string>
-    <string name="sample_text">A história de Portugal como nação europeia remonta à Baixa Idade Média, quando o condado Portucalense se tornou autónomo do reino de Leão. Contudo a história da presença humana no território correspondente a Portugal começou muito antes.A pré-história regista os primeiros hominídeos há cerca de 500 mil anos. O território foi visitado por diversos povos: fenícios que fundaram feitorias, mais tarde substituídos por cartagineses. Povos celtas estabeleceram-se e misturaram-se com os nativos.</string>
+    <string name="sample_text">União Europeia aprova carregador único para telemóveis, tablets e câmaras. Ao abrigo das novas regras, os consumidores deixarão de precisar de carregadores e cabos diferentes para os vários aparelhos electrónicos portáteis de pequena e média dimensão. Medida começará a ser aplicada no Outono de 2024. As novas regras não se aplicarão aos produtos colocados no mercado antes da data de aplicação.</string>
     <string name="spatialization_scenario">Cenário Espacialização</string>
     <string name="audio_properties_scenario">Cenário Propriedades de Aúdio</string>
     <string name="number_of_voices_label">Número de vozes</string>

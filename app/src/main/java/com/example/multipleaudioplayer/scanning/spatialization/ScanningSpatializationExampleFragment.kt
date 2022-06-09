@@ -249,8 +249,8 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
         private const val SCANNING_THREE_VOICE_FIRST_NEWS_PART_TWO = "three_voices_part_two_joao.mp3"
         private const val SCANNING_THREE_VOICE_FIRST_NEWS_PART_THREE = "three_voices_part_three_maria.mp3"
         private const val SCANNING_THREE_VOICE_SECOND_NEWS_PART_ONE = "three_voices_part_one_maria.mp3"
-        private const val SCANNING_THREE_VOICE_SECOND_NEWS_PART_TWO = "three_voices_part_two_ines.mp3"
-        private const val SCANNING_THREE_VOICE_SECOND_NEWS_PART_THREE = "three_voices_part_three_joao.mp3"
+        private const val SCANNING_THREE_VOICE_SECOND_NEWS_PART_TWO = "three_voices_part_two_manel.mp3"
+        private const val SCANNING_THREE_VOICE_SECOND_NEWS_PART_THREE = "three_voices_part_three_cristiano.mp3"
 
         private const val SCANNING_FOUR_VOICE_FIRST_NEWS_PART_ONE = "four_voices_part_one_ines.mp3"
         private const val SCANNING_FOUR_VOICE_FIRST_NEWS_PART_TWO = "four_voices_part_two_cristiano.mp3"

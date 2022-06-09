@@ -94,11 +94,13 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
                 if (mediaPlayer?.isPlaying == true) {
                     mediaPlayer?.stop()
                     mediaPlayer?.release()
+                    mediaPlayer = null
                 }
 
                 if (notificationSampleMediaPlayer?.isPlaying == true) {
                     notificationSampleMediaPlayer?.stop()
                     notificationSampleMediaPlayer?.release()
+                    notificationSampleMediaPlayer = null
                 }
 
                 job?.cancel()
@@ -142,9 +144,9 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
         scope.launch {
             NotificationHelper.createSampleDataNotification(
                 requireActivity(),
-                getString(R.string.notification_title),
-                getString(R.string.notification_message),
-                getString(R.string.notification_message), false
+                getString(R.string.second_notification_title),
+                getString(R.string.second_notification_content),
+                getString(R.string.second_notification_content), false
             )
         }
     }
@@ -277,11 +279,13 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
         if (mediaPlayer?.isPlaying == true) {
             mediaPlayer?.stop()
             mediaPlayer?.release()
+            mediaPlayer = null
         }
 
         if (notificationSampleMediaPlayer?.isPlaying == true) {
             notificationSampleMediaPlayer?.stop()
             notificationSampleMediaPlayer?.release()
+            notificationSampleMediaPlayer = null
         }
 
         job?.cancel()

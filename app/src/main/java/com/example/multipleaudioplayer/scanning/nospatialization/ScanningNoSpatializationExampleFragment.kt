@@ -71,21 +71,25 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
                 if (mediaPlayer1?.isPlaying == true) {
                     mediaPlayer1?.stop()
                     mediaPlayer1?.release()
+                    mediaPlayer1 = null
                 }
 
                 if (mediaPlayer2?.isPlaying == true) {
                     mediaPlayer2?.stop()
                     mediaPlayer2?.release()
+                    mediaPlayer2 = null
                 }
 
                 if (mediaPlayer3?.isPlaying == true) {
                     mediaPlayer3?.stop()
                     mediaPlayer3?.release()
+                    mediaPlayer3 = null
                 }
 
                 if (mediaPlayer4?.isPlaying == true) {
                     mediaPlayer4?.stop()
                     mediaPlayer4?.release()
+                    mediaPlayer4 = null
                 }
 
                 binding.btnPlayScenario.isEnabled = true
@@ -230,10 +234,10 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
                     "O mesmo Ronaldo fez o 3-0, aos 39'. O madeirense apareceu solto de marcação para o terceiro de Portugal. Cancelo fixou o resultado aos 68'. Bernardo Silva serviu a desmarcação de João Cancelo, que com muita classe, atira colocado para o 4-0."
                 ),
                 listOf(
-                    "O País de Gales qualificou-se hoje para a fase final do Mundial de futebol, 64 anos depois, ao bater em Cardiff a Ucrânia por 1-0, na final do caminho A do ‘play-off’ europeu de acesso ao Mundial2022." +
-                            "Um autogolo de Yarmolenko, aos 34 minutos, a desviar um livre de Gareth Bale, selou o apuramento dos galeses, que só tinham estado no Mundial em 1958, ano em que terminaram no sexto lugar.",
-                    "Num jogo muito equilibrado, ambas as equipas criaram várias oportunidades de golo, mas, muitas vezes por ação dos guarda-redes Hennessey (País de Gales) e Bushchan (Ucrânia) e outras por falta de pontaria dos avançados, não houve mais golos.",
-                    "Na fase final, os galeses vão integrar o Grupo B, juntamente com Inglaterra, Irão e Estados Unidos, face aos quais se vão estrear, em 21 de novembro."
+                    "A Madeira já investiu cerca de oito milhões de euros na introdução de manuais digitais nas escolas." +
+                            "A Região Autónoma da Madeira introduziu os manuais digitais pela primeira vez no ano letivo 2018/2019 e, de acordo com o governante, o processo está agora “suficientemente consolidado” ao nível do 2.º e 3.º ciclos do ensino básico.",
+                    "Sobre o uso dos manuais digitais, o governante referiu que em algumas disciplinas se verifica um “aproveitamento muito mais significativo” e, por outro lado, a indisciplina na sala de aula diminuiu mais de 30%.",
+                    "Cerca de 2.000 alunos ingressam por ano no 5.º ano de escolaridade e com os manuais digitais estamos a poupar o equivalente a 280 árvores."
                 )
             )
             else -> listOf(
@@ -244,10 +248,10 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
                     "Depois de ter vencido pela 112.ª vez nos 115 encontros que disputou ao longo da sua carreira em Roland Garros."
                 ),
                 listOf(
-                    "A Madeira já investiu cerca de oito milhões de euros na introdução de manuais digitais nas escolas.",
-                    "A Região Autónoma da Madeira introduziu os manuais digitais pela primeira vez no ano letivo 2018/2019 e, de acordo com o governante, o processo está agora “suficientemente consolidado” ao nível do 2.º e 3.º ciclos do ensino básico.",
-                    "Sobre o uso dos manuais digitais, o governante referiu que em algumas disciplinas se verifica um “aproveitamento muito mais significativo” e, por outro lado, a indisciplina na sala de aula diminuiu mais de 30%.",
-                    "Cerca de 2.000 alunos ingressam por ano no 5.º ano de escolaridade e com os manuais digitais estamos a poupar o equivalente a 280 árvores."
+                    "O País de Gales qualificou-se hoje para a fase final do Mundial de futebol, 64 anos depois, ao bater em Cardiff a Ucrânia por 1-0, na final do caminho A do ‘play-off’ europeu de acesso ao Mundial2022.",
+                    "Um autogolo de Yarmolenko, aos 34 minutos, a desviar um livre de Gareth Bale, selou o apuramento dos galeses, que só tinham estado no Mundial em 1958, ano em que terminaram no sexto lugar.",
+                    "Num jogo muito equilibrado, ambas as equipas criaram várias oportunidades de golo, mas, muitas vezes por ação dos guarda-redes Hennessey (País de Gales) e Bushchan (Ucrânia) e outras por falta de pontaria dos avançados, não houve mais golos.",
+                    "Na fase final, os galeses vão integrar o Grupo B, juntamente com Inglaterra, Irão e Estados Unidos, face aos quais se vão estrear, em 21 de novembro."
                 )
             )
         }
@@ -385,21 +389,25 @@ class ScanningNoSpatializationExampleFragment : Fragment(R.layout.layout_scannin
         if (mediaPlayer1?.isPlaying == true) {
             mediaPlayer1?.stop()
             mediaPlayer1?.release()
+            mediaPlayer1 = null
         }
 
         if (mediaPlayer2?.isPlaying == true) {
             mediaPlayer2?.stop()
             mediaPlayer2?.release()
+            mediaPlayer2 = null
         }
 
         if (mediaPlayer3?.isPlaying == true) {
             mediaPlayer3?.stop()
             mediaPlayer3?.release()
+            mediaPlayer3 = null
         }
 
         if (mediaPlayer4?.isPlaying == true) {
             mediaPlayer4?.stop()
             mediaPlayer4?.release()
+            mediaPlayer4 = null
         }
         super.onPause()
     }
