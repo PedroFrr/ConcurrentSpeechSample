@@ -48,5 +48,7 @@
     <string name="scanning_spatialization_two_voices">Duas vozes</string>
     <string name="scanning_spatialization_three_voices">Três vozes</string>
     <string name="scanning_spatialization_four_voices">Quatro vozes</string>
+    <string name="media_url_mp3">https://storage.googleapis.com/exoplayer-test-media-0/Jazz_In_Paris.mp3</string>
+    <string name="media_url_mp4">https://www2.iis.fraunhofer.de/AAC/ChID-BLITS-EBU-Narration.mp4</string>
 
 </resources>
