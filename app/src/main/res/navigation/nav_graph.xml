@@ -40,9 +40,6 @@
             app:destination="@id/headersScenarioFragment"
             app:popUpTo="@id/headersScenarioFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/options_to_spatial_example"
-            app:destination="@id/spatialAudioExampleFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationExampleFragment"
@@ -73,8 +70,4 @@
         android:id="@+id/headersScenarioFragment"
         android:name="com.example.multipleaudioplayer.headers.HeadersScenarioFragment"
         android:label="HeadersScenarioFragment" />
-    <fragment
-        android:id="@+id/spatialAudioExampleFragment"
-        android:name="com.example.SpatialAudioExampleFragment"
-        android:label="SpatialAudioExampleFragment" />
 </navigation>

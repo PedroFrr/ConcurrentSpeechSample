@@ -11,6 +11,7 @@ import com.datadog.android.rum.GlobalRum
 import com.datadog.android.rum.RumMonitor
 import com.datadog.android.rum.tracking.FragmentViewTrackingStrategy
 import com.datadog.android.tracing.AndroidTracer
+import com.example.multipleaudioplayer.utils.SampleNavigationPredicate
 import io.opentracing.util.GlobalTracer
 import logcat.AndroidLogcatLogger
 import logcat.LogPriority
@@ -32,7 +33,7 @@ class MultipleAudioPlayerApplication : Application() {
             TrackingConsent.GRANTED
         )
         Datadog.setVerbosity(Log.VERBOSE)
-        Datadog.enableRumDebugging(true)
+        Datadog.enableRumDebugging(false)
 
         GlobalTracer.registerIfAbsent(AndroidTracer.Builder().build())
         GlobalRum.registerIfAbsent(RumMonitor.Builder().build())
@@ -55,7 +56,10 @@ class MultipleAudioPlayerApplication : Application() {
             rumEnabled = true
         )
             .useViewTrackingStrategy(
-                FragmentViewTrackingStrategy(true)
+                FragmentViewTrackingStrategy(
+                    true,
+                    SampleNavigationPredicate()
+                )
             )
             .trackInteractions()
             .trackLongTasks(250L)
