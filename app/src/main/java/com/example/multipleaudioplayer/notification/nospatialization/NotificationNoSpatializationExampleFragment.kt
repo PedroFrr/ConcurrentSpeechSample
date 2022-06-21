@@ -40,6 +40,10 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
 
     var mediaPlayer: MediaPlayer? = null
 
+    private val sweepMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(requireActivity(), R.raw.air_sweep)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -134,6 +138,8 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
             // manually trigger notification after waiting 7 seconds
             // and play the notification audio
             delay(10000)
+            sweepMediaPlayer.start()
+            delay(1000)
 
             launchNotification()
             notificationSampleMediaPlayer?.start()
@@ -183,7 +189,7 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
         val synthesizeSpeechPresignRequest =
             SynthesizeSpeechPresignRequest() // Set text to synthesize.
                 .withText(
-                    getString(R.string.sample_text).convertToSsml(
+                    getString(R.string.first_notice).convertToSsml(
                         speedRate = speedRate,
                         pitch = pitch,
                         timbre = timbre.toInt()

@@ -31,10 +31,6 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
 
     private lateinit var viewPager: ViewPager2
 
-    private val loadingMediaPlayer: MediaPlayer by lazy {
-        MediaPlayer.create(requireActivity(), R.raw.loading)
-    }
-
     private val imageViewMediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(context, R.raw.image_view)
     }
@@ -102,20 +98,6 @@ class GesturesExampleFragment : Fragment(R.layout.layout_gestures_example) {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = "Página ${(position + 1)}"
         }.attach()
-
-        binding.srlHomescreen.setOnRefreshListener {
-            showToast("Updating............")
-
-            scope.launch {
-                loadingMediaPlayer.start()
-                withContext(Dispatchers.Main) {
-                    binding.overlay.visibility = View.VISIBLE
-                    delay(6000)
-                    binding.srlHomescreen.isRefreshing = false
-                    binding.overlay.visibility = View.GONE
-                }
-            }
-        }
 
         ViewCompat.setAccessibilityDelegate(binding.root, object : AccessibilityDelegateCompat() {
             override fun onRequestSendAccessibilityEvent(

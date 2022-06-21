@@ -1,5 +1,6 @@
 package com.example.multipleaudioplayer.notification.spatialization
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -35,6 +36,10 @@ class NotificationSpatializationExampleFragment :
 
     private val audioEngine by lazy {
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
+    }
+
+    private val sweepMediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(requireActivity(), R.raw.air_sweep)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -106,6 +111,9 @@ class NotificationSpatializationExampleFragment :
             )
 
             delay(10000)
+            sweepMediaPlayer.start()
+            delay(1000)
+
             launchNotification()
             audioEngine.playSound(notificationSourceId, false)
 
@@ -143,6 +151,9 @@ class NotificationSpatializationExampleFragment :
             )
 
             delay(10000)
+            sweepMediaPlayer.start()
+            delay(1000)
+
             launchNotification()
             audioEngine.playSound(notificationSourceId, false)
 
