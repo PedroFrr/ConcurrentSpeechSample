@@ -47,24 +47,24 @@ class AudioPropertiesSamplesExampleFragment :
         MediaPlayer.create(requireActivity(), R.raw.earcon_with_pauses)
     }
 
-    private val audioPropertiesWithPauses: MediaPlayer by lazy {
+    private val audioPropertiesSameTime: MediaPlayer by lazy {
         MediaPlayer.create(
             requireActivity(),
-            R.raw.audio_properties_main_with_cristiano_and_pauses_with_ines
+            R.raw.audio_properties_same_time_scenario
         )
     }
 
     private val audioPropertiesWithPausesFaster: MediaPlayer by lazy {
         MediaPlayer.create(
             requireActivity(),
-            R.raw.audio_properties_main_with_cristiano_and_pauses_with_ines_faster
+            R.raw.pauses_with_earcon_at_end
         )
     }
 
     private val audioPropertiesWithPausesFasterAndEarcons: MediaPlayer by lazy {
         MediaPlayer.create(
             requireActivity(),
-            R.raw.audio_properties_main_with_cristiano_and_pauses_with_ines_faster_and_earcons
+            R.raw.audio_properties_same_time_with_earcons
         )
     }
 
@@ -86,20 +86,6 @@ class AudioPropertiesSamplesExampleFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        scope.launch {
-            withContext(Dispatchers.Main) {
-                toggleButtons(isEnabled = false)
-            }
-            awaitAll(
-                async { audioEngine.preloadSoundFile(MALE_VOICE_MAIN_DOCUMENT_NEW) },
-                async { audioEngine.preloadSoundFile(MALE_VOICE_AUDIO_PROPERTIES_NEW) }
-            )
-
-            withContext(Dispatchers.Main) {
-                toggleButtons(isEnabled = true)
-            }
-        }
-
         setupUi()
     }
 
@@ -110,10 +96,6 @@ class AudioPropertiesSamplesExampleFragment :
 
         binding.btnSpatialScenario.setOnClickListener {
             playSampleWithSpatialization()
-        }
-
-        binding.btnScenarioWithPauses.setOnClickListener {
-            audioPropertiesWithPauses.start()
         }
 
         binding.btnScenarioWithPausesFaster.setOnClickListener {
@@ -138,11 +120,11 @@ class AudioPropertiesSamplesExampleFragment :
                 stopMediaPlayer(mediaPlayerDocumentSampleWithPauses)
                 stopMediaPlayer(mediaPlayerAudioPropertiesWithPauses)
                 stopMediaPlayer(mediaPlayerEarcon)
-                stopMediaPlayer(audioPropertiesWithPauses)
                 stopMediaPlayer(audioPropertiesWithPausesFaster)
                 stopMediaPlayer(audioPropertiesWithPausesFasterAndEarcons)
                 stopMediaPlayer(audioPropertiesOnlyEarcons)
                 stopMediaPlayer(audioPropertiesOnlyVoiceSameTime)
+                stopMediaPlayer(audioPropertiesSameTime)
 
                 if (audioEngine.isSoundPlaying(mainDocumentSourceId)) audioEngine.stopSound(mainDocumentSourceId)
                 if (audioEngine.isSoundPlaying(audioPropertiesSourceId)) audioEngine.stopSound(audioPropertiesSourceId)
@@ -155,28 +137,7 @@ class AudioPropertiesSamplesExampleFragment :
     }
 
     private fun playSampleWithSpatialization() {
-        scope.launch {
-            withContext(Dispatchers.Main) {
-                toggleButtons(isEnabled = false)
-            }
-
-            mainDocumentSourceId = audioEngine.createSoundObject(MALE_VOICE_MAIN_DOCUMENT_NEW)
-            audioPropertiesSourceId = audioEngine.createSoundObject(MALE_VOICE_AUDIO_PROPERTIES_NEW)
-
-            //audioEngine.setSoundObjectPosition(mainDocumentSourceId, -8.0f, 0.0f, 0.0f)
-            audioEngine.setSoundObjectPosition(audioPropertiesSourceId, 8.0f, 0.0f, 0.0f)
-
-
-            awaitAll(async {
-                audioEngine.playSound(mainDocumentSourceId, false)
-            }, async {
-                audioEngine.playSound(audioPropertiesSourceId, false)
-            })
-
-            withContext(Dispatchers.Main) {
-                toggleButtons(isEnabled = true)
-            }
-        }
+        audioPropertiesSameTime.start()
     }
 
     private fun setupMediaPlayerListeners() {
@@ -213,15 +174,10 @@ class AudioPropertiesSamplesExampleFragment :
         mediaPlayerAudioProperties.stop()
         mediaPlayerAudioPropertiesWithPauses.stop()
         mediaPlayerDocumentSampleWithPauses.stop()
+        audioPropertiesSameTime.stop()
 
         audioEngine.pause()
 
         super.onDestroyView()
-    }
-
-    companion object {
-        private const val MALE_VOICE_MAIN_DOCUMENT_NEW = "document_audio_properties_only_with_voice_same_time.mp3"
-        private const val MALE_VOICE_AUDIO_PROPERTIES_NEW =
-            "properties_audio_properties_only_with_voice_same_time.mp3"
     }
 }

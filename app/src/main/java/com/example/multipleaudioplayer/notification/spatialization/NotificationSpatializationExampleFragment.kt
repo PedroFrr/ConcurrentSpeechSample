@@ -42,7 +42,7 @@ class NotificationSpatializationExampleFragment :
 
         scope.launch {
             withContext(Dispatchers.Main) {
-                toggleButtons(true)
+                toggleButtons(false)
             }
             audioEngine.preloadSoundFile(DOCUMENT_SOUND_FILE)
             audioEngine.preloadSoundFile(NOTIFICATION_SOUND_FILE)
@@ -50,7 +50,7 @@ class NotificationSpatializationExampleFragment :
             audioEngine.preloadSoundFile(NOTIFICATION_SOUND_CRISTIANO_FILE)
 
             withContext(Dispatchers.Main) {
-                toggleButtons(false)
+                toggleButtons(true)
             }
         }
 
@@ -177,9 +177,9 @@ class NotificationSpatializationExampleFragment :
     }
 
     companion object {
-        private const val DOCUMENT_SOUND_FILE = "first_notice_example.mp3"
+        private const val DOCUMENT_SOUND_FILE = "notification_document_cristiano.mp3"
         private const val NOTIFICATION_SOUND_FILE = "notification_ines.mp3"
-        private const val DOCUMENT_SOUND_INES_FILE = "first_notice_ines.mp3"
+        private const val DOCUMENT_SOUND_INES_FILE = "notification_document_ines.mp3"
         private const val NOTIFICATION_SOUND_CRISTIANO_FILE = "notification_cristiano.mp3"
     }
 }

@@ -220,7 +220,7 @@ class NotificationNoSpatializationExampleFragment : Fragment(R.layout.layout_not
         val synthesizeSpeechPresignRequest =
             SynthesizeSpeechPresignRequest() // Set text to synthesize.
                 .withText(
-                    getString(R.string.notification_message).convertToSsml(
+                    getString(R.string.second_notification_content).convertToSsml(
                         speedRate = speedRate,
                         pitch = pitch,
                         timbre = timbre.toInt()
