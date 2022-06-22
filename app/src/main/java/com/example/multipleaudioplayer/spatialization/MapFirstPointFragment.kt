@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.multipleaudioplayer.R
-import com.example.multipleaudioplayer.databinding.LayoutSpatializationSecondNewsBinding
+import com.example.multipleaudioplayer.databinding.LayoutSpatializationMapOneBinding
 import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
@@ -12,18 +12,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SpatializationSecondNewsExampleFragment :
-    Fragment(R.layout.layout_spatialization_second_news) {
+class MapFirstPointFragment :
+    Fragment(R.layout.layout_spatialization_map_one) {
 
-    private val binding by viewBinding(LayoutSpatializationSecondNewsBinding::bind)
+    private val binding by viewBinding(LayoutSpatializationMapOneBinding::bind)
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
     private var documentPartOneSourceId = GvrAudioEngine.INVALID_ID
     private var documentPartTwoSourceId = GvrAudioEngine.INVALID_ID
 
-    private var leftEarPosition = floatArrayOf(-8f, 0.0f, 0.0f)
-    private var rightEarPosition = floatArrayOf(8f, 0.0f, 0.0f)
+    private val pointZeroFcul = floatArrayOf(-1f, 0.0f, 0.0f)
+    private val pointZeroPizzaria = floatArrayOf(2f, 5.0f, 0.0f)
 
     private val audioEngine by lazy {
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
@@ -36,8 +36,8 @@ class SpatializationSecondNewsExampleFragment :
             withContext(Dispatchers.Main) {
                 binding.btnScenario.isEnabled = false
             }
-            audioEngine.preloadSoundFile(FIRST_COLUMN)
-            audioEngine.preloadSoundFile(SECOND_COLUMN)
+            audioEngine.preloadSoundFile(POINT_ZERO_FCUL)
+            audioEngine.preloadSoundFile(POINT_ZERO_PIZZARIA)
 
             withContext(Dispatchers.Main) {
                 binding.btnScenario.isEnabled = true
@@ -49,7 +49,7 @@ class SpatializationSecondNewsExampleFragment :
 
     private fun setupUi() {
         binding.btnScenario.setOnClickListener {
-            playSpatialization()
+            playPointZero()
         }
 
         binding.cvMediaPlayerButtons.apply {
@@ -63,29 +63,30 @@ class SpatializationSecondNewsExampleFragment :
         }
     }
 
-    private fun playSpatialization() {
+    private fun playPointZero() {
         scope.launch {
-            documentPartOneSourceId = audioEngine.createSoundObject(FIRST_COLUMN)
-            documentPartTwoSourceId = audioEngine.createSoundObject(SECOND_COLUMN)
+            documentPartOneSourceId = audioEngine.createSoundObject(POINT_ZERO_FCUL)
+            documentPartTwoSourceId = audioEngine.createSoundObject(POINT_ZERO_PIZZARIA)
 
             audioEngine.setSoundObjectPosition(
                 documentPartOneSourceId,
-                leftEarPosition[0],
-                leftEarPosition[1],
-                leftEarPosition[2]
+                pointZeroFcul[0],
+                pointZeroFcul[1],
+                pointZeroFcul[2]
             )
 
             audioEngine.setSoundObjectPosition(
                 documentPartTwoSourceId,
-                rightEarPosition[0],
-                rightEarPosition[1],
-                rightEarPosition[2]
+                pointZeroPizzaria[0],
+                pointZeroPizzaria[1],
+                pointZeroPizzaria[2]
             )
 
             audioEngine.playSound(documentPartOneSourceId, false)
             audioEngine.playSound(documentPartTwoSourceId, false)
         }
     }
+
 
     override fun onPause() {
         audioEngine.pause()
@@ -98,8 +99,7 @@ class SpatializationSecondNewsExampleFragment :
     }
 
     companion object {
-        private const val FIRST_COLUMN = "scenario_spatialization_second_news_first_column_ines.mp3"
-        private const val SECOND_COLUMN =
-            "scenario_spatialization_second_news_second_column_cristiano.mp3"
+        private const val POINT_ZERO_FCUL = "fcul_100m.mp3"
+        private const val POINT_ZERO_PIZZARIA = "pizzaria_500m.mp3"
     }
 }

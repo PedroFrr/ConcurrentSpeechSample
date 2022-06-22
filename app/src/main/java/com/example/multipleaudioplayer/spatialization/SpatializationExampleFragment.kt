@@ -28,22 +28,25 @@ class SpatializationExampleFragment : Fragment(R.layout.layout_spatialization_ex
         val tabLayout = binding.tabLayout
         TabLayoutMediator(tabLayout, binding.pager) { tab, position ->
             tab.text = when (position) {
-                0 -> "Primeira notícia"
-                else -> "Segunda notícia"
+                0 -> "Ponto um"
+                1 -> "Ponto dois"
+                2 -> "Ponto três"
+                else -> "Ponto quatro"
             }
         }.attach()
     }
 
     private inner class ConfigurationsSlidePageAdapter(fa: FragmentActivity) :
         FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = 2
+        override fun getItemCount(): Int = 4
 
         override fun createFragment(position: Int): Fragment {
-            val fragment = when (position) {
-                0 -> SpatializationFirstNewsExampleFragment()
-                else -> SpatializationSecondNewsExampleFragment()
+            return when(position){
+                0 -> MapFirstPointFragment()
+                1 -> MapSecondPointFragment()
+                2 -> MapThirdPointFragment()
+                else -> MapFourthPointFragment()
             }
-            return fragment
         }
     }
 }

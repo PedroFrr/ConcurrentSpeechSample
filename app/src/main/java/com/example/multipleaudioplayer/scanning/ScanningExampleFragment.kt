@@ -10,11 +10,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutScanningExampleBinding
-import com.example.multipleaudioplayer.notification.nospatialization.NotificationNoSpatializationExampleFragment
 import com.example.multipleaudioplayer.scanning.nospatialization.ScanningNoSpatializationExampleFragment
 import com.example.multipleaudioplayer.scanning.spatialization.ScanningSpatializationExampleFragment
-import com.example.multipleaudioplayer.spatialization.SpatializationFirstNewsExampleFragment
-import com.example.multipleaudioplayer.spatialization.SpatializationSecondNewsExampleFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 

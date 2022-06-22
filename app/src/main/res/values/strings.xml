@@ -37,7 +37,7 @@
         <item>Ines</item>
     </string-array>
 
-    <string name="first_notice">O Benfica sagrou-se campeão nacional de juniores de futebol pela 25.ª vez na sua história, ao bater em casa o Sp, Braga, por 3-0, na 14.ª e última jornada do Apuramento de Campeão da época 2021/22. Iuri Moreira (87 e 89 minutos) e Franculino Djú (90+6) marcaram os golos dos ‘encarnados’, que terminaram a prova com os mesmos 33 pontos do FC Porto (6-0 ao Estoril Praia), mas vantagem na diferença total de golos (35-14 contra 29-9).</string>
+    <string name="first_notice">O Benfica sagrou-se campeão nacional de juniores de futebol pela 25.ª vez na sua história, ao bater em casa o Sp, Braga, por 3-0, na 14.ª e última jornada do Apuramento de Campeão da época 2021/22.</string>
 
     <!--Scanning-->
     <string name="scanning_spatialization_one_voice">Uma voz</string>
