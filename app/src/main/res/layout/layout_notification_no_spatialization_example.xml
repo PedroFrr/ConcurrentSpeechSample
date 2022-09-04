@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:text="@string/sample_text"
+            android:text="@string/first_notice"
             tools:layout_editor_absoluteX="16dp" />
 
     </ScrollView>

@@ -9,6 +9,7 @@ import com.google.vr.sdk.audio.GvrAudioEngine
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -25,6 +26,17 @@ class MapThirdPointFragment :
     private val pointTwoFcul = floatArrayOf(0.0f, -3.0f, 0.0f)
     private val pointTwoPizzaria = floatArrayOf(2f, 0.0f, 0.0f)
 
+
+    private var pointOneFnacSourceId = GvrAudioEngine.INVALID_ID
+    private var pointOneZaraSourceId = GvrAudioEngine.INVALID_ID
+    private var pointOneWortenSourceId = GvrAudioEngine.INVALID_ID
+    private var pointOneSpringfieldSourceId = GvrAudioEngine.INVALID_ID
+
+    private val pointOneFnac = floatArrayOf(-10.0f, -50.0f, 50.0f)
+    private val pointOneZara = floatArrayOf(-10.0f, 10.0f, 10.0f)
+    private val pointOneWorten = floatArrayOf(0.0f, 50.0f, 50.0f)
+    private val pointOneSpringfield = floatArrayOf(60.0f, 30.0f, 60.0f)
+
     private val audioEngine by lazy {
         GvrAudioEngine(requireActivity(), GvrAudioEngine.RenderingMode.BINAURAL_HIGH_QUALITY)
     }
@@ -35,12 +47,20 @@ class MapThirdPointFragment :
         scope.launch {
             withContext(Dispatchers.Main) {
                 binding.btnScenario.isEnabled = false
+                binding.btnScenarioSequential.isEnabled = false
             }
             audioEngine.preloadSoundFile(POINT_TWO_FCUL)
             audioEngine.preloadSoundFile(POINT_TWO_PIZZARIA)
 
+
+            audioEngine.preloadSoundFile(POINT_ONE_FNAC)
+            audioEngine.preloadSoundFile(POINT_ONE_ZARA)
+            audioEngine.preloadSoundFile(POINT_ONE_WORTEN)
+            audioEngine.preloadSoundFile(POINT_ONE_SPRINGFIELD)
+
             withContext(Dispatchers.Main) {
                 binding.btnScenario.isEnabled = true
+                binding.btnScenarioSequential.isEnabled = true
             }
         }
 
@@ -52,8 +72,17 @@ class MapThirdPointFragment :
             playPointTwo()
         }
 
+        binding.btnScenarioSequential.setOnClickListener {
+            playSequentialScenario()
+        }
+
         binding.cvMediaPlayerButtons.apply {
             btnStop.setOnClickListener {
+                if (audioEngine.isSoundPlaying(pointOneFnacSourceId)) audioEngine.stopSound(pointOneFnacSourceId)
+                if (audioEngine.isSoundPlaying(pointOneWortenSourceId)) audioEngine.stopSound(pointOneWortenSourceId)
+                if (audioEngine.isSoundPlaying(pointOneSpringfieldSourceId)) audioEngine.stopSound(pointOneSpringfieldSourceId)
+                if (audioEngine.isSoundPlaying(pointOneZaraSourceId)) audioEngine.stopSound(pointOneZaraSourceId)
+
                 if (audioEngine.isSoundPlaying(documentPartOneSourceId)) audioEngine.stopSound(documentPartOneSourceId)
                 if (audioEngine.isSoundPlaying(documentPartTwoSourceId)) audioEngine.stopSound(documentPartTwoSourceId)
                 binding.btnScenario.isEnabled = true
@@ -87,6 +116,57 @@ class MapThirdPointFragment :
         }
     }
 
+    private fun playSequentialScenario() {
+        pointOneFnacSourceId = audioEngine.createSoundObject(POINT_ONE_FNAC)
+        pointOneZaraSourceId = audioEngine.createSoundObject(POINT_ONE_ZARA)
+        pointOneWortenSourceId = audioEngine.createSoundObject(POINT_ONE_WORTEN)
+        pointOneSpringfieldSourceId = audioEngine.createSoundObject(POINT_ONE_SPRINGFIELD)
+
+        audioEngine.setSoundObjectPosition(
+            pointOneFnacSourceId,
+            pointOneFnac[0],
+            pointOneFnac[1],
+            pointOneFnac[2]
+        )
+
+        audioEngine.setSoundObjectPosition(
+            pointOneZaraSourceId,
+            pointOneZara[0],
+            pointOneZara[1],
+            pointOneZara[2]
+        )
+
+        audioEngine.setSoundObjectPosition(
+            pointOneWortenSourceId,
+            pointOneWorten[0],
+            pointOneWorten[1],
+            pointOneWorten[2]
+        )
+
+        audioEngine.setSoundObjectPosition(
+            pointOneSpringfieldSourceId,
+            pointOneSpringfield[0],
+            pointOneSpringfield[1],
+            pointOneSpringfield[2]
+        )
+
+        scope.launch {
+            audioEngine.playSound(pointOneZaraSourceId, false)
+
+            delay(3000)
+
+            audioEngine.playSound(pointOneFnacSourceId, false)
+
+            delay(3000)
+
+            audioEngine.playSound(pointOneWortenSourceId, false)
+
+            delay(3000)
+
+            audioEngine.playSound(pointOneSpringfieldSourceId, false)
+        }
+    }
+
     override fun onPause() {
         audioEngine.pause()
         super.onPause()
@@ -100,5 +180,10 @@ class MapThirdPointFragment :
     companion object {
         private const val POINT_TWO_FCUL = "fcul_300m.mp3"
         private const val POINT_TWO_PIZZARIA = "pizzaria_200m.mp3"
+
+        private const val POINT_ONE_FNAC = "fnac_50m.mp3"
+        private const val POINT_ONE_ZARA = "zara_10m.mp3"
+        private const val POINT_ONE_WORTEN = "worten_50m.mp3"
+        private const val POINT_ONE_SPRINGFIELD = "springfield_60m.mp3"
     }
 }

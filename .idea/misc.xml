@@ -27,6 +27,10 @@
         <entry key="app/src/main/res/layout/layout_scanning_spatialization.xml" value="0.24635416666666668" />
         <entry key="app/src/main/res/layout/layout_spatialization_example.xml" value="0.22552083333333334" />
         <entry key="app/src/main/res/layout/layout_spatialization_example_first_news.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/layout_spatialization_map_four.xml" value="0.17395833333333333" />
+        <entry key="app/src/main/res/layout/layout_spatialization_map_one.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/layout_spatialization_map_three.xml" value="0.17395833333333333" />
+        <entry key="app/src/main/res/layout/layout_spatialization_map_two.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/layout/layout_spatialization_second_news.xml" value="0.24635416666666668" />
         <entry key="app/src/main/res/xml/service_config.xml" value="0.21784420289855072" />
       </map>

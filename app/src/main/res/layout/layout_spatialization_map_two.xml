@@ -13,6 +13,13 @@
         android:src="@drawable/map_two"/>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_scenario_sequential"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reproduzir cenário sequencial"
+        app:layout_constraintBottom_toTopOf="@id/btn_scenario" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_scenario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
