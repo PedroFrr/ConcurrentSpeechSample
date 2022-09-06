@@ -74,6 +74,9 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
         binding.apply {
             btnSpatialScenarioOneVoice.isEnabled = isEnable
             btnSpatialScenarioTwoVoices.isEnabled = isEnable
+            btnTwoVoicesDifferentNews.isEnabled = isEnable
+            btnThreeVoicesDifferentNews.isEnabled = isEnable
+            btnFourVoicesDifferentNews.isEnabled = isEnable
             btnSpatialScenarioThreeVoices.isEnabled = isEnable
             btnSpatialScenarioFourVoices.isEnabled = isEnable
             cvMediaPlayerButtons.btnStop.isEnabled = !isEnable // this one is the opposite. When scenario buttons are enabled, the play button is disabled
@@ -135,6 +138,9 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
     }
 
     private fun initializeDifferentNewsPlayer(@RawRes audioResourceId: Int) {
+        releasePlayer()
+        toggleButtons(isEnable = false)
+
         player = ExoPlayer.Builder(requireContext())
             .build()
             .also { exoPlayer ->
