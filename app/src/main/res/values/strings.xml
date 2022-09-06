@@ -41,8 +41,13 @@
 
     <!--Scanning-->
     <string name="scanning_spatialization_one_voice">Uma voz</string>
-    <string name="scanning_spatialization_two_voices">Duas vozes</string>
-    <string name="scanning_spatialization_three_voices">Três vozes</string>
-    <string name="scanning_spatialization_four_voices">Quatro vozes</string>
+    <string name="scanning_spatialization_two_voices">2 vozes mesma notícia</string>
+    <string name="scanning_spatialization_three_voices">3 vozes mesma notícia</string>
+    <string name="scanning_spatialization_four_voices">4 vozes mesma notícia</string>
+
+    <string name="scanning_spatialization_one_voice_different">Uma voz</string>
+    <string name="scanning_spatialization_two_voices_different">2 vozes outra notícia</string>
+    <string name="scanning_spatialization_three_voices_different">3 vozes outra notícia</string>
+    <string name="scanning_spatialization_four_voices_different">4 vozes outra notícia</string>
 
 </resources>

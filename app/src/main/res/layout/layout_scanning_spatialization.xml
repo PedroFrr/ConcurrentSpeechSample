@@ -10,14 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/scanning_spatialization_one_voice"
-        app:layout_constraintBottom_toTopOf="@id/btn_spatial_scenario_two_voices"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/btn_spatial_scenario_two_voices" />
 
     <Button
         android:id="@+id/btn_spatial_scenario_two_voices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/scanning_spatialization_two_voices"
+        app:layout_constraintBottom_toTopOf="@id/btn_two_voices_different_news" />
+
+    <Button
+        android:id="@+id/btn_two_voices_different_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/scanning_spatialization_two_voices_different"
         app:layout_constraintBottom_toTopOf="@id/btn_spatial_scenario_three_voices" />
 
     <Button
@@ -25,6 +32,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/scanning_spatialization_three_voices"
+        app:layout_constraintBottom_toTopOf="@id/btn_three_voices_different_news" />
+
+    <Button
+        android:id="@+id/btn_three_voices_different_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/scanning_spatialization_three_voices_different"
         app:layout_constraintBottom_toTopOf="@id/btn_spatial_scenario_four_voices" />
 
     <Button
@@ -32,6 +46,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/scanning_spatialization_four_voices"
+        app:layout_constraintBottom_toTopOf="@id/btn_four_voices_different_news" />
+
+    <Button
+        android:id="@+id/btn_four_voices_different_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/scanning_spatialization_four_voices_different"
         app:layout_constraintBottom_toTopOf="@id/cv_media_player_buttons" />
 
     <include

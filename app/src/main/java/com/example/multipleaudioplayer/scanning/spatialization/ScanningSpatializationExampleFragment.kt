@@ -2,6 +2,7 @@ package com.example.multipleaudioplayer.scanning.spatialization
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RawRes
 import androidx.fragment.app.Fragment
 import com.example.multipleaudioplayer.R
 import com.example.multipleaudioplayer.databinding.LayoutScanningSpatializationBinding
@@ -43,6 +44,19 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
 
         binding.btnSpatialScenarioFourVoices.setOnClickListener {
             initializePlayer(4)
+        }
+
+        // different news scenario
+        binding.btnTwoVoicesDifferentNews.setOnClickListener {
+            initializeDifferentNewsPlayer(R.raw.different_news_two_voices)
+        }
+
+        binding.btnThreeVoicesDifferentNews.setOnClickListener {
+            initializeDifferentNewsPlayer(R.raw.different_news_three_voices)
+        }
+
+        binding.btnFourVoicesDifferentNews.setOnClickListener {
+            initializeDifferentNewsPlayer(R.raw.different_news_four_voices)
         }
 
         binding.cvMediaPlayerButtons.apply {
@@ -87,13 +101,13 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
 
         val audioResourceId = when (numberOfVoices) {
             2 -> {
-                if (numberOfTimesTwoVoiceButtonWasClicked == 0) R.raw.two_voices_first_news else R.raw.two_voices_second_news
+                R.raw.two_voices_first_news
             }
             3 -> {
-                if (numberOfTimesThreeVoiceButtonWasClicked == 0) R.raw.three_voices_first_news else R.raw.three_voices_second_news
+                R.raw.three_voices_first_news
             }
             4 -> {
-                if (numberOfTimesFourVoiceButtonWasClicked == 0) R.raw.four_voices_first_news else R.raw.four_voices_second_news
+                R.raw.four_voices_first_news
             }
             else -> {
                 R.raw.two_voices_first_news
@@ -118,6 +132,26 @@ class ScanningSpatializationExampleFragment : Fragment(R.layout.layout_scanning_
                 exoPlayer.play()
             }
 
+    }
+
+    private fun initializeDifferentNewsPlayer(@RawRes audioResourceId: Int) {
+        player = ExoPlayer.Builder(requireContext())
+            .build()
+            .also { exoPlayer ->
+                val uri = requireContext().getResourceUri(audioResourceId)
+                val mediaItem = MediaItem.Builder()
+                    .setUri(uri)
+                    .setMimeType(MimeTypes.AUDIO_WAV)
+                    .build()
+
+                exoPlayer.setMediaItem(mediaItem)
+                //exoPlayer.playWhenReady = playWhenReady
+                exoPlayer.seekTo(currentItem, startPosition)
+
+                exoPlayer.prepare()
+
+                exoPlayer.play()
+            }
     }
 
     override fun onPause() {
