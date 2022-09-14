@@ -23,8 +23,8 @@ class MapFirstPointFragment :
     private var documentPartOneSourceId = GvrAudioEngine.INVALID_ID
     private var documentPartTwoSourceId = GvrAudioEngine.INVALID_ID
 
-    private val pointZeroFcul = floatArrayOf(-1f, 0.0f, 0.0f)
-    private val pointZeroPizzaria = floatArrayOf(2f, 5.0f, 0.0f)
+    private val pointZeroFcul = floatArrayOf(-10f, 0.0f, 20.0f)
+    private val pointZeroPizzaria = floatArrayOf(20f, 5.0f, 100.0f)
 
     private var pointOneFnacSourceId = GvrAudioEngine.INVALID_ID
     private var pointOneZaraSourceId = GvrAudioEngine.INVALID_ID
@@ -159,9 +159,10 @@ class MapFirstPointFragment :
 
             audioEngine.playSound(pointOneSpringfieldSourceId, false)
 
-            delay(3000)
+            // this is not read because the location is too far
+/*            delay(3000)
 
-            audioEngine.playSound(pointOneWortenSourceId, false)
+            audioEngine.playSound(pointOneWortenSourceId, false)*/
         }
     }
 

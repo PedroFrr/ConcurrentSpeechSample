@@ -23,8 +23,8 @@ class MapThirdPointFragment :
     private var documentPartOneSourceId = GvrAudioEngine.INVALID_ID
     private var documentPartTwoSourceId = GvrAudioEngine.INVALID_ID
 
-    private val pointTwoFcul = floatArrayOf(0.0f, -3.0f, 0.0f)
-    private val pointTwoPizzaria = floatArrayOf(2f, 0.0f, 0.0f)
+    private val pointTwoFcul = floatArrayOf(0.0f, -3.0f, 60.0f)
+    private val pointTwoPizzaria = floatArrayOf(2f, 0.0f, 40.0f)
 
 
     private var pointOneFnacSourceId = GvrAudioEngine.INVALID_ID
